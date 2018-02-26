@@ -5,6 +5,13 @@ package src.fr.eni.ProjetVeterinaire.bo;
 public class AppliTestBO {
 
 	public static void main(String[] args) {
+		/*----Test du Personnel------*/
+		Personnel vPersonnel = new Personnel("0123", "Jade Orlécha", "Fd454q2d1sdD","Veterinaire",false);
+		System.out.println("-------------Après Création du personnel------------");
+		System.out.println("\n"+vPersonnel.toString()+"\n");
+
+		
+		/*----Test du client------*/
 		Client vClient = new Client(0, "Ramel", "Mika", "19, rue des abysses", "", "42190", "Laba","0665044064","FrigAssur","carantrodébar@gmail.com","",false );
 		System.out.println("-------------Après Création du client------------");
 		System.out.println("\n"+vClient.toString());
