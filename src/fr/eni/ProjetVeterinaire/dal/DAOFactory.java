@@ -3,10 +3,10 @@ package src.fr.eni.ProjetVeterinaire.dal;
 
 public class DAOFactory {
 	
-	public static PersonnelDAO getPersonnelDAO()  {
-		PersonnelDAO personnelDAO=null;
+	public static ConnexionDAO getConnexionDAO()  {
+		ConnexionDAO connexionDAO=null;
 		try {
-			personnelDAO=(PersonnelDAO ) Class.forName("src.fr.eni.ProjetVeterinaire.dal.jdbc.ConnexionDAOJdbcImpl").newInstance();
+			connexionDAO=(ConnexionDAO ) Class.forName("src.fr.eni.ProjetVeterinaire.dal.jdbc.ConnexionDAOJdbcImpl").newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -17,7 +17,7 @@ public class DAOFactory {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return personnelDAO; 
+		return connexionDAO; 
 	}
 	
 	

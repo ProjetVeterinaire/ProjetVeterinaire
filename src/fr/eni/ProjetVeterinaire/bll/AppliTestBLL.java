@@ -6,7 +6,7 @@ import java.text.ParseException;
 
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DAOFactory;
-import src.fr.eni.ProjetVeterinaire.dal.PersonnelDAO;
+import src.fr.eni.ProjetVeterinaire.dal.ConnexionDAO;
 
 public class AppliTestBLL {
 

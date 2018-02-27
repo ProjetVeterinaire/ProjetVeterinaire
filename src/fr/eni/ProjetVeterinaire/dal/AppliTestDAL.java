@@ -12,7 +12,7 @@ public class AppliTestDAL {
 
 	public static void main(String[] args) throws ParseException, NoSuchAlgorithmException, UnsupportedEncodingException, DALException {
 
-		PersonnelDAO vC = DAOFactory.getPersonnelDAO();
+		ConnexionDAO vC = DAOFactory.getConnexionDAO();
 
 		
 

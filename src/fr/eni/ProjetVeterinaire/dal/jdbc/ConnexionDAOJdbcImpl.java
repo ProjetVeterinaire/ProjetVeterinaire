@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.dal.ConnexionDAO;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
-import src.fr.eni.ProjetVeterinaire.dal.PersonnelDAO;
 
 /**
  * Author : Ronan GODICHEAU (26/02/2018)
  * **/
-public class ConnexionDAOJdbcImpl implements PersonnelDAO{
+public class ConnexionDAOJdbcImpl implements ConnexionDAO{
 	private static final String sqlSelectConnexion = "Select * from Personnels where MotPasse=? and Nom=?";
 
 	

@@ -5,7 +5,7 @@ import src.fr.eni.ProjetVeterinaire.bo.*;
 
 public class LoginManager {
 	
-	private static PersonnelDAO daoPersonnel;
+	private static ConnexionDAO daoConnexion;
 	
 	private static LoginManager instance;
 	
@@ -19,14 +19,14 @@ public class LoginManager {
     }
 	
 	public LoginManager() throws BLLException{
-		daoPersonnel = DAOFactory.getPersonnelDAO();
+		daoConnexion = DAOFactory.getConnexionDAO();
 	}
 	
 		
 	public Personnel selectConnexion(String aNom, String aMotDePasse) throws BLLException{
 		Personnel personnel = null;
 		try{
-			personnel = daoPersonnel.selectConnexion(aNom, aMotDePasse);
+			personnel = daoConnexion.selectConnexion(aNom, aMotDePasse);
 		}catch(DALException e){
 			e.printStackTrace();
 			throw new BLLException("Erreur de connexion");
