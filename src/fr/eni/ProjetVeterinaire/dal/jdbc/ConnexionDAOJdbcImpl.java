@@ -7,12 +7,13 @@ import java.sql.SQLException;
 
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.PersonnelDAO;
 
 /**
  * Author : Ronan GODICHEAU (26/02/2018)
  * **/
-public class ConnexionDAOJdbcImpl {
-	private static final String sqlSelectConnexion = "Select * from Personnel where MotPasse=? and Nom=?";
+public class ConnexionDAOJdbcImpl implements PersonnelDAO{
+	private static final String sqlSelectConnexion = "Select * from Personnels where MotPasse=? and Nom=?";
 
 	
 	public Personnel selectConnexion(String aNom,String aMotPasse) throws DALException {
@@ -24,7 +25,7 @@ public class ConnexionDAOJdbcImpl {
 				cnx = JDBCTools.getConnection();
 				rqt = cnx.prepareStatement(sqlSelectConnexion);
 				rqt.setString(1, aMotPasse);
-				rqt.setString(1, aNom);
+				rqt.setString(2, aNom);
 
 				rs = rqt.executeQuery();
 				if (rs.next()){

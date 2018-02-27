@@ -17,7 +17,8 @@ public class JDBCTools {
 	static {
 		
 		try {
-			Class.forName(Settings.getProperty("driverdb"));
+			Class.forName(Settings.getProperty("driverDB"));
+			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}		
