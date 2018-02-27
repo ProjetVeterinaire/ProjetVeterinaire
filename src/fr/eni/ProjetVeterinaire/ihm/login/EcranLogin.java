@@ -9,6 +9,7 @@ package src.fr.eni.ProjetVeterinaire.ihm.login;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,6 +57,9 @@ public class EcranLogin extends JFrame{
 	    JButton btnConnexion=new JButton("Valider");  
 	    btnConnexion.setBounds(180,120,95,30);  
 	    fenetre.add(btnConnexion);
+	    
+	    ActionListener actionListener = new AppliTestIHM();
+	    btnConnexion.addActionListener(actionListener);
 	    
 	    //Set la frame visible   
 		fenetre.setLayout(null); 
