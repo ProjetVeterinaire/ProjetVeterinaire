@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class EcranLogin extends JFrame{
@@ -50,7 +51,7 @@ public class EcranLogin extends JFrame{
 	    Login.add(lblPassword);
 	    
 	    //Creer, donne les paramètres, et insère la zone de texte "Password" à la fenetre
-	    TFPassword=new JTextField("");  
+	    TFPassword=new JPasswordField("");  
 	    TFPassword.setBounds(150,75, 150,30);
 	    Login.add(TFPassword);
 	    
