@@ -23,7 +23,7 @@ public class EcranLogin extends JFrame{
 	    //Définit un titre pour la fenetre
 	    fenetre.setTitle("Connexion");
 	    //Définit sa taille
-	    fenetre.setSize(400, 300);
+	    fenetre.setSize(350, 215);
 	    //Place la fenetre au cntre de l'écran
 	    fenetre.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
@@ -33,38 +33,36 @@ public class EcranLogin extends JFrame{
 	    //Définis, creer, donne les paramètres de position, et insère le label "Nom" à la fenetre
 	    JLabel lblNom,lblPassword;  
 	    lblNom=new JLabel("Nom :");  
-	    lblNom.setBounds(75,75, 100,30);
+	    lblNom.setBounds(50,35, 50,30);
 	    fenetre.add(lblNom);
 	    
 	    //Définis, creer, donne les paramètres, et insère la zone de texte "Nom" à la fenetre
 	    JTextField TFNom,TFPassword; 
 	    TFNom=new JTextField("");  
-	    TFNom.setBounds(200,75, 150,30);
+	    TFNom.setBounds(150,35, 150,30);
 	    fenetre.add(TFNom);
-	    
-	    
+	    	    
 	    //Creer, donne les paramètres de position, et insère le label "Password" à la fenetre 
 	    lblPassword=new JLabel("Mot de passe :");  
-	    lblPassword.setBounds(75,125, 100,30);
+	    lblPassword.setBounds(50,75, 100,30);
 	    fenetre.add(lblPassword);
 	    
 	    //Creer, donne les paramètres, et insère la zone de texte "Password" à la fenetre
 	    TFPassword=new JTextField("");  
-	    TFPassword.setBounds(200,125, 150,30);
+	    TFPassword.setBounds(150,75, 150,30);
 	    fenetre.add(TFPassword);
 	    
-	    
+	    //Définis, creer, donne les paramètres et insère le bouton de validation de connexion
 	    JButton btnConnexion=new JButton("Valider");  
-	    btnConnexion.setBounds(255,200,95,30);  
+	    btnConnexion.setBounds(180,120,95,30);  
 	    fenetre.add(btnConnexion);
 	    
-	    
-	fenetre.setLayout(null);
-	//Set la frame visible    
-	fenetre.setVisible(true);
-	
-	//Donne à la fenetre l'icone de l'application
-	Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
-	fenetre.setIconImage(icone);
+	    //Set la frame visible   
+		fenetre.setLayout(null); 
+		fenetre.setVisible(true);
+		
+		//Donne à la fenetre l'icone de l'application
+		Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
+		fenetre.setIconImage(icone);
 	}
 }
