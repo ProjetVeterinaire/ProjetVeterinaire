@@ -20,13 +20,13 @@ public class EcranLogin extends JFrame{
 	public EcranLogin(){
 	    JFrame fenetre = new JFrame();
 	    
-	    //D�finit un ti	tre pour notre fen�tre
+	    //Définit un titre pour la fenetre
 	    fenetre.setTitle("Connexion");
-	    //D�finit sa taille
+	    //Définit sa taille
 	    fenetre.setSize(400, 300);
-	    //Nous demandons maintenant � notre objet de se positionner au centre
+	    //Place la fenetre au cntre de l'écran
 	    fenetre.setLocationRelativeTo(null);
-	    //Termine le processus lorsqu'on clique sur la croix rouge
+	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    
