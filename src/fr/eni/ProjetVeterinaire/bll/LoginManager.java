@@ -12,14 +12,14 @@ public class LoginManager {
 	}
 		
 	public Personnel selectConnexion(String aNom, String aMotDePasse) throws BLLException{
-		Personnel connexion = null;
+		Personnel personnel = null;
 		try{
-			connexion = daoPersonnel.selectConnexion(aNom, aMotDePasse);
+			personnel = daoPersonnel.selectConnexion(aNom, aMotDePasse);
 		}catch(DALException e){
 			e.printStackTrace();
 			throw new BLLException("Erreur de connexion");
 		}
-		return connexion;
+		return personnel;
 	}
 	
 
