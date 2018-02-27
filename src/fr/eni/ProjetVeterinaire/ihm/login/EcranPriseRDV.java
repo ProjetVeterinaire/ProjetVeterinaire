@@ -7,6 +7,7 @@
 
 package src.fr.eni.ProjetVeterinaire.ihm.login;
 
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -21,7 +22,7 @@ public class EcranPriseRDV {
 		//Définit un titre pour la fenetre
 		PriseRDV.setTitle("Prise de rendez-vous");
 	    //Définit sa taille
-		PriseRDV.setSize(350, 215);
+		PriseRDV.setSize(750, 500);
 	    //Place la fenetre au cntre de l'écran
 		PriseRDV.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge

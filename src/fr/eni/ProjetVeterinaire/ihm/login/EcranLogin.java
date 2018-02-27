@@ -59,12 +59,16 @@ public class EcranLogin extends JFrame{
 	    btnConnexion.setBounds(180,120,95,30);  
 	    Login.add(btnConnexion);
 	    
+	    
+	    //Creer le Listener ("On click" du bouton) pour btnConnexion
 	    btnConnexion.addActionListener(new ActionListener(){  
 	    	public void actionPerformed(ActionEvent e){ 
-	    		TFNom.setText("FELICITATIONS !");
-	    		TFPassword.setText("Tu as remplis les cases !");  
-	    	        }  
-	    	    });  
+	    		TFNom.setText("FELICITATIONS !");//pour du test
+	    		TFPassword.setText("Tu as remplis les cases !"); //pour du test 
+	    		
+	    		EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel();//lance la page "d'accueil"
+	    	}  
+	    });  
 	    
 	    //ActionListener actionListener = new AppliTestIHM();
 	    //btnConnexion.addActionListener(actionListener);
@@ -72,6 +76,8 @@ public class EcranLogin extends JFrame{
 	    //Set la frame visible   
 	    Login.setLayout(null); 
 	    Login.setVisible(true);
+	    Login.setResizable(false);
+
 		
 		//Donne à la fenetre l'icone de l'application
 		Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 

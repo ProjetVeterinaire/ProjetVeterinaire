@@ -21,7 +21,7 @@ public class EcranGestionPersonnel {
 		//Définit un titre pour la fenetre
 		GPersonnel.setTitle("Gestion du personnel");
 	    //Définit sa taille
-		GPersonnel.setSize(350, 215);
+		GPersonnel.setSize(650, 400);
 	    //Place la fenetre au cntre de l'écran
 		GPersonnel.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
