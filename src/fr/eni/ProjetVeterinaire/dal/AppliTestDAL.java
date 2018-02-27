@@ -10,17 +10,19 @@ import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 
 public class AppliTestDAL {
 
-	public static void main(String[] args) throws DALException, ParseException, NoSuchAlgorithmException, UnsupportedEncodingException {
+	public static void main(String[] args) throws ParseException, NoSuchAlgorithmException, UnsupportedEncodingException, DALException {
 
-//		PersonnelDAO personnelDAO = DAOFactory.getPersonnelDAO();
-
-//		ConnexionDAOJdbcImpl vC = new ConnexionDAOJdbcImpl();
-//		PersonnelDAO vC = new ConnexionDAOJdbcImpl();
 		PersonnelDAO vC = DAOFactory.getPersonnelDAO();
 
-		Personnel vPersonnel = vC.selectConnexion("Marc", "motdepasse");
+		
 
-		System.out.println(vPersonnel.toString());
+			Personnel vPersonnel = vC.selectConnexion("Marc", "motdepasse");
+			System.out.println("----Affichage du Veterinaire exporté de la base : ----");
+			System.out.println(vPersonnel.toString());
+
+
+
+		
 	}
 
 }
