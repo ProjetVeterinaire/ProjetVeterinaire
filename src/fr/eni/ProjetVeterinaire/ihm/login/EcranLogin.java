@@ -18,10 +18,17 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+
 public class EcranLogin extends JFrame{
+	
+	private JButton btnConnexion;
+	private JTextField vTFNom;
+	private JPasswordField vTFPassword;
+    private JFrame Login = new JFrame();
 
 	public EcranLogin(){
-	    JFrame Login = new JFrame();
 	    
 	    //Définit un titre pour la fenetre
 	    Login.setTitle("Connexion");
@@ -40,10 +47,7 @@ public class EcranLogin extends JFrame{
 	    Login.add(lblNom);
 	    
 	    //Définis, creer, donne les paramètres, et insère la zone de texte "Nom" à la fenetre
-	    JTextField TFNom,TFPassword; 
-	    TFNom=new JTextField("");  
-	    TFNom.setBounds(150,35, 150,30);
-	    Login.add(TFNom);
+	    Login.add(getTFNom());
 	    	    
 	    //Creer, donne les paramètres de position, et insère le label "Password" à la fenetre 
 	    lblPassword=new JLabel("Mot de passe :");  
@@ -51,25 +55,16 @@ public class EcranLogin extends JFrame{
 	    Login.add(lblPassword);
 	    
 	    //Creer, donne les paramètres, et insère la zone de texte "Password" à la fenetre
-	    TFPassword=new JPasswordField("");  
-	    TFPassword.setBounds(150,75, 150,30);
-	    Login.add(TFPassword);
+	    Login.add(getTFPassword());
 	    
 	    //Définis, creer, donne les paramètres et insère le bouton de validation de connexion
-	    JButton btnConnexion=new JButton("Valider");  
-	    btnConnexion.setBounds(180,120,95,30);  
-	    Login.add(btnConnexion);
+	     
+	     
+	    Login.add(getBtnConnexion());
+	
 	    
 	    
-	    //Creer le Listener ("On click" du bouton) pour btnConnexion
-	    btnConnexion.addActionListener(new ActionListener(){  
-	    	public void actionPerformed(ActionEvent e){ 
-	    		TFNom.setText("FELICITATIONS !");//pour du test
-	    		TFPassword.setText("Tu as remplis les cases !"); //pour du test 
-	    		
-	    		EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel();//lance la page "d'accueil"
-	    	}  
-	    });  
+	    
 	    
 	    //ActionListener actionListener = new AppliTestIHM();
 	    //btnConnexion.addActionListener(actionListener);
@@ -84,4 +79,49 @@ public class EcranLogin extends JFrame{
 		Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
 		Login.setIconImage(icone);
 	}
+	public JButton getBtnConnexion(){
+    	if (btnConnexion == null){
+    		btnConnexion = new JButton("Valider");
+    		btnConnexion.setBounds(180,120,95,30); 
+    		//Creer le Listener ("On click" du bouton) pour btnConnexion
+    		btnConnexion.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),getTFPassword().getText());
+						EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel(vPersonnel);
+						
+					} catch (BLLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
+    	}
+    	return btnConnexion;
+    }
+	
+	
+	public JTextField getTFNom(){
+    	if (vTFNom == null){
+    		vTFNom = new JTextField("");  
+    	    vTFNom.setBounds(150,35, 150,30);
+    	
+    	}
+    	return vTFNom;
+    }
+	public JPasswordField getTFPassword(){
+    	if (vTFPassword == null){
+    		vTFPassword = new JPasswordField("");  
+    		vTFPassword.setBounds(150,75, 150,30);
+    	
+    	}
+    	return vTFPassword;
+    }
 }
+
+
+	
+
+	

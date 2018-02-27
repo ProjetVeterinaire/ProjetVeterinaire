@@ -7,9 +7,21 @@ public class LoginManager {
 	
 	private static PersonnelDAO daoPersonnel;
 	
+	private static LoginManager instance;
+	
+	public static LoginManager getInstance() throws BLLException {
+        if (null == instance) { // Premier appel
+                if (null == instance) {
+                    instance = new LoginManager();
+                }
+        }
+        return instance;
+    }
+	
 	public LoginManager() throws BLLException{
 		daoPersonnel = DAOFactory.getPersonnelDAO();
 	}
+	
 		
 	public Personnel selectConnexion(String aNom, String aMotDePasse) throws BLLException{
 		Personnel personnel = null;

@@ -16,9 +16,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+
 public class EcranGestionPersonnel {
 
-	public EcranGestionPersonnel(){
+	public EcranGestionPersonnel(Personnel aPersonnel){
 		
 		JFrame GPersonnel = new JFrame();
 		
