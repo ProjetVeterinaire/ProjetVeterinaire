@@ -34,7 +34,9 @@ public class Client {
 		this.vRemarque = vRemarque;
 		this.vArchive = vArchive;
 	}
-
+	public void setvCodeClient(int aCode) {
+		this.vCodeClient= aCode;
+	}
 	public int getvCodeClient() {
 		return vCodeClient;
 	}
