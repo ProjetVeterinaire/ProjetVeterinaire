@@ -22,6 +22,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	private static final String sqlSelectAll = "Select * from Personnels";
 	private static final String sqlReinitialiser ="update Personnels set MotPasse=('abc123456') where Nom=?";
 	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role) values (?,?,?)";
+	private static final String sqlArchiver ="update Personnels set Archive=true";
 	
 	public ArrayList<Personnel> selectAll() throws DALException {
 			Connection cnx = null;
@@ -126,5 +127,21 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 
 		}
 	}
-
+	
+	public void archiver(Personnel personnel) throws DALException{
+		Connection cnx = null;
+		Statement rqt = null;
+		
+		
+		try{
+		cnx = JDBCTools.getConnection();
+		rqt = cnx.createStatement();
+		rqt.executeUpdate(sqlArchiver);
+		}catch(SQLException e){
+			throw new DALException("archivage failed - login ="+  personnel.getvNom() , e);
+		}
+	}
+	
+	
+	
 }

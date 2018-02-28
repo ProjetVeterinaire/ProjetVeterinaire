@@ -14,5 +14,7 @@ public interface PersonnelDAO {
 	
 	public int reinitialiser(String aNom)throws DALException;
 	
-	public int ajouter(Personnel personnel) throws DALException; 
+	public int ajouter(Personnel personnel) throws DALException;
+	
+	public void archiver(Personnel personnel) throws DALException;
 }
