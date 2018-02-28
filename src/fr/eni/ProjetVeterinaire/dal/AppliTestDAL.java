@@ -15,8 +15,10 @@ public class AppliTestDAL {
 		ConnexionDAO vC = DAOFactory.getConnexionDAO();
 
 		
-
+			//Récupération d'une personne
 			Personnel vPersonnel = vC.selectConnexion("Marc", "motdepasse");
+			
+			//Affichage
 			System.out.println("----Affichage du Veterinaire exporté de la base : ----");
 			System.out.println(vPersonnel.toString());
 

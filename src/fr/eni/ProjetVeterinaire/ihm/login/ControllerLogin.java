@@ -10,7 +10,7 @@ public class ControllerLogin {
 	private LoginManager personnel;
 	private EcranLogin fenetre;
 	
-	
+	//constructeurs
 	private ControllerLogin() throws BLLException{
 		personnel = LoginManager.getInstance();
 	}
@@ -22,11 +22,14 @@ public class ControllerLogin {
 		return ControllerLogin.instance;
 	}
 	
+	
+	//methode de lancement de l'application
 	public void startApp() throws BLLException{
 		fenetre = new EcranLogin();
 		fenetre.setVisible(true);
 	}
 	
+	//methode de selection de la connexion
 	public Personnel selectConnexion(String aNom, String aPassword) throws BLLException{
 		
 		LoginManager vLoginManager = new LoginManager(); 

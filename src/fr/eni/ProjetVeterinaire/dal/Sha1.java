@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
 
 public class Sha1 {
-
+	//fonction de hachage SHA1
 	public String sha1(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 	    String sha1 = null;
 

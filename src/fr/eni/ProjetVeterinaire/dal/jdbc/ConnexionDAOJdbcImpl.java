@@ -13,6 +13,8 @@ import src.fr.eni.ProjetVeterinaire.dal.DALException;
  * Author : Ronan GODICHEAU (26/02/2018)
  * **/
 public class ConnexionDAOJdbcImpl implements ConnexionDAO{
+	
+	//requete sql de selection de la connexion
 	private static final String sqlSelectConnexion = "Select * from Personnels where MotPasse=? and Nom=?";
 
 	

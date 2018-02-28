@@ -10,7 +10,6 @@ public class Settings {
 		try {
 			properties = new Properties();
 			properties.load(Settings.class.getResourceAsStream("settings.properties"));
-			//properties.loadFromXML(Settings.class.getResourceAsStream("settings.xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
