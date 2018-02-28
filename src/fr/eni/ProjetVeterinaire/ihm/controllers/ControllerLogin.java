@@ -1,4 +1,4 @@
-package src.fr.eni.ProjetVeterinaire.ihm.login;
+package src.fr.eni.ProjetVeterinaire.ihm.controllers;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bll.LoginManager;

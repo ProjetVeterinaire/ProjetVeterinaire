@@ -5,7 +5,7 @@
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm.controllers;
+package src.fr.eni.ProjetVeterinaire.ihm;
 
 import java.awt.Image;
 import java.awt.Toolkit;

@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
-import src.fr.eni.ProjetVeterinaire.ihm.login.ControllerLogin;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 
 public class EcranLogin extends JFrame{
 	
