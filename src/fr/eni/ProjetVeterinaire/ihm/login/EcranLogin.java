@@ -61,13 +61,6 @@ public class EcranLogin extends JFrame{
 	     
 	     
 	    Login.add(getBtnConnexion());
-	
-	    
-	    
-	    
-	    
-	    //ActionListener actionListener = new AppliTestIHM();
-	    //btnConnexion.addActionListener(actionListener);
 	    
 	    //Set la frame visible   
 	    Login.setLayout(null); 
@@ -91,7 +84,7 @@ public class EcranLogin extends JFrame{
 					try {
 						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),getTFPassword().getText());
 						EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel(vPersonnel);
-						
+						Login.setVisible(false);
 					} catch (BLLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -107,7 +100,6 @@ public class EcranLogin extends JFrame{
     	if (vTFNom == null){
     		vTFNom = new JTextField("");  
     	    vTFNom.setBounds(150,35, 150,30);
-    	
     	}
     	return vTFNom;
     }
@@ -115,7 +107,6 @@ public class EcranLogin extends JFrame{
     	if (vTFPassword == null){
     		vTFPassword = new JPasswordField("");  
     		vTFPassword.setBounds(150,75, 150,30);
-    	
     	}
     	return vTFPassword;
     }
