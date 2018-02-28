@@ -21,7 +21,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	//requete sql de selection de la connexion
 	private static final String sqlSelectAll = "Select * from Personnels";
 	private static final String sqlReinitialiser ="update Personnels set MotPasse=('abc123456') where Nom=?";
-
+	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role) values (?,?,?)";
 	
 	public ArrayList<Personnel> selectAll() throws DALException {
 			Connection cnx = null;
@@ -35,7 +35,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 				rs = rqt.executeQuery(sqlSelectAll);
 			
 				while(rs.next()){
-					personnel = new Personnel(rs.getString("CodePers"),
+					personnel = new Personnel(rs.getInt("CodePers"),
 							rs.getString("Nom"),
 							rs.getString("MotPasse"),
 							rs.getString("Role"),
@@ -85,6 +85,46 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		} 	
 		return  rs;
 		
+	}
+	
+	public int ajouter(Personnel personnel) throws DALException{
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+	
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt=cnx.prepareStatement(sqlAjouter);
+			rqt.setString(1, personnel.getvNom());
+			rqt.setString(2, personnel.getvMotDePasse());
+			rqt.setString(3, personnel.getvRole());
+			
+			int nbRows = rqt.executeUpdate();
+					if(nbRows == 1){
+						ResultSet rs = rqt.getGeneratedKeys();
+						if(rs.next()){
+							personnel.setvCodePers(rs.getInt(1));
+						}
+
+					}
+			return personnel.getvCodePers();
+			
+		}catch(SQLException e){
+			throw new DALException("Insert personnel failed - " + personnel, e);
+			
+		}
+		finally {
+			try {
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				throw new DALException("close failed - ", e);
+			}
+
+		}
 	}
 
 }

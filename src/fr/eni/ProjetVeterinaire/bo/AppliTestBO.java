@@ -6,17 +6,17 @@ public class AppliTestBO {
 
 	public static void main(String[] args) {
 		/*----Test du Personnel------*/
-		Personnel vPersonnel = new Personnel("0123", "Jade Orlécha", "Fd454q2d1sdD","Veterinaire",false);
-		System.out.println("-------------Après Création du personnel------------");
+		Personnel vPersonnel = new Personnel(0123, "Jade Orlï¿½cha", "Fd454q2d1sdD","Veterinaire",false);
+		System.out.println("-------------Aprï¿½s Crï¿½ation du personnel------------");
 		System.out.println("\n"+vPersonnel.toString()+"\n");
 
 		
 		/*----Test du client------*/
-		Client vClient = new Client(0, "Ramel", "Mika", "19, rue des abysses", "", "42190", "Laba","0665044064","FrigAssur","carantrodébar@gmail.com","",false );
-		System.out.println("-------------Après Création du client------------");
+		Client vClient = new Client(0, "Ramel", "Mika", "19, rue des abysses", "", "42190", "Laba","0665044064","FrigAssur","carantrodï¿½bar@gmail.com","",false );
+		System.out.println("-------------Aprï¿½s Crï¿½ation du client------------");
 		System.out.println("\n"+vClient.toString());
-		System.out.println("\n-------------Après modifications(adresse2+telephone)------------");
-		vClient.setvAdresse2("12, rue du marché");
+		System.out.println("\n-------------Aprï¿½s modifications(adresse2+telephone)------------");
+		vClient.setvAdresse2("12, rue du marchï¿½");
 		vClient.setvNumTel("0656564545");
 		System.out.println("\n"+vClient.toString());
 	}

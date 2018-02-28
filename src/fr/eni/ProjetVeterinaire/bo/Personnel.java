@@ -4,13 +4,13 @@ package src.fr.eni.ProjetVeterinaire.bo;
  * **/
 public class Personnel {
 
-	private String vCodePers;
+	private int vCodePers;
 	private String vNom;
 	private String vMotDePasse;
 	private String vRole;
 	private boolean vArchive;
 	//constructeur
-	public Personnel(String vCodePers, String vNom, String vMotDePasse, String vRole, boolean vArchive) {
+	public Personnel(int vCodePers, String vNom, String vMotDePasse, String vRole, boolean vArchive) {
 		super();
 		this.vCodePers = vCodePers;
 		this.vNom = vNom;
@@ -43,8 +43,11 @@ public class Personnel {
 	public void setvArchive(boolean vArchive) {
 		this.vArchive = vArchive;
 	}
-	public String getvCodePers() {
+	public int getvCodePers() {
 		return vCodePers;
+	}
+	public void setvCodePers(int vCodePers){
+		this.vCodePers = vCodePers;
 	}
 	
 	@Override

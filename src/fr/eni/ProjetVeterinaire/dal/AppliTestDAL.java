@@ -15,6 +15,7 @@ public class AppliTestDAL {
 
 		ConnexionDAO vC = DAOFactory.getConnexionDAO();
 		PersonnelDAO vP = DAOFactory.getPersonnelDAO();
+		
 
 			//Récupération d'une personne
 			Personnel vPersonnel = vC.selectConnexion("0", "0");
@@ -30,6 +31,14 @@ public class AppliTestDAL {
 			int nbLigneModifiees = vP.reinitialiser("0");
 			
 			System.out.println(nbLigneModifiees);
+			
+			vPersonnel.setvNom("Jean Neymar");
+			vPersonnel.setvMotDePasse("sketuve");
+			vPersonnel.setvRole("vet");
+			vPersonnel.setvArchive(false);
+			int nbLignesInserees = vP.ajouter(vPersonnel);
+			
+			System.out.println(nbLignesInserees +"ligne(s) insérée(s)");
 			
 			
 		

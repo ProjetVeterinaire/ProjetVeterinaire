@@ -13,4 +13,6 @@ public interface PersonnelDAO {
 	public  ArrayList<Personnel> selectAll() throws DALException;	
 	
 	public int reinitialiser(String aNom)throws DALException;
+	
+	public int ajouter(Personnel personnel) throws DALException; 
 }

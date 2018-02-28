@@ -31,7 +31,7 @@ public class ConnexionDAOJdbcImpl implements ConnexionDAO{
 
 				rs = rqt.executeQuery();
 				if (rs.next()){
-					personnel = new Personnel(rs.getString("CodePers"),
+					personnel = new Personnel(rs.getInt("CodePers"),
 							rs.getString("Nom"),
 							rs.getString("MotPasse"),
 							rs.getString("Role"),
