@@ -65,10 +65,10 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			}
 			return vListePersonnels;
 		}
-	public void reinitialiser(String aNom) throws DALException {
+	public int reinitialiser(String aNom) throws DALException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
-		ResultSet rs = null;
+		int rs;
 		Personnel personnel = null;
 		
 		try {
@@ -77,25 +77,13 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			rqt.setString(1, aNom);
 			
 
-			rs = rqt.executeQuery();
+			rs = rqt.executeUpdate();
+			
 		}catch(SQLException e){
 			throw new DALException("reinitialisation failed - login =" + aNom , e);
 			
-		} finally {
-			try {
-				if (rs != null){
-					rs.close();
-				}
-				if (rqt != null){
-					rqt.close();
-				}
-				if(cnx!=null){
-					cnx.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		} 	
+		return  rs;
 		
 	}
 
