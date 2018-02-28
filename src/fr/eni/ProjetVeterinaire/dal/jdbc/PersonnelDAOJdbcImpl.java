@@ -20,7 +20,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	//requete sql de selection de la connexion
 	private static final String sqlSelectAll = "Select * from Personnels";
-	private static final String sqlReinitialiser ="Alter table Personnels set MotPasse='abc123456' where Nom=?";
+	private static final String sqlReinitialiser ="update Personnels set MotPasse=('abc123456') where Nom=?";
 
 	
 	public ArrayList<Personnel> selectAll() throws DALException {

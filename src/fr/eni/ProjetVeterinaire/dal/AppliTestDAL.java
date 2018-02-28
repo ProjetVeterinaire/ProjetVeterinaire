@@ -26,6 +26,12 @@ public class AppliTestDAL {
 			ArrayList<Personnel> vListePersonnels = vP.selectAll();
 
 			System.out.println(vListePersonnels);
+			
+			vP.reinitialiser("0");
+			
+			System.out.println(vC.selectConnexion("0", "0"));
+			
+			
 		
 	}
 
