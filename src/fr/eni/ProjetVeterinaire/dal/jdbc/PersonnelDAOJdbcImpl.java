@@ -20,6 +20,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	//requete sql de selection de la connexion
 	private static final String sqlSelectAll = "Select * from Personnels";
+	private static final String sqlReinitialiser ="Alter table Personnels set MotPasse='abc123456' where Nom=?";
 
 	
 	public ArrayList<Personnel> selectAll() throws DALException {
@@ -64,6 +65,38 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			}
 			return vListePersonnels;
 		}
+	public void reinitialiser(String aNom) throws DALException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		Personnel personnel = null;
+		
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(sqlReinitialiser);
+			rqt.setString(1, aNom);
+			
 
+			rs = rqt.executeQuery();
+		}catch(SQLException e){
+			throw new DALException("reinitialisation failed - login =" + aNom , e);
+			
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 }
