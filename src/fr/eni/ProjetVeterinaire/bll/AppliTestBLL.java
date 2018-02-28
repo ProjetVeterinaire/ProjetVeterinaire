@@ -14,7 +14,7 @@ public class AppliTestBLL {
 		
 		LoginManager vLoginManager = new LoginManager(); 
 
-		Personnel vPersonnel = vLoginManager.selectConnexion("Marc", "motdepasse");
+		Personnel vPersonnel = vLoginManager.selectConnexion("0", "0");
 
 		System.out.println(vPersonnel.toString());
 		

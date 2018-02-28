@@ -16,7 +16,7 @@ public class AppliTestDAL {
 
 		
 			//Récupération d'une personne
-			Personnel vPersonnel = vC.selectConnexion("Marc", "motdepasse");
+			Personnel vPersonnel = vC.selectConnexion("0", "0");
 			
 			//Affichage
 			System.out.println("----Affichage du Veterinaire exporté de la base : ----");
