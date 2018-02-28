@@ -5,11 +5,11 @@ import java.util.List;
 
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 
-public interface ConnexionDAO {
+public interface PersonnelDAO {
 
 
 	//Selectionner un personnel par son nom et son mot de passe
-	public  Personnel selectConnexion(String aNom, String aMotDePasse) throws DALException;
+	public  Personnel selectAll(String aNom, String aMotDePasse) throws DALException;
 	
 	
 
