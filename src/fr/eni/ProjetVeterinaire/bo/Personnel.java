@@ -9,6 +9,7 @@ public class Personnel {
 	private String vMotDePasse;
 	private String vRole;
 	private boolean vArchive;
+	//constructeur
 	public Personnel(String vCodePers, String vNom, String vMotDePasse, String vRole, boolean vArchive) {
 		super();
 		this.vCodePers = vCodePers;
@@ -17,6 +18,7 @@ public class Personnel {
 		this.vRole = vRole;
 		this.vArchive = vArchive;
 	}
+	//getters & setters
 	public String getvNom() {
 		return vNom;
 	}

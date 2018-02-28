@@ -9,6 +9,7 @@ public class LoginManager {
 	
 	private static LoginManager instance;
 	
+	//Retourne l'instance du manager
 	public static LoginManager getInstance() throws BLLException {
         if (null == instance) { // Premier appel
                 if (null == instance) {
@@ -22,7 +23,7 @@ public class LoginManager {
 		daoConnexion = DAOFactory.getConnexionDAO();
 	}
 	
-		
+	//Retourne la connexion	
 	public Personnel selectConnexion(String aNom, String aMotDePasse) throws BLLException{
 		Personnel personnel = null;
 		try{
