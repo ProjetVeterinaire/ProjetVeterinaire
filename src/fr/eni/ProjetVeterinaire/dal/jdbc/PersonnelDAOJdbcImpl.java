@@ -1,9 +1,12 @@
 package src.fr.eni.ProjetVeterinaire.dal.jdbc;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.ConnexionDAO;
@@ -11,26 +14,25 @@ import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.PersonnelDAO;
 
 /**
- * Author : Ronan GODICHEAU (26/02/2018)
+ * Author : Ronan GODICHEAU (28/02/2018)
  * **/
 public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	//requete sql de selection de la connexion
-	private static final String sqlSelectAll = "Select * from Personnels where MotPasse=? and Nom=?";
+	private static final String sqlSelectAll = "Select * from Personnels";
 
 	
-	public Personnel selectAll(String aNom,String aMotPasse) throws DALException {
+	public ArrayList<Personnel> selectAll() throws DALException {
 			Connection cnx = null;
-			PreparedStatement rqt = null;
-			ResultSet rs = null;
+			Statement rqt = null;
+			ResultSet rs = null; 
 			Personnel personnel = null; 
+			ArrayList<Personnel> vListePersonnels = new ArrayList<Personnel>();
 			try {
 				cnx = JDBCTools.getConnection();
-				rqt = cnx.prepareStatement(sqlSelectAll);
-				rqt.setString(1, aMotPasse);
-				rqt.setString(2, aNom);
-
-				rs = rqt.executeQuery();
+				rqt=cnx.createStatement();
+				rs = rqt.executeQuery(sqlSelectAll);
+			
 				if (rs.next()){
 					personnel = new Personnel(rs.getString("CodePers"),
 							rs.getString("Nom"),
@@ -38,12 +40,12 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 							rs.getString("Role"),
 							rs.getBoolean("Archive")
 							);
-					
+					vListePersonnels.add(personnel);
 					}
 				}
 	
 			catch (SQLException e) {
-				throw new DALException("selectById failed - login = " + aNom , e);
+				throw new DALException("selectAll failed :" , e);
 			} finally {
 				try {
 					if (rs != null){
@@ -60,6 +62,8 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 				}
 	
 			}
-			return personnel;
+			return vListePersonnels;
 		}
+
+
 }

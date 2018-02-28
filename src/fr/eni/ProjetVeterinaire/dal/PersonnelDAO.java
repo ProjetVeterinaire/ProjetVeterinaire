@@ -1,5 +1,6 @@
 package src.fr.eni.ProjetVeterinaire.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -8,9 +9,8 @@ import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 public interface PersonnelDAO {
 
 
-	//Selectionner un personnel par son nom et son mot de passe
-	public  Personnel selectAll(String aNom, String aMotDePasse) throws DALException;
-	
+	//Selectionner tous les personnels
+	public  ArrayList<Personnel> selectAll() throws DALException;	
 	
 
 }
