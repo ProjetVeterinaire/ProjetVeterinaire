@@ -5,7 +5,7 @@
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm.login;
+package src.fr.eni.ProjetVeterinaire.ihm;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.ihm.login.ControllerLogin;
 
 public class EcranLogin extends JFrame{
 	

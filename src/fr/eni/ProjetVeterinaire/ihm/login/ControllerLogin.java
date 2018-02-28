@@ -3,6 +3,7 @@ package src.fr.eni.ProjetVeterinaire.ihm.login;
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bll.LoginManager;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.ihm.EcranLogin;
 
 public class ControllerLogin {
 
