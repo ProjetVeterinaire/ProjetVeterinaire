@@ -34,7 +34,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 				rqt=cnx.createStatement();
 				rs = rqt.executeQuery(sqlSelectAll);
 			
-				if (rs.next()){
+				while(rs.next()){
 					personnel = new Personnel(rs.getString("CodePers"),
 							rs.getString("Nom"),
 							rs.getString("MotPasse"),
