@@ -35,7 +35,7 @@ public class ControllerLogin {
 		
 		LoginManager vLoginManager =  LoginManager.getInstance();
 
-		Personnel vPersonnel = vLoginManager.selectConnexion("0", "0");
+		Personnel vPersonnel = vLoginManager.selectConnexion(aNom, aPassword);
 
 		return vPersonnel;
 	}

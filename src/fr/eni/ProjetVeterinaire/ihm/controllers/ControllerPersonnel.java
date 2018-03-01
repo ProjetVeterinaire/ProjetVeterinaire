@@ -43,4 +43,9 @@ public class ControllerPersonnel {
 		vPersonnelManager.ajouter(aNom,aPrenom,aMotPasse,aRole);
 		
 	}
+	public void archiver(String aNom) throws DALException, BLLException{
+		vPersonnelManager = PersonnelManager.getInstance();
+		vPersonnelManager.archiver(aNom);
+
+	}
 } 

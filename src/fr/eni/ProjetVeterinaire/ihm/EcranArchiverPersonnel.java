@@ -1,5 +1,5 @@
 /*
- * Auteur : Ronan GODICHEAU-TORNIER 
+ * Auteur : Ronan GODICHEAU-TORNIER
  * ENI
  * Projet client - serveur JAVA  / Groupe 3
  * 
@@ -12,6 +12,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -26,24 +27,26 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.bll.PersonnelManager;
+import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerPersonnel;
 
-public class EcranAddPersonnel extends JDialog{
+public class EcranArchiverPersonnel extends JDialog{
 	private JTextField vTFNom;
 	private JTextField vTFPrenom;
 	private JComboBox vComboBox;
 	private JPasswordField vPasswordField;
-	private JButton btn_ajouter;
+	private JButton btn_archiver;
 
 
-	public EcranAddPersonnel(){
+	public EcranArchiverPersonnel() throws BLLException{
 			
 			
 			//Définit un titre pour la fenetre
-			this.setTitle("Ajouter un personnel");
+			this.setTitle("Archiver un personnel");
 		    //Définit sa taille
-			this.setSize(350, 215);
+			this.setSize(350, 100);
 		    //Place la fenetre au cntre de l'écran
 			this.setLocationRelativeTo(null);
 		    //Termine proprement le processus lorsqu'on clique sur la croix rouge
@@ -53,47 +56,38 @@ public class EcranAddPersonnel extends JDialog{
 			//Donne à la fenetre l'icone de l'application
 			Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
 			this.setIconImage(icone);
-			//Layout 
-			
+			//Layout
 			getContentPane().setLayout(
 				    new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS)
 				);
-			//Ajout des composants de la fenetre
-			JLabel vNom = new JLabel("Entrez le nom :");
-			JLabel vPrenom = new JLabel("Entrez le prénom :");
-			JLabel vMotPasse = new JLabel("Entrez le mot de passe :");
-			JLabel vChoixRole = new JLabel("Choisissez votre role :");
-		
-			getComboBoxRole().addItem("Sec");
-			getComboBoxRole().addItem("Adm");
-			getComboBoxRole().addItem("Vet");
 			
-			this.add(vNom);
-			this.add(getTextFieldNom());
-			this.add(vPrenom);
-			this.add(getTextFieldPrenom());
-			this.add(vMotPasse);
-			this.add(getPasswordField());
-			this.add(vChoixRole);
-			this.add(getComboBoxRole());
-			this.add(getBtn_Ajouter());
+			
+			PersonnelManager vPersonnelManager = PersonnelManager.getInstance();
+			ArrayList<Personnel> vListePersonnel = vPersonnelManager.selectAllSansRDV();
+			for(Personnel vPersonneli : vListePersonnel){
+				getComboBoxPersonnels().addItem(vPersonneli.getvNom());
+			}
+						
+			
+			this.add(getComboBoxPersonnels());
+			this.add(getBtn_Archiver());
 			//Set la frame visible   
 			
 			this.setVisible(true);
 			
 
 	}
-	public JButton getBtn_Ajouter(){
-    	if (btn_ajouter == null){
-    		btn_ajouter = new JButton("Ajouter");
-    		btn_ajouter.addActionListener(new ActionListener() {
+	public JButton getBtn_Archiver(){
+    	if (btn_archiver == null){
+    		btn_archiver = new JButton("Archiver");
+    		btn_archiver.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
 						ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
 						try {
-							vControllerPersonnel.ajouter(getTextFieldNom().getText(), getTextFieldPrenom().getText(), String.valueOf(getPasswordField().getPassword()), getComboBoxRole().getSelectedItem().toString());
+							vControllerPersonnel.archiver(getComboBoxPersonnels().getSelectedItem().toString());
 						} catch (DALException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -106,30 +100,13 @@ public class EcranAddPersonnel extends JDialog{
 				}
 			});
     	}
-    	return btn_ajouter;
+    	return btn_archiver;
     }
-	public JComboBox<String> getComboBoxRole(){
+	public JComboBox<String> getComboBoxPersonnels(){
 		if (vComboBox == null){
 			vComboBox = new JComboBox<String>();	
     	}
     	return vComboBox;
 	}
-	public JTextField getTextFieldPrenom(){
-		if (vTFPrenom == null){
-			vTFPrenom = new JTextField();	
-    	}
-    	return vTFPrenom;
-	}
-	public JTextField getTextFieldNom(){
-		if (vTFNom == null){
-			vTFNom = new JTextField();	
-    	}
-    	return vTFNom;
-	}
-	public JPasswordField getPasswordField(){
-		if (vPasswordField == null){
-			vPasswordField = new JPasswordField();	
-		}
-    	return vPasswordField;
-	}
+
 }

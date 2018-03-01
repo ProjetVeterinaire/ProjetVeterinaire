@@ -1,5 +1,5 @@
 /*
- * Auteur : Gauthier LEFEVRE 
+ * Auteur : Gauthier LEFEVRE /Ronan GODICHEAU-TORNIER
  * ENI
  * Projet client - serveur JAVA  / Groupe 3
  * 
@@ -52,7 +52,7 @@ public class EcranGestionPersonnel extends JFrame{
 	    //Place la fenetre au cntre de l'écran
 		this.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 		
 		
@@ -116,7 +116,7 @@ public class EcranGestionPersonnel extends JFrame{
 			panelBTN.setBorder(BorderFactory.createLineBorder(Color.black));
 			
 			
-			panelBTN.add(getBtn_Ajouter());panelBTN.add(getBtn_Supprimer());panelBTN.add(getBtn_Reinitialiser());		
+			panelBTN.add(getBtn_Ajouter());panelBTN.add(getBtn_Archiver());panelBTN.add(getBtn_Reinitialiser());		
 
     	}
     	return panelBTN;
@@ -129,20 +129,24 @@ public class EcranGestionPersonnel extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					new EcranAddPersonnel();
-					setVisible(false);
 				}
 			});
     	}
     	return btn_ajouter;
     }
-	public JButton getBtn_Supprimer(){
+	public JButton getBtn_Archiver(){
     	if (btn_supprimer == null){
     		btn_supprimer=new JButton(new ImageIcon("./ressources/images/BTN_Supprimer.png"));
     		btn_supprimer.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					setVisible(false);
+					try {
+						new EcranArchiverPersonnel();
+					} catch (BLLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
     	}
@@ -155,7 +159,6 @@ public class EcranGestionPersonnel extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					setVisible(false);
 				}
 			});
     	}

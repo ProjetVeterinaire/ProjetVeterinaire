@@ -1,4 +1,10 @@
 package src.fr.eni.ProjetVeterinaire.dal.jdbc;
+/*
+ * Auteur : Ronan GODICHEAU-TORNIER 
+ * ENI
+ * Projet client - serveur JAVA  / Groupe 3
+ * 
+ */
 
 import java.awt.List;
 import java.sql.Connection;
@@ -22,8 +28,8 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	private static final String sqlSelectAll = "Select * from Personnels";
 	private static final String sqlReinitialiser ="update Personnels set MotPasse=('abc123456') where Nom=?";
 	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role,Archive) values (?,?,?,0)";
-	private static final String sqlArchiver ="update Personnels set Archive=true";
-	
+	private static final String sqlArchiver ="update Personnels set Archive='1' where nom = ?";
+	private static final String sqlSelectAllSansRdv = "Select * from Personnels where Archive=0 and CodePers not in(Select CodeVeto from Agendas a join Personnels p on a.CodeVeto=p.CodePers); ";
 	public ArrayList<Personnel> selectAll() throws DALException {
 			Connection cnx = null;
 			Statement rqt = null;
@@ -118,22 +124,62 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			} catch (SQLException e) {
 				throw new DALException("close failed - ", e);
 			}
-
 		}
 	}
 	
-	public void archiver(Personnel personnel) throws DALException{
+	public void archiver(String aNom) throws DALException{
 		Connection cnx = null;
-		Statement rqt = null;
-		
-		
+		PreparedStatement rqt = null;
 		try{
 		cnx = JDBCTools.getConnection();
-		rqt = cnx.createStatement();
-		rqt.executeUpdate(sqlArchiver);
+		rqt=cnx.prepareStatement(sqlArchiver);
+		rqt.setString(1, aNom);
+		rqt.executeUpdate();
 		}catch(SQLException e){
-			throw new DALException("archivage failed - login ="+  personnel.getvNom() , e);
+			throw new DALException("archivage failed - login ="+  aNom , e);
 		}
+	}
+	public ArrayList<Personnel> selectAllSansRdv() throws DALException {
+		Connection cnx = null;
+		Statement rqt = null;
+		ResultSet rs = null; 
+		Personnel personnel = null; 
+		ArrayList<Personnel> vListePersonnels = new ArrayList<Personnel>();
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt=cnx.createStatement();
+			rs = rqt.executeQuery(sqlSelectAllSansRdv);
+		
+			while(rs.next()){
+				personnel = new Personnel(rs.getInt("CodePers"),
+						rs.getString("Nom"),
+						rs.getString("MotPasse"),
+						rs.getString("Role"),
+						rs.getBoolean("Archive")
+						);
+				vListePersonnels.add(personnel);
+				}
+			}
+
+		catch (SQLException e) {
+			throw new DALException("selectAll failed :" , e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return vListePersonnels;
 	}
 	
 	

@@ -16,5 +16,8 @@ public interface PersonnelDAO {
 	
 	public int ajouter(Personnel personnel) throws DALException;
 	
-	public void archiver(Personnel personnel) throws DALException;
+	public void archiver(String aNom) throws DALException;
+	
+	public  ArrayList<Personnel> selectAllSansRdv() throws DALException;	
+
 }

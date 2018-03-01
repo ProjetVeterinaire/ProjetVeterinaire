@@ -1,5 +1,5 @@
 /*
- * Auteur : Gauthier LEFEVRE 
+ * Auteur : Gauthier LEFEVRE /Ronan GODICHEAU-TORNIER
  * ENI
  * Projet client - serveur JAVA  / Groupe 3
  * 
@@ -7,6 +7,7 @@
 
 package src.fr.eni.ProjetVeterinaire.ihm;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -27,51 +28,55 @@ public class EcranLogin extends JFrame{
 	private JButton btnConnexion;
 	private JTextField vTFNom;
 	private JPasswordField vTFPassword;
-    private JFrame Login = new JFrame();
-
+	private JLabel vErrorMessage;
 	public EcranLogin(){
 	    
 	    //Définit un titre pour la fenetre
-	    Login.setTitle("Connexion");
+	    this.setTitle("Connexion");
 	    //Définit sa taille
-	    Login.setSize(350, 215);
+	    this.setSize(350, 215);
 	    //Place la fenetre au cntre de l'écran
-	    Login.setLocationRelativeTo(null);
+	    this.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-	    Login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    
 	    //Définis, creer, donne les paramètres de position, et insère le label "Nom" à la fenetre
 	    JLabel lblNom,lblPassword;  
 	    lblNom=new JLabel("Nom :");  
 	    lblNom.setBounds(50,35, 50,30);
-	    Login.add(lblNom);
+	    this.add(lblNom);
 	    
 	    //Définis, creer, donne les paramètres, et insère la zone de texte "Nom" à la fenetre
-	    Login.add(getTFNom());
+	    this.add(getTFNom());
 	    	    
 	    //Creer, donne les paramètres de position, et insère le label "Password" à la fenetre 
 	    lblPassword=new JLabel("Mot de passe :");  
 	    lblPassword.setBounds(50,75, 100,30);
-	    Login.add(lblPassword);
+	    this.add(lblPassword);
 	    
 	    //Creer, donne les paramètres, et insère la zone de texte "Password" à la fenetre
-	    Login.add(getTFPassword());
+	    this.add(getTFPassword());
 	    
 	    //Définis, creer, donne les paramètres et insère le bouton de validation de connexion
 	     
+
 	     
-	    Login.add(getBtnConnexion());
-	    
+	    this.add(getBtnConnexion());
+	    vErrorMessage=new JLabel("");
+	    vErrorMessage.setBounds(50,150,180,30);
+
+	    this.add(vErrorMessage);
+
 	    //Set la frame visible   
-	    Login.setLayout(null); 
-	    Login.setVisible(true);
-	    Login.setResizable(false);
+	    this.setLayout(null); 
+	    this.setVisible(true);
+	    this.setResizable(false);
 
 		
 		//Donne à la fenetre l'icone de l'application
 		Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
-		Login.setIconImage(icone);
+		this.setIconImage(icone);
 	}
 	public JButton getBtnConnexion(){
     	if (btnConnexion == null){
@@ -84,12 +89,17 @@ public class EcranLogin extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					try {
 						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),String.valueOf(getTFPassword().getPassword()));
-						EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel(vPersonnel);
-						Login.setVisible(false);
+						if(vPersonnel!=null){
+							EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel(vPersonnel);
+						    setVisible(false);
+						}else{
+							vErrorMessage.setForeground(Color.red);
+							vErrorMessage.setText("Couple Login/Mdp invalide");
+						}
 					} catch (BLLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+					} 
 				}
 			});
     	}
@@ -111,6 +121,7 @@ public class EcranLogin extends JFrame{
     	}
     	return vTFPassword;
     }
+
 }
 
 

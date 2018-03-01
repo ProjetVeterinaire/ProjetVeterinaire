@@ -1,4 +1,10 @@
 package src.fr.eni.ProjetVeterinaire.bll;
+/*
+ * Auteur : Ronan GODICHEAU-TORNIER 
+ * ENI
+ * Projet client - serveur JAVA  / Groupe 3
+ * 
+ */
 
 import src.fr.eni.ProjetVeterinaire.dal.*;
 
@@ -44,6 +50,24 @@ a	prénom et profil de l’employé et lui affecter un mot de passe.*/
 		String vNomPrenom = aNom +" "+ aPrenom;
 		Personnel vPersonnelAAjouter = new Personnel(0,vNomPrenom,aMotPasse,aRole, false);
 		daoPersonnel.ajouter(vPersonnelAAjouter);
+	}
+	
+	//Retourne tous les personnels sans rendez vous et non archivés
+	public ArrayList<Personnel> selectAllSansRDV() throws BLLException{
+			ArrayList<Personnel> personnel = null;
+			try{
+				personnel = daoPersonnel.selectAllSansRdv();
+			}catch(DALException e){
+				e.printStackTrace();
+				throw new BLLException("Probleme lors du select all sans rdvs du personnel");
+			}
+			return personnel;
+		}
+	
+	/*Supprimer : Archivage de l’employé. Les données archivées ne sont plus visibles dans l’application. Attention, l’archivage d’un
+	 *  vétérinaire n’est possible que si celui-ci n’est attaché à aucun rendez-vous à venir.*/
+	public void archiver(String aNom) throws DALException{
+		daoPersonnel.archiver(aNom);
 	}
 
 }
