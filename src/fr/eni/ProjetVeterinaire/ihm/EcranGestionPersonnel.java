@@ -67,7 +67,6 @@ public class EcranGestionPersonnel extends JFrame{
 		
 		
 		
-        ButtonGroup groupRadio = new ButtonGroup();  
         
         ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
         ArrayList<Personnel> vListePersonnels = vControllerPersonnel.selectAll(); 
@@ -91,8 +90,7 @@ public class EcranGestionPersonnel extends JFrame{
         		userList.add(vLabelPasswordi,gbc);
             	gbc.gridx=3;
         		gbc.insets = new Insets(0,10,0,0);
-        		groupRadio.add(vRadioSelecti);
-        		userList.add(vRadioSelecti,gbc);
+        	
 
         	}
         }
@@ -129,6 +127,7 @@ public class EcranGestionPersonnel extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					new EcranAddPersonnel();
+					repaint();
 				}
 			});
     	}
@@ -143,6 +142,7 @@ public class EcranGestionPersonnel extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					try {
 						new EcranArchiverPersonnel();
+						repaint();
 					} catch (BLLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -161,6 +161,7 @@ public class EcranGestionPersonnel extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					try {
 						new EcranReinitialiserMotDePasse();
+						repaint();
 					} catch (BLLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

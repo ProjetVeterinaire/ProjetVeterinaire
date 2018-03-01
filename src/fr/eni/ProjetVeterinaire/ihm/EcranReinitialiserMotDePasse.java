@@ -44,7 +44,7 @@ public class EcranReinitialiserMotDePasse extends JDialog{
 			//Définit un titre pour la fenetre
 			this.setTitle("Reinitialiser le mot de passe d'un personnel");
 		    //Définit sa taille
-			this.setSize(350, 250);
+			this.setSize(350, 150);
 		    //Place la fenetre au cntre de l'écran
 			this.setLocationRelativeTo(null);
 		    //Termine proprement le processus lorsqu'on clique sur la croix rouge
@@ -63,12 +63,14 @@ public class EcranReinitialiserMotDePasse extends JDialog{
 			PersonnelManager vPersonnelManager = PersonnelManager.getInstance();
 			ArrayList<Personnel> vListePersonnel = vPersonnelManager.selectAll();
 			for(Personnel vPersonneli : vListePersonnel){
-				getComboBoxPersonnels().addItem(vPersonneli.getvNom());
+				if(!vPersonneli.isvArchive()){
+					getComboBoxPersonnels().addItem(vPersonneli.getvNom());
+				}
 			}
 						
 			
 			this.add(getComboBoxPersonnels());
-			JLabel vLabelMotPasse = new JLabel();
+			JLabel vLabelMotPasse = new JLabel("Nouveau Mot de Passe :");
 			this.add(vLabelMotPasse);
 			this.add(getTFMotPasse());
 			this.add(getBtn_Reinitialiser());
