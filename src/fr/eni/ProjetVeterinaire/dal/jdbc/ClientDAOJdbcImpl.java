@@ -76,7 +76,7 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 		}
 	
 	
-	public int Ajouter(Client aClient) throws DALException {
+	public void Ajouter(Client aClient) throws DALException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
 		ResultSet rs;
@@ -108,7 +108,7 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 			throw new DALException("ajout failed - nom =" + aClient.getvCodeClient() , e);
 			
 		} 	
-		return  aClient.getvCodeClient();
+		
 		
 	}
 

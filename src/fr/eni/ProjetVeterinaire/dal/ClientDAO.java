@@ -14,7 +14,7 @@ public interface ClientDAO {
 	
 	/*String vNomClient, String vPrenomClient, String vAdresse1, String vAdresse2,
 			String vCode_postal, String vVille, String vNumTel, String vAssurance, String vEmail, String vRemarque*/
-	public int Ajouter(Client aClient)throws DALException;
+	public void Ajouter(Client aClient)throws DALException;
 	
 	public ArrayList<Client> SelectAll() throws DALException;
 
