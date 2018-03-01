@@ -32,6 +32,9 @@ public class PersonnelManager {
 		daoPersonnel = DAOFactory.getPersonnelDAO();
 	}
 	
+	
+	
+	
 	//Retourne tous les personnels
 	public ArrayList<Personnel> selectAll() throws BLLException{
 		ArrayList<Personnel> personnel = null;
@@ -44,6 +47,9 @@ public class PersonnelManager {
 		return personnel;
 	}
 	
+	
+	
+	
 	/*Ajouter : Ouvre une boîte de dialogue qui permet de renseigner le nom,
 a	prénom et profil de l’employé et lui affecter un mot de passe.*/
 	public void ajouter(String aNom, String aPrenom, String aMotPasse,String aRole) throws DALException{
@@ -51,6 +57,8 @@ a	prénom et profil de l’employé et lui affecter un mot de passe.*/
 		Personnel vPersonnelAAjouter = new Personnel(0,vNomPrenom,aMotPasse,aRole, false);
 		daoPersonnel.ajouter(vPersonnelAAjouter);
 	}
+	
+	
 	
 	//Retourne tous les personnels sans rendez vous et non archivés
 	public ArrayList<Personnel> selectAllSansRDV() throws BLLException{
@@ -64,10 +72,19 @@ a	prénom et profil de l’employé et lui affecter un mot de passe.*/
 			return personnel;
 		}
 	
+	
+	
 	/*Supprimer : Archivage de l’employé. Les données archivées ne sont plus visibles dans l’application. Attention, l’archivage d’un
 	 *  vétérinaire n’est possible que si celui-ci n’est attaché à aucun rendez-vous à venir.*/
 	public void archiver(String aNom) throws DALException{
 		daoPersonnel.archiver(aNom);
+	}
+	
+	
+	/*Réinitialiser : Ouvre une boîte de dialogue qui permet de 
+	 * réinitialiser le mot de passe de l’employé sélectionné.*/
+	public void reinitialiser(String aNom,String aNouveauMotDePasse) throws DALException{
+		daoPersonnel.reinitialiser(aNom, aNouveauMotDePasse);
 	}
 
 }

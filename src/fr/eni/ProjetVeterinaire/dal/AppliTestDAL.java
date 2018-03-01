@@ -28,7 +28,7 @@ public class AppliTestDAL {
 
 			System.out.println(vListePersonnels);
 			
-			int nbLigneModifiees = vP.reinitialiser("0");
+			int nbLigneModifiees = vP.reinitialiser("0","0");
 			
 			System.out.println(nbLigneModifiees);
 			

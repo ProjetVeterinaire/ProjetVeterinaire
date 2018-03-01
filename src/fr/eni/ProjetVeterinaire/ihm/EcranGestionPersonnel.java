@@ -159,6 +159,12 @@ public class EcranGestionPersonnel extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					try {
+						new EcranReinitialiserMotDePasse();
+					} catch (BLLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
     	}

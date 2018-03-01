@@ -48,4 +48,9 @@ public class ControllerPersonnel {
 		vPersonnelManager.archiver(aNom);
 
 	}
+	public void reinitialiser(String aNom, String aMotPasse) throws BLLException, DALException{
+		vPersonnelManager = PersonnelManager.getInstance();
+		vPersonnelManager.reinitialiser(aNom,aMotPasse);
+		
+	}
 } 

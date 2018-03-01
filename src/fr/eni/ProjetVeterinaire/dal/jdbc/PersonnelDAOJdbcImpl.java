@@ -26,7 +26,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	//requete sql de selection de la connexion
 	private static final String sqlSelectAll = "Select * from Personnels";
-	private static final String sqlReinitialiser ="update Personnels set MotPasse=('abc123456') where Nom=?";
+	private static final String sqlReinitialiser ="update Personnels set MotPasse=? where Nom=?";
 	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role,Archive) values (?,?,?,0)";
 	private static final String sqlArchiver ="update Personnels set Archive='1' where nom = ?";
 	private static final String sqlSelectAllSansRdv = "Select * from Personnels where Archive=0 and CodePers not in(Select CodeVeto from Agendas a join Personnels p on a.CodeVeto=p.CodePers); ";
@@ -72,7 +72,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			}
 			return vListePersonnels;
 		}
-	public int reinitialiser(String aNom) throws DALException {
+	public int reinitialiser(String aNom, String aNouveauMotDePasse) throws DALException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
 		int rs;
@@ -81,13 +81,14 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		try {
 			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(sqlReinitialiser);
-			rqt.setString(1, aNom);
+			rqt.setString(1, aNouveauMotDePasse);
+			rqt.setString(2, aNom);
 			
 
 			rs = rqt.executeUpdate();
 			
 		}catch(SQLException e){
-			throw new DALException("reinitialisation failed - login =" + aNom , e);
+			throw new DALException("reinitialisation failed - nom =" + aNom , e);
 			
 		} 	
 		return  rs;

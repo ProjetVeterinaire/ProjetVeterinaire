@@ -11,13 +11,12 @@ public interface PersonnelDAO {
 
 	//Selectionner tous les personnels
 	public  ArrayList<Personnel> selectAll() throws DALException;	
-	
-	public int reinitialiser(String aNom)throws DALException;
-	
+		
 	public int ajouter(Personnel personnel) throws DALException;
 	
 	public void archiver(String aNom) throws DALException;
 	
 	public  ArrayList<Personnel> selectAllSansRdv() throws DALException;	
 
+	public int reinitialiser(String aNom, String aNouveauMotDePasse) throws DALException; 
 }
