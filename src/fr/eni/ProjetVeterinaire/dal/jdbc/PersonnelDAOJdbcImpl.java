@@ -21,7 +21,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	//requete sql de selection de la connexion
 	private static final String sqlSelectAll = "Select * from Personnels";
 	private static final String sqlReinitialiser ="update Personnels set MotPasse=('abc123456') where Nom=?";
-	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role) values (?,?,?)";
+	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role,Archive) values (?,?,?,0)";
 	private static final String sqlArchiver ="update Personnels set Archive=true";
 	
 	public ArrayList<Personnel> selectAll() throws DALException {
@@ -99,14 +99,8 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 			rqt.setString(2, personnel.getvMotDePasse());
 			rqt.setString(3, personnel.getvRole());
 			
-			int nbRows = rqt.executeUpdate();
-					if(nbRows == 1){
-						ResultSet rs = rqt.getGeneratedKeys();
-						if(rs.next()){
-							personnel.setvCodePers(rs.getInt(1));
-						}
-
-					}
+			rqt.executeUpdate();
+					
 			return personnel.getvCodePers();
 			
 		}catch(SQLException e){

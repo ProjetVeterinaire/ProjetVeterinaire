@@ -33,7 +33,7 @@ public class ControllerLogin {
 	//methode de selection de la connexion
 	public Personnel selectConnexion(String aNom, String aPassword) throws BLLException{
 		
-		LoginManager vLoginManager = new LoginManager(); 
+		LoginManager vLoginManager =  LoginManager.getInstance();
 
 		Personnel vPersonnel = vLoginManager.selectConnexion("0", "0");
 

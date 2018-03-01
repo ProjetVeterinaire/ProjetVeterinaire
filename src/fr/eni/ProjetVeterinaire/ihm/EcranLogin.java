@@ -83,7 +83,7 @@ public class EcranLogin extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
-						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),getTFPassword().getText());
+						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),String.valueOf(getTFPassword().getPassword()));
 						EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel(vPersonnel);
 						Login.setVisible(false);
 					} catch (BLLException e1) {
