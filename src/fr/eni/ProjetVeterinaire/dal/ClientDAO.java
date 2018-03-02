@@ -1,10 +1,8 @@
 package src.fr.eni.ProjetVeterinaire.dal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import src.fr.eni.ProjetVeterinaire.bo.Client;
-import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 
 public interface ClientDAO {
 
@@ -16,6 +14,10 @@ public interface ClientDAO {
 			String vCode_postal, String vVille, String vNumTel, String vAssurance, String vEmail, String vRemarque*/
 	public void Ajouter(Client aClient)throws DALException;
 	
-	public ArrayList<Client> SelectAll() throws DALException;
+	public List<Client> SelectAll() throws DALException;
+	
+	public void Archiver(int CodeClient) throws DALException;
+	
+	public void Update(Client aClient) throws DALException;
 
 }

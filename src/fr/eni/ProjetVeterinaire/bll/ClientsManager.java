@@ -1,9 +1,11 @@
 package src.fr.eni.ProjetVeterinaire.bll;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import src.fr.eni.ProjetVeterinaire.bo.*;
-import src.fr.eni.ProjetVeterinaire.dal.*;
+import src.fr.eni.ProjetVeterinaire.bo.Client;
+import src.fr.eni.ProjetVeterinaire.dal.ClientDAO;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.DAOFactory;
 
 
 public class ClientsManager {
@@ -33,15 +35,23 @@ public class ClientsManager {
 		}
 	}
 	
-	public ArrayList<Client> SelectAll() throws BLLException{
-		ArrayList<Client> client = null;
+	public List<Client> SelectAll() throws DALException{
+		List<Client> client = null;
 		try{
 			client = daoClient.SelectAll();
 		}catch(DALException e){
 			e.printStackTrace();
-			throw new BLLException("Probleme lors du select all du clients");
+			throw new DALException("Probleme lors du select all du clients");
 		}
 		
 		return client;
+	}
+	
+	public void Archiver(int CodeClient) throws DALException{
+		daoClient.Archiver(CodeClient);
+	}
+
+	public void Update(Client aClient) throws DALException{
+		daoClient.Update(aClient);
 	}
 }

@@ -67,7 +67,7 @@ public class DAOFactory {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return connexionDAO; 
+		return animauxDAO; 
 	}
 	
 

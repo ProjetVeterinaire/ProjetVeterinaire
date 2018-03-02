@@ -1,7 +1,11 @@
 package src.fr.eni.ProjetVeterinaire.bll;
 
-import fr.eni.ResaConcert.bll.BLLException;
-import fr.eni.ResaConcert.bll.ClientManager;
+/**
+ * Author : Florian CHEVALIER (02/03/2018)
+ * **/
+
+import src.fr.eni.ProjetVeterinaire.dal.AnimauxDAO;
+import src.fr.eni.ProjetVeterinaire.dal.DAOFactory;
 
 public class AnimauxManager {
 
