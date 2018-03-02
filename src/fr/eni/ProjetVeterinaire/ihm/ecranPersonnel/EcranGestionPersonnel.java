@@ -5,9 +5,10 @@
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm;
+package src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -15,7 +16,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -25,10 +26,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JViewport;
+import javax.swing.ListSelectionModel;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
-import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerPersonnel;
 
 public class EcranGestionPersonnel extends JFrame{
@@ -42,9 +47,14 @@ public class EcranGestionPersonnel extends JFrame{
 	private JLabel vLabelRolei;
 	private JLabel vLabelPasswordi;
 	private JRadioButton vRadioSelecti;
+	private TablePersonnel vTablePersonnel;
+	private JScrollPane vJScrollPane;
+	private EcranGestionPersonnel vEcranGestionPersonnel;
+
 	public EcranGestionPersonnel(Personnel aPersonnel) throws BLLException{
-		
-		
+		vEcranGestionPersonnel=this;
+		JPanel vPanel = new JPanel();
+		setContentPane(vPanel);
 		//Définit un titre pour la fenetre
 		this.setTitle("Gestion du personnel");
 	    //Définit sa taille
@@ -68,37 +78,37 @@ public class EcranGestionPersonnel extends JFrame{
 		
 		
         
-        ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
-        ArrayList<Personnel> vListePersonnels = vControllerPersonnel.selectAll(); 
-        for(int i =0; i<vListePersonnels.size();i++){
-        	Personnel vPersonneli = vListePersonnels.get(i);
-        	if(!vPersonneli.isvArchive()){
-        		vLabelNomPersonneli=new JLabel(vPersonneli.getvNom());
-            	vLabelRolei=new JLabel(vPersonneli.getvRole());
-            	vLabelPasswordi=new JLabel(vPersonneli.getvMotDePasse());
-            	vRadioSelecti=new JRadioButton();
-            	
+//        ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
+//        List<Personnel> vListePersonnels = vControllerPersonnel.selectAll(); 
+//        for(int i =0; i<vListePersonnels.size();i++){
+//        	Personnel vPersonneli = vListePersonnels.get(i);
+//        	if(!vPersonneli.isvArchive()){
+//        		vLabelNomPersonneli=new JLabel(vPersonneli.getvNom());
+//            	vLabelRolei=new JLabel(vPersonneli.getvRole());
+//            	vLabelPasswordi=new JLabel(vPersonneli.getvMotDePasse());
+//            	vRadioSelecti=new JRadioButton();
+//            	
+//
+//            	gbc.gridy=i;
+//            	gbc.gridx=0;
+//            	userList.add(vLabelNomPersonneli,gbc);
+//            	gbc.gridx=1;
+//        		gbc.insets = new Insets(0,150,0,0);
+//        		userList.add(vLabelRolei,gbc);
+//            	gbc.gridx=2;
+//        		gbc.insets = new Insets(0,20,0,0);
+//        		userList.add(vLabelPasswordi,gbc);
+//            	gbc.gridx=3;
+//        		gbc.insets = new Insets(0,10,0,0);
+//        	
+//
+//        	}
+//        }
 
-            	gbc.gridy=i;
-            	gbc.gridx=0;
-            	userList.add(vLabelNomPersonneli,gbc);
-            	gbc.gridx=1;
-        		gbc.insets = new Insets(0,150,0,0);
-        		userList.add(vLabelRolei,gbc);
-            	gbc.gridx=2;
-        		gbc.insets = new Insets(0,20,0,0);
-        		userList.add(vLabelPasswordi,gbc);
-            	gbc.gridx=3;
-        		gbc.insets = new Insets(0,10,0,0);
-        	
-
-        	}
-        }
-
-		//Set la frame visible   
-        this.add(getPanelBTN());
-		this.add(userList);
-		this.setLayout(null); 
+		vPanel.add(getPanelBTN());
+		vJScrollPane = new JScrollPane(getvTablePersonnel());
+		vPanel.add(vJScrollPane);
+        
 		this.setVisible(true);
 		
 		//Donne à la fenetre l'icone de l'application
@@ -106,6 +116,16 @@ public class EcranGestionPersonnel extends JFrame{
 		this.setIconImage(icone);
 	}
 	
+	public TablePersonnel getvTablePersonnel() throws BLLException {
+		if(vTablePersonnel==null){
+			vTablePersonnel=new TablePersonnel();
+			vTablePersonnel.setFillsViewportHeight(true);
+			vTablePersonnel.setPreferredScrollableViewportSize(new Dimension(400,200));
+			vTablePersonnel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		}
+		return vTablePersonnel;
+	}
 	
 	public JPanel getPanelBTN(){
 		if (panelBTN == null){
@@ -126,8 +146,7 @@ public class EcranGestionPersonnel extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new EcranAddPersonnel();
-					repaint();
+					new EcranAddPersonnel(vEcranGestionPersonnel);
 				}
 			});
     	}
@@ -141,17 +160,27 @@ public class EcranGestionPersonnel extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
-						new EcranArchiverPersonnel();
-						repaint();
+						ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
+						vControllerPersonnel.archiver(getvTablePersonnel().getValueAt(getvTablePersonnel().getSelectedRow(), 0).toString());
+						JDBCTools.closeConnection();
+						vEcranGestionPersonnel.getvTablePersonnel().setModel(new DataModelPersonnel(vControllerPersonnel.selectAll()));
+						
 					} catch (BLLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} catch (DALException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+					JDBCTools.closeConnection();
 				}
 			});
     	}
     	return btn_supprimer;
     }
+	public void modifierMotDePasseTable(String aValue, int row, int column) throws BLLException{
+		getvTablePersonnel().setValueAt(aValue, row, column);
+	}
 	public JButton getBtn_Reinitialiser(){
     	if (btn_reinitialiser == null){
     		btn_reinitialiser=new JButton(new ImageIcon("./ressources/images/BTN_Reinitialiser.png"));
@@ -160,12 +189,14 @@ public class EcranGestionPersonnel extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
-						new EcranReinitialiserMotDePasse();
-						repaint();
+						ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
+						new EcranReinitialiserMotDePasse(getvTablePersonnel().getValueAt(getvTablePersonnel().getSelectedRow(), 0).toString(),vEcranGestionPersonnel);
+						
 					} catch (BLLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+
 				}
 			});
     	}

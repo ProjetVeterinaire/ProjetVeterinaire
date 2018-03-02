@@ -25,11 +25,12 @@ import src.fr.eni.ProjetVeterinaire.dal.PersonnelDAO;
 public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	
 	//requete sql de selection de la connexion
-	private static final String sqlSelectAll = "Select * from Personnels";
+	private static final String sqlSelectAll = "Select * from Personnels where Archive='0'";
 	private static final String sqlReinitialiser ="update Personnels set MotPasse=? where Nom=?";
 	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role,Archive) values (?,?,?,0)";
 	private static final String sqlArchiver ="update Personnels set Archive='1' where nom = ?";
 	private static final String sqlSelectAllSansRdv = "Select * from Personnels where Archive=0 and CodePers not in(Select CodeVeto from Agendas a join Personnels p on a.CodeVeto=p.CodePers); ";
+	
 	public ArrayList<Personnel> selectAll() throws DALException {
 			Connection cnx = null;
 			Statement rqt = null;

@@ -1,14 +1,12 @@
 package src.fr.eni.ProjetVeterinaire.ihm.controllers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
-import src.fr.eni.ProjetVeterinaire.bll.LoginManager;
 import src.fr.eni.ProjetVeterinaire.bll.PersonnelManager;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
-import src.fr.eni.ProjetVeterinaire.ihm.EcranGestionPersonnel;
-import src.fr.eni.ProjetVeterinaire.ihm.EcranLogin;
+import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranGestionPersonnel;
 
 public class ControllerPersonnel {
 
@@ -30,10 +28,10 @@ public class ControllerPersonnel {
 
 	
 	//methode de selection de tous les personnels
-	public ArrayList<Personnel> selectAll() throws BLLException{
+	public List<Personnel> selectAll() throws BLLException{
 		vPersonnelManager = PersonnelManager.getInstance();
 
-		ArrayList<Personnel> vPersonnel = vPersonnelManager.selectAll();
+		List<Personnel> vPersonnel = vPersonnelManager.selectAll();
 
 		return vPersonnel;
 		

@@ -6,11 +6,13 @@ package src.fr.eni.ProjetVeterinaire.bll;
  * 
  */
 
-import src.fr.eni.ProjetVeterinaire.dal.*;
-
 import java.util.ArrayList;
+import java.util.List;
 
-import src.fr.eni.ProjetVeterinaire.bo.*;
+import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.DAOFactory;
+import src.fr.eni.ProjetVeterinaire.dal.PersonnelDAO;
 
 public class PersonnelManager {
 	
@@ -36,7 +38,7 @@ public class PersonnelManager {
 	
 	
 	//Retourne tous les personnels
-	public ArrayList<Personnel> selectAll() throws BLLException{
+	public List<Personnel> selectAll() throws BLLException{
 		ArrayList<Personnel> personnel = null;
 		try{
 			personnel = daoPersonnel.selectAll();

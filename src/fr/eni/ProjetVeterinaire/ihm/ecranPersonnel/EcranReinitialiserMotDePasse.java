@@ -5,48 +5,45 @@
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm;
+package src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bll.PersonnelManager;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerPersonnel;
 
-public class EcranArchiverPersonnel extends JDialog{
-	private JTextField vTFNom;
-	private JTextField vTFPrenom;
+public class EcranReinitialiserMotDePasse extends JDialog{
+	private JTextField vTFNouveauMotPasse;
 	private JComboBox vComboBox;
-	private JPasswordField vPasswordField;
-	private JButton btn_archiver;
-
-
-	public EcranArchiverPersonnel() throws BLLException{
-			
-			
+	private JButton btn_reinitialiser;
+	private String vNomPersonnel;
+	private EcranGestionPersonnel  vEcranGestionPersonnel;
+	private EcranReinitialiserMotDePasse vEcranReinitialiserMotDePasse;
+	
+	public EcranReinitialiserMotDePasse(String nomPersonnel,EcranGestionPersonnel aEcranGestionPersonnel) throws BLLException{
+			vEcranReinitialiserMotDePasse = this;
+			vNomPersonnel=nomPersonnel;
+			vEcranGestionPersonnel=aEcranGestionPersonnel;
 			//Définit un titre pour la fenetre
-			this.setTitle("Archiver un personnel");
+			this.setTitle("Reinitialiser le mot de passe d'un personnel");
 		    //Définit sa taille
-			this.setSize(350, 100);
+			this.setSize(350, 150);
 		    //Place la fenetre au cntre de l'écran
 			this.setLocationRelativeTo(null);
 		    //Termine proprement le processus lorsqu'on clique sur la croix rouge
@@ -62,32 +59,41 @@ public class EcranArchiverPersonnel extends JDialog{
 				);
 			
 			
-			PersonnelManager vPersonnelManager = PersonnelManager.getInstance();
-			ArrayList<Personnel> vListePersonnel = vPersonnelManager.selectAllSansRDV();
-			for(Personnel vPersonneli : vListePersonnel){
-				getComboBoxPersonnels().addItem(vPersonneli.getvNom());
-			}
+	
+		
 						
 			
-			this.add(getComboBoxPersonnels());
-			this.add(getBtn_Archiver());
+			
+			JLabel vLabelMotPasse = new JLabel("Nouveau Mot de Passe :");
+			this.add(vLabelMotPasse);
+			this.add(getTFMotPasse());
+			this.add(getBtn_Reinitialiser());
 			//Set la frame visible   
 			
 			this.setVisible(true);
 			
 
 	}
-	public JButton getBtn_Archiver(){
-    	if (btn_archiver == null){
-    		btn_archiver = new JButton("Archiver");
-    		btn_archiver.addActionListener(new ActionListener() {
+	public JTextField getTFMotPasse(){
+		if (vTFNouveauMotPasse == null){
+			vTFNouveauMotPasse = new JTextField();	
+    	}
+    	return vTFNouveauMotPasse;
+	}
+	public JButton getBtn_Reinitialiser(){
+    	if (btn_reinitialiser == null){
+    		btn_reinitialiser = new JButton("Reinitialiser");
+    		btn_reinitialiser.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
 						ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
 						try {
-							vControllerPersonnel.archiver(getComboBoxPersonnels().getSelectedItem().toString());
+							vControllerPersonnel.reinitialiser(vNomPersonnel,getTFMotPasse().getText());
+							JDBCTools.closeConnection();
+							vEcranGestionPersonnel.getvTablePersonnel().setModel(new DataModelPersonnel(vControllerPersonnel.selectAll()));
+							vEcranReinitialiserMotDePasse.setVisible(false);
 						} catch (DALException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -96,11 +102,12 @@ public class EcranArchiverPersonnel extends JDialog{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
+					JDBCTools.closeConnection();
+
 				}
 			});
     	}
-    	return btn_archiver;
+    	return btn_reinitialiser;
     }
 	public JComboBox<String> getComboBoxPersonnels(){
 		if (vComboBox == null){

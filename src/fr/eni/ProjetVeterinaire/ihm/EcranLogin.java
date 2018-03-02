@@ -21,7 +21,9 @@ import javax.swing.JTextField;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
+import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranGestionPersonnel;
 
 public class EcranLogin extends JFrame{
 	
@@ -100,6 +102,8 @@ public class EcranLogin extends JFrame{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} 
+					JDBCTools.closeConnection();
+
 				}
 			});
     	}

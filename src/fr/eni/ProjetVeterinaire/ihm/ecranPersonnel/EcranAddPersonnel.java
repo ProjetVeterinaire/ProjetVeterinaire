@@ -5,7 +5,7 @@
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm;
+package src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerPersonnel;
 
 public class EcranAddPersonnel extends JDialog{
@@ -35,11 +36,13 @@ public class EcranAddPersonnel extends JDialog{
 	private JComboBox vComboBox;
 	private JPasswordField vPasswordField;
 	private JButton btn_ajouter;
+	private EcranGestionPersonnel  vEcranGestionPersonnel;
+	private EcranAddPersonnel vEcranAddPersonnel;
 
+	public EcranAddPersonnel(EcranGestionPersonnel aEcranGestionPersonnel){
+			vEcranAddPersonnel=this;
+			vEcranGestionPersonnel=aEcranGestionPersonnel;
 
-	public EcranAddPersonnel(){
-			
-			
 			//Définit un titre pour la fenetre
 			this.setTitle("Ajouter un personnel");
 		    //Définit sa taille
@@ -94,6 +97,10 @@ public class EcranAddPersonnel extends JDialog{
 						ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
 						try {
 							vControllerPersonnel.ajouter(getTextFieldNom().getText(), getTextFieldPrenom().getText(), String.valueOf(getPasswordField().getPassword()), getComboBoxRole().getSelectedItem().toString());
+							JDBCTools.closeConnection();
+							
+							vEcranGestionPersonnel.getvTablePersonnel().setModel(new DataModelPersonnel(vControllerPersonnel.selectAll()));
+							vEcranAddPersonnel.setVisible(false);
 						} catch (DALException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -102,7 +109,8 @@ public class EcranAddPersonnel extends JDialog{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
+					JDBCTools.closeConnection();
+
 				}
 			});
     	}
