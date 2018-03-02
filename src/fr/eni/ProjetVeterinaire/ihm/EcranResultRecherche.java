@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 
 public class EcranResultRecherche {
 	private JTextField TFRecherche;
@@ -47,7 +48,7 @@ public class EcranResultRecherche {
 		ResultRecherche.getContentPane().setLayout(null); 
 		
 		JPanel panelRecherche = new JPanel();
-		panelRecherche.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		panelRecherche.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelRecherche.setBounds(10, 11, 464, 51);
 		ResultRecherche.getContentPane().add(panelRecherche);
 		panelRecherche.setLayout(null);
