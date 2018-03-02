@@ -32,7 +32,9 @@ public class EcranAddClient {
 	private JTextField TFCodePostal;
 	private JTextField TFVille;
 
-	public EcranAddClient(){
+	public EcranAddClient(EcranClients aEcranClients){
+		
+		
 			
 			JFrame AddClient = new JFrame();
 			
