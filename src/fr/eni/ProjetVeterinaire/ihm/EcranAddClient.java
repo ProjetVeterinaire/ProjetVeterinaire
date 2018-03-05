@@ -10,6 +10,8 @@ package src.fr.eni.ProjetVeterinaire.ihm;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -23,31 +25,47 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class EcranAddClient {
-	private JTextField TFCode;
-	private JTextField TFAdresse1;
-	private JTextField TFNom;
-	private JTextField TFPrenom;
-	private JTextField TFAdresse2;
-	private JTextField TFCodePostal;
-	private JTextField TFVille;
+import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.bo.Client;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
 
+public class EcranAddClient extends JFrame{
+	
+	private JButton btnValider;
+	private JButton btnAnnuler;
+	private JTextField vTFCode;
+	private JTextField vTFNom;
+	private JTextField vTFPrenom;
+	private JTextField vTFAdresse1;
+	private JTextField vTFAdresse2;
+	private JTextField vTFCodePostal;
+	private JTextField vTFVille;
+	private JTextField vTFNumTel;
+	private JTextField vTFAssurance;
+	private JTextField vTFEmail;
+	private JTextField vTFRemarque;
+	private JTextField vTFArchive;
+	
+	private JLabel vErrorMessage;
+	private EcranAddClient ecranAddClient;
+	
 	public EcranAddClient(EcranClients aEcranClients){
-		
+		ecranAddClient=this;
 		
 			
 			JFrame AddClient = new JFrame();
 			
 			//Définit un titre pour la fenetre
-			AddClient.setTitle("Ajouter un client");
+			this.setTitle("Ajouter un client");
 		    //Définit sa taille
-			AddClient.setSize(300, 380);
+			this.setSize(300, 380);
 		    //Place la fenetre au cntre de l'écran
-			AddClient.setLocationRelativeTo(null);
+			this.setLocationRelativeTo(null);
 		    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-			AddClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			AddClient.setResizable(false);//Bloque le redimensionnement de la page
-			AddClient.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setResizable(false);//Bloque le redimensionnement de la page
+			this.getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
 					FormSpecs.UNRELATED_GAP_COLSPEC,
 					ColumnSpec.decode("98px"),
 					ColumnSpec.decode("56px"),
@@ -76,62 +94,211 @@ public class EcranAddClient {
 			
 			
 			//Creer les boutons et les ajoute au panel
-			JButton btn_Valider=new JButton(new ImageIcon("./ressources/images/BTN_Valider.png"));
-			JButton btn_Annuler=new JButton(new ImageIcon("./ressources/images/BTN_Annuler.png"));
-			panelControleAjoutClient.add(btn_Valider);panelControleAjoutClient.add(btn_Annuler);
 			
+		
+//			JButton btn_Valider=new JButton(new ImageIcon("./ressources/images/BTN_Valider.png"));
+//			JButton btn_Annuler=new JButton(new ImageIcon("./ressources/images/BTN_Annuler.png"));
+//			panelControleAjoutClient.add(btn_Valider);panelControleAjoutClient.add(btn_Annuler);
+//			
 			  
-			AddClient.getContentPane().add(panelControleAjoutClient, "1, 2, 3, 1, left, fill");
+			this.getContentPane().add(panelControleAjoutClient, "1, 2, 3, 1, left, fill");
 			
 			JLabel lblCode = new JLabel("Code");
-			AddClient.getContentPane().add(lblCode, "2, 4, right, center");
-			
-			TFCode = new JTextField();
-			AddClient.getContentPane().add(TFCode, "4, 4, left, top");
-			TFCode.setColumns(10);
-			
+			this.getContentPane().add(lblCode, "2, 4, right, center");
+			this.getContentPane().add(getTFCode(), "4, 4, left, top");
+
 			JLabel lblNom = new JLabel("Nom");
-			AddClient.getContentPane().add(lblNom, "2, 6, right, top");
-			
-			TFNom = new JTextField();
-			AddClient.getContentPane().add(TFNom, "4, 6, left, default");
-			TFNom.setColumns(10);
-			
+			this.getContentPane().add(lblNom, "2, 6, right, top");	
+			this.getContentPane().add(getTFNom(), "4, 6, left, default");
+					
 			JLabel lblPrenom = new JLabel("Prenom");
-			AddClient.getContentPane().add(lblPrenom, "2, 8, right, top");
-			
-			TFPrenom = new JTextField();
-			AddClient.getContentPane().add(TFPrenom, "4, 8, left, default");
-			TFPrenom.setColumns(10);
+			this.getContentPane().add(lblPrenom, "2, 8, right, top");
+			this.getContentPane().add(getTFPrenom(), "4, 8, left, default");
 			
 			JLabel lblAdresse = new JLabel("Adresse");
-			AddClient.getContentPane().add(lblAdresse, "2, 10, right, default");
-			
-			TFAdresse1 = new JTextField();
-			AddClient.getContentPane().add(TFAdresse1, "4, 10, left, default");
-			TFAdresse1.setColumns(10);
-			
-			TFAdresse2 = new JTextField();
-			AddClient.getContentPane().add(TFAdresse2, "4, 12, left, fill");
-			TFAdresse2.setColumns(10);
+			this.getContentPane().add(lblAdresse, "2, 10, right, default");	
+			this.getContentPane().add(getTFAdresse1(), "4, 10, left, default");
+			this.getContentPane().add(getTFAdresse2(), "4, 12, left, fill");
 			
 			JLabel lblCodePostal = new JLabel("Code Postal");
-			AddClient.getContentPane().add(lblCodePostal, "2, 14, right, default");
-			
-			TFCodePostal = new JTextField();
-			AddClient.getContentPane().add(TFCodePostal, "4, 14, left, default");
-			TFCodePostal.setColumns(10);
+			this.getContentPane().add(lblCodePostal, "2, 14, right, default");
+			this.getContentPane().add(getTFCodePostal(), "4, 14, left, default");
 			
 			JLabel lblVille = new JLabel("Ville");
-			AddClient.getContentPane().add(lblVille, "2, 16, right, default");
+			this.getContentPane().add(lblVille, "2, 16, right, default");
+			this.getContentPane().add(getTFVille(), "4, 16, left, default");
 			
-			TFVille = new JTextField();
-			AddClient.getContentPane().add(TFVille, "4, 16, left, default");
-			TFVille.setColumns(10);
-			AddClient.setVisible(true);
+			JLabel lblNumTel = new JLabel("Numéro de téléphone");
+			this.getContentPane().add(lblNumTel, "2, 18, right, default");
+			this.getContentPane().add(getTFNumTel(), "4, 18, left, default");
+			
+			JLabel lblAssurance = new JLabel("Numéro de téléphone");
+			this.getContentPane().add(lblAssurance, "2, 20, right, default");
+			this.getContentPane().add(getTFAssurance(), "4, 20, left, default");
+			
+			JLabel lblEmail = new JLabel("Numéro de téléphone");
+			this.getContentPane().add(lblEmail, "2, 22, right, default");
+			this.getContentPane().add(getTFEmail(), "4, 22, left, default");
+			
+			JLabel lblRemarque = new JLabel("Numéro de téléphone");
+			this.getContentPane().add(lblRemarque, "2, 24, right, default");
+			this.getContentPane().add(getTFRemarque(), "4, 24, left, default");
+			
+			this.setVisible(true);
+			
+			
 			
 			//Donne à la fenetre l'icone de l'application
 			Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
-			AddClient.setIconImage(icone);
+			this.setIconImage(icone);
 	}
+	
+	public JButton getBtnValider(){
+		if (btnValider == null){
+			btnValider = new JButton (new ImageIcon("./ressources/images/BTN_Valider.png"));
+			//Creer le listener ("On click du bouton") pour btnValider
+			btnValider.addActionListener(new ActionListener(){
+				
+				public void actionPerformed(ActionEvent e){
+					try{
+						Client aClient = new Client(0,getTFNom().getText(), getTFPrenom().getText(), getTFAdresse1().getText(), getTFAdresse2().getText(), getTFCodePostal().getText(), getTFVille().getText(), getTFNumTel().getText(),getTFAssurance().getText(), getTFEmail().getText(), getTFRemarque().getText(), false); 
+						if(aClient.getvNomClient()!=null || aClient.getvPrenomClient()!=null){
+							ControllerClient.getInstance().Ajouter(aClient);
+						}else{
+							vErrorMessage.setForeground(Color.red);
+							vErrorMessage.setText("Nom et/ou Prenom du client non renseigné");
+						}
+						
+						
+					}catch(BLLException e1){
+						e1.printStackTrace();
+					} catch (DALException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
+		}
+		return btnValider;
+	}
+	
+	public JButton getBtnAnnuler(){
+		if (btnAnnuler == null){
+			btnAnnuler = new JButton("Annuler");
+			btnAnnuler.addActionListener(new ActionListener(){
+				
+				public void actionPerformed(ActionEvent e){
+					getTFNom().setText("");
+					getTFPrenom().setText("");
+					getTFAdresse1().setText("");
+					getTFAdresse2().setText("");
+					getTFCodePostal().setText("");
+					getTFVille().setText("");
+					getTFNumTel().setText("");
+					getTFAssurance().setText("");
+					getTFEmail().setText("");
+					getTFRemarque().setText("");
+					
+				}
+			});
+		}
+		return btnAnnuler;
+	}
+	
+	public JTextField getTFCode(){
+		if (vTFCode== null){
+			vTFCode= new JTextField();
+			vTFCode.setColumns(10);;	
+			
+    	}
+    	return vTFCode;
+	}
+	
+	public JTextField getTFNom(){
+		if (vTFNom== null){
+			vTFNom= new JTextField();
+			vTFNom.setColumns(10);;	
+			
+    	}
+    	return vTFNom;
+	}
+	
+	public JTextField getTFPrenom(){
+		if (vTFPrenom== null){
+			vTFPrenom= new JTextField();
+			vTFPrenom.setColumns(10);;	
+			
+    	}
+    	return vTFPrenom;
+	}
+	
+	public JTextField getTFAdresse1(){
+		if (vTFAdresse1== null){
+			vTFAdresse1= new JTextField();
+			vTFAdresse1.setColumns(10);;	
+			
+    	}
+    	return vTFAdresse1;
+	}
+	
+	public JTextField getTFAdresse2(){
+		if (vTFAdresse2== null){
+			vTFAdresse2= new JTextField();
+			vTFAdresse2.setColumns(10);;	
+			
+    	}
+    	return vTFAdresse2;
+	}
+	
+	public JTextField getTFCodePostal(){
+		if (vTFCodePostal== null){
+			vTFCodePostal= new JTextField();
+			vTFCodePostal.setColumns(10);;	
+			
+    	}
+    	return vTFCodePostal;
+	}
+	
+	public JTextField getTFVille(){
+		if (vTFVille== null){
+			vTFVille= new JTextField();
+			vTFVille.setColumns(10);;	
+			
+    	}
+    	return vTFVille;
+	}
+	
+	public JTextField getTFNumTel(){
+		if (vTFNumTel== null){
+			vTFNumTel= new JTextField();
+			vTFNumTel.setColumns(10);
+		}
+		return vTFNumTel;
+	}
+	
+	public JTextField getTFAssurance(){
+		if (vTFAssurance== null){
+			vTFAssurance= new JTextField();
+			vTFAssurance.setColumns(10);
+		}
+		return vTFAssurance;
+	}
+	
+	public JTextField getTFEmail(){
+		if (vTFEmail== null){
+			vTFEmail= new JTextField();
+			vTFEmail.setColumns(10);
+		}
+		return vTFEmail;
+	}
+	
+	public JTextField getTFRemarque(){
+		if (vTFRemarque== null){
+			vTFRemarque= new JTextField();
+			vTFRemarque.setColumns(10);
+		}
+		return vTFRemarque;
+	}
+	
 }
+
