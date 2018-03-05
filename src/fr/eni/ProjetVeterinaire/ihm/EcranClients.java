@@ -13,6 +13,9 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
+
 import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
@@ -185,18 +188,23 @@ public class EcranClients {
 		Clients.setIconImage(icone);
 	}
 	
-	private JButton getBtnRechercher(){
-		if (btnRechercher == null){
-			btnRechercher = new JButton (new ImageIcon("./ressources/images/BTN_Recherche.png"));
-			btnRechercher.addActionListener(new ActionListener(){
-				
-				public void actionPerformed(ActionEvent e){
-					
-				}
-			});
-		}
-		
-		
-		return btnAjouterAnimal;
-	}
+//	private JButton getBtnRechercher(){
+//		if (btnRechercher == null){
+//			btnRechercher = new JButton (new ImageIcon("./ressources/images/BTN_Recherche.png"));
+//			btnRechercher.addActionListener(new ActionListener(){
+//				
+//				public void actionPerformed(ActionEvent e){
+//					try{
+//						ControllerClient vControllerClient = ControllerClient.getInstance();
+//						vControllerClient.selectByNom(getNomClient());
+//					}
+//						
+//					
+//				}
+//			});
+//		}
+//		
+//		
+//		return btnAjouterAnimal;
+//	}
 }

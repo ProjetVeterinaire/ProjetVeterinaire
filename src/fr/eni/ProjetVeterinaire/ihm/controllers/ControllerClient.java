@@ -52,7 +52,14 @@ public class ControllerClient {
 		vClientsManager.Update(aClient);
 		
 	}
-	
+	public List<Client> selectByNom(String NomClient) throws BLLException, DALException{
+		vClientsManager = ClientsManager.getInstance();
+		
+		List<Client> vClientByNom = vClientsManager.SelectByNom(NomClient);
+		
+		return vClientByNom;
+		
+	}
 	
 	
 	
