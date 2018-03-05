@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
 
 public class EcranAgenda {
 
@@ -21,14 +23,18 @@ public class EcranAgenda {
 		//Définit un titre pour la fenetre
 		Agenda.setTitle("Agenda");
 	    //Définit sa taille
-		Agenda.setSize(350, 215);
+		Agenda.setSize(600, 450);
 	    //Place la fenetre au cntre de l'écran
 		Agenda.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
 		Agenda.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 		
-		
+		JPanel panelAgendaDe = new JPanel();
+		panelAgendaDe.setBorder(new TitledBorder(null, "De", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelAgendaDe.setBounds(10, 36, 221, 133);
+		Agenda.getContentPane().add(panelAgendaDe);
+		panelAgendaDe.setLayout(null);
 		
 		
 		//Set la frame visible   
