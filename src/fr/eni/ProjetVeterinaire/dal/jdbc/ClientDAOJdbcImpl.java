@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import src.fr.eni.ProjetVeterinaire.bo.Client;
 import src.fr.eni.ProjetVeterinaire.dal.ClientDAO;
@@ -22,6 +23,7 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 	private static final String sqlInsert ="insert into Clients(NomClient,PrenomClient,Adresse1,Adresse2,CodePostal,Ville,NumTel,Assurance,Email,Remarque,Archive) values(?,?,?,?,?,?,?,?,?,?,0);";
 	private static final String sqlArchiver="update Clients set Archive=1 where CodeClient=?";
 	private static final String sqlUpdate="update Clients set NomClient=?,PrenomClient=?,Adresse1=?,Adresse2=?,CodePostal=?,Ville=?,NumTel=?,Assurance=?,Email=?,Remarque=?,Archive=? where CodeClient=?";
+	private static final String sqlSelectByNom="Select * from Clients where nom=?";
 	
 	public ArrayList<Client> SelectAll() throws DALException {
 			Connection cnx = null;
@@ -147,6 +149,47 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 			throw new DALException("Update Failed - Client" + aClient.getvCodeClient());
 		}
 	}
+
+
+	@Override
+	
+	public ArrayList<Client> SelectByNom(String NomClient) throws DALException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ArrayList<Client> vListeByNom = new ArrayList<Client>();
+		Client client = null;
+		ResultSet rs = null;
+		try{
+			cnx = JDBCTools.getConnection();
+			rqt=cnx.prepareStatement(sqlSelectByNom);
+			rqt.setString(1, NomClient);
+			rs = rqt.executeQuery();
+			
+			while(rs.next()){
+				client = new Client(rs.getInt("CodeClient"),
+						rs.getString("NomClient"),
+						rs.getString("PrenomClient"),
+						rs.getString("Adresse1"),
+						rs.getString("Adresse2"),
+						rs.getString("CodePostal"),
+						rs.getString("Ville"),
+						rs.getString("NumTel"),
+						rs.getString("Assurance"),
+						rs.getString("Email"),
+						rs.getString("Remarque"),
+						rs.getBoolean("Archive")
+						);
+				vListeByNom.add(client);
+				}
+			
+			
+			}catch(SQLException e){
+				throw new DALException("archivage failed - Client ="+  NomClient , e);
+			}
+		return vListeByNom;
+		}
+	}
+
 	 
 
-}
+

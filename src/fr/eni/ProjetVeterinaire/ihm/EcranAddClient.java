@@ -28,6 +28,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Client;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
 
 public class EcranAddClient extends JFrame{
@@ -91,15 +92,16 @@ public class EcranAddClient extends JFrame{
 			JPanel panelControleAjoutClient = new JPanel();
 			panelControleAjoutClient.setBounds(10,10, 270,70);
 			panelControleAjoutClient.setBorder(BorderFactory.createLineBorder(Color.black));//donne les bordurs au panel
+			panelControleAjoutClient.add(getBtnValider());
+			panelControleAjoutClient.add(getBtnAnnuler());
 			
-			
-			//Creer les boutons et les ajoute au panel
+			//ajouteles boutons au panel
 			
 		
 //			JButton btn_Valider=new JButton(new ImageIcon("./ressources/images/BTN_Valider.png"));
 //			JButton btn_Annuler=new JButton(new ImageIcon("./ressources/images/BTN_Annuler.png"));
-//			panelControleAjoutClient.add(btn_Valider);panelControleAjoutClient.add(btn_Annuler);
-//			
+			
+			
 			  
 			this.getContentPane().add(panelControleAjoutClient, "1, 2, 3, 1, left, fill");
 			
@@ -161,9 +163,11 @@ public class EcranAddClient extends JFrame{
 				
 				public void actionPerformed(ActionEvent e){
 					try{
+						
 						Client aClient = new Client(0,getTFNom().getText(), getTFPrenom().getText(), getTFAdresse1().getText(), getTFAdresse2().getText(), getTFCodePostal().getText(), getTFVille().getText(), getTFNumTel().getText(),getTFAssurance().getText(), getTFEmail().getText(), getTFRemarque().getText(), false); 
 						if(aClient.getvNomClient()!=null || aClient.getvPrenomClient()!=null){
 							ControllerClient.getInstance().Ajouter(aClient);
+							
 						}else{
 							vErrorMessage.setForeground(Color.red);
 							vErrorMessage.setText("Nom et/ou Prenom du client non renseigné");
@@ -175,7 +179,9 @@ public class EcranAddClient extends JFrame{
 					} catch (DALException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
+					}finally{
+						JDBCTools.closeConnection();
+					}	
 				}
 			});
 		}

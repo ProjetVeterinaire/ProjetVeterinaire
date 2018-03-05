@@ -20,4 +20,5 @@ public interface ClientDAO {
 	
 	public void Update(Client aClient) throws DALException;
 
+	public List<Client> SelectByNom(String NomClient) throws DALException;
 }

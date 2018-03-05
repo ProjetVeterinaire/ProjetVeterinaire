@@ -27,6 +27,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 
 public class EcranClients {
+	
+	private JButton btnRechercher;
+	private JButton btnAjouterClient;
+	private JButton btnAjouterAnimal;
+	private JButton btnSupprimerClient;
+	private JButton btnSupprimerAnimal;
+	private JButton btnValider;
+	private JButton btnAnnuler;
+	private JButton btnEditerAnimal;
 	private JTextField TFAdresse1;
 	private JTextField TFAdresse2;
 	private JTextField TFPrenom;
@@ -174,5 +183,20 @@ public class EcranClients {
 		//Donne à la fenetre l'icone de l'application
 		Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
 		Clients.setIconImage(icone);
+	}
+	
+	private JButton getBtnRechercher(){
+		if (btnRechercher == null){
+			btnRechercher = new JButton (new ImageIcon("./ressources/images/BTN_Recherche.png"));
+			btnRechercher.addActionListener(new ActionListener(){
+				
+				public void actionPerformed(ActionEvent e){
+					
+				}
+			});
+		}
+		
+		
+		return btnAjouterAnimal;
 	}
 }
