@@ -7,30 +7,29 @@
 
 package src.fr.eni.ProjetVeterinaire.ihm;
 
+import java.awt.Choice;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
 import javax.swing.border.TitledBorder;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Animal;
+import src.fr.eni.ProjetVeterinaire.bo.Race;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerAnimal;
-import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranAddPersonnel;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import java.awt.Choice;
-import java.awt.Label;
 
 public class EcranAnimaux extends JFrame {
 	//JTextFields
@@ -63,7 +62,7 @@ public class EcranAnimaux extends JFrame {
 	private Choice vChoiceSexe;
 	private Choice vChoiceRace;
 	
-	public EcranAnimaux(){
+	public EcranAnimaux() throws BLLException, DALException{
 		
 		vEcranAnimaux=this;
 		//Définit un titre pour la fenetre
@@ -139,7 +138,16 @@ public class EcranAnimaux extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					ControllerAnimal vControllerAnimal;
-					Animal vAnimal = new Animal(0,getvTextFieldNomAnimal().getText(),getvChoiceSexe().getSelectedItem(),getvTextFieldCouleur().getText(),getvChoiceRace().getSelectedItem(),getvChoiceEspece().getSelectedItem(), 1, getvTextFieldTatouage().getText(),"",false );
+					Animal vAnimal = null;
+					try {
+						vAnimal = new Animal(0,getvTextFieldNomAnimal().getText(),getvChoiceSexe().getSelectedItem(),getvTextFieldCouleur().getText(),getvChoiceRace().getSelectedItem(),getvChoiceEspece().getSelectedItem(), 1, getvTextFieldTatouage().getText(),"",false );
+					} catch (BLLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					} catch (DALException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 					try {
 						vControllerAnimal = ControllerAnimal.getInstance();
 						vControllerAnimal.ajouter(vAnimal);
@@ -272,12 +280,16 @@ public class EcranAnimaux extends JFrame {
 	}
 	//GETTERS CHOICES
 
-	public Choice getvChoiceEspece(){
+	public Choice getvChoiceEspece() throws BLLException, DALException{
 		if(vChoiceEspece==null){
-			
+			ControllerAnimal vControllerAnimal = ControllerAnimal.getInstance();
+			List<Race> vListeRaces =vControllerAnimal.selectRaces();
+			JDBCTools.closeConnection();
 			vChoiceEspece = new Choice();
 			vChoiceEspece.setBounds(84, 198, 109, 20);
-			vChoiceEspece.add("Chien");vChoiceEspece.add("Chat");vChoiceEspece.add("Rat");vChoiceEspece.add("Lapin");vChoiceEspece.add("Diplodocus");
+			for(Race vRace : vListeRaces){
+				vChoiceEspece.add(vRace.getvEspece().toString());
+			}
 			
 		}
 		return vChoiceEspece;
@@ -291,11 +303,16 @@ public class EcranAnimaux extends JFrame {
 		}
 		return vChoiceSexe;
 	}
-	public Choice getvChoiceRace(){
+	public Choice getvChoiceRace() throws BLLException, DALException{
 		if(vChoiceRace==null){
 			vChoiceRace = new Choice();
 			vChoiceRace.setBounds(315, 198, 109, 20);
-			vChoiceRace.add("Siamois");vChoiceRace.add("Saint-Bernard");vChoiceRace.add("Main-Coon");
+			ControllerAnimal vControllerAnimal = ControllerAnimal.getInstance();
+			List<Race> vListeRaces =vControllerAnimal.selectRaces();
+			JDBCTools.closeConnection();
+			for(Race vRace : vListeRaces){
+				vChoiceRace.add(vRace.getvRace().toString());
+			}
 		}
 		return vChoiceRace;
 	}

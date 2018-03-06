@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranGestionPersonnel;
@@ -92,13 +93,13 @@ public class EcranLogin extends JFrame{
 					try {
 						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),String.valueOf(getTFPassword().getPassword()));
 						if(vPersonnel!=null){
-							EcranGestionPersonnel CliniqueVeto = new EcranGestionPersonnel(vPersonnel);
+							EcranAnimaux CliniqueVeto = new EcranAnimaux();
 						    setVisible(false);
 						}else{
 							vErrorMessage.setForeground(Color.red);
 							vErrorMessage.setText("Couple Login/Mdp invalide");
 						}
-					} catch (BLLException e1) {
+					} catch (BLLException | DALException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} 

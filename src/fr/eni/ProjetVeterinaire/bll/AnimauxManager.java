@@ -4,6 +4,7 @@ import java.util.List;
 
 import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Client;
+import src.fr.eni.ProjetVeterinaire.bo.Race;
 
 /**
  * Author : Florian CHEVALIER (02/03/2018)
@@ -48,6 +49,17 @@ public class AnimauxManager {
 		}
 		
 		return animal;
+	}
+	public static List<Race> SelectRaces() throws DALException{
+		List<Race> races = null;
+		try{
+			races = daoAnimaux.SelectRaces();
+		}catch(DALException e){
+			e.printStackTrace();
+			throw new DALException("Probleme lors du select des races d'animaux");
+		}
+		
+		return races;
 	}
 	public void Ajouter(Animal aAnimal)throws BLLException{
 		try{

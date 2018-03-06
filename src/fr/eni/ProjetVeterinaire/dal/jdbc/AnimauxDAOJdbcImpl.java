@@ -20,7 +20,7 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 	private static final String sqlAjouter ="insert into Animaux(NomAnimal,Sexe,Couleur,Race,Espece,CodeClient,Tatouage,Antecedents,Archive) values(?,?,?,?,?,?,?,?,'false');";
 	private static final String sqlArchiver="update Animaux set Archive=1 where CodeAnimal=?";
 	private static final String sqlUpdate ="update Animaux set NomAnimal=?,Sexe=?,Couleur=?,Race=?,Espece=?,CodeClient=?,Tatouage=?,Antecedents=?,Archive=? where CodeAnimal=?";
-	
+	private static final String sqlRaces = "select * from Races";
 	public ArrayList<Animal> SelectAll() throws DALException {
 		Connection cnx = null;
 		Statement rqt = null;
@@ -68,7 +68,46 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 		}
 		return vListeAnimaux;
 	}
+	public ArrayList<Race> SelectRaces() throws DALException {
+		Connection cnx = null;
+		Statement rqt = null;
+		ResultSet rs = null; 
+		Race race = null; 
+		ArrayList<Race> vListeRaces = new ArrayList<Race>();
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt=cnx.createStatement();
+			rs = rqt.executeQuery(sqlRaces);
+		
+			while(rs.next()){
+				race = new Race(
+						rs.getString("Race"),
+						rs.getString("Espece")
+						);
+				vListeRaces.add(race);
+				}
+			}
 
+		catch (SQLException e) {
+			throw new DALException("selectRaces failed :" , e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return vListeRaces;
+	}
 
 	
 	public void Ajouter(Animal aAnimal) throws DALException {

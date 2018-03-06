@@ -1,8 +1,10 @@
 package src.fr.eni.ProjetVeterinaire.dal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import src.fr.eni.ProjetVeterinaire.bo.Animal;
+import src.fr.eni.ProjetVeterinaire.bo.Race;
 
 public interface AnimauxDAO {
 	
@@ -13,4 +15,6 @@ public interface AnimauxDAO {
 	public void Archiver(int CodeAnimal) throws DALException;
 	
 	public void Update(Animal animal) throws DALException;
+	
+	public ArrayList<Race> SelectRaces()throws DALException;
 }
