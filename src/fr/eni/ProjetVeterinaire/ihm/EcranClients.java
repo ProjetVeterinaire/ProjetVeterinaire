@@ -59,7 +59,7 @@ public class EcranClients {
 	    //Place la fenetre au cntre de l'écran
 		Clients.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-		Clients.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Clients.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    
 		
 		

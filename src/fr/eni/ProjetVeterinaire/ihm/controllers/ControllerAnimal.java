@@ -59,4 +59,13 @@ public class ControllerAnimal {
 		vAnimauxManager.Update(aAnimal);
 		
 	}
+	//methode de selection des animaux par IdClient
+		public List<Animal> selectIdClient(int aIdClient) throws BLLException, DALException{
+			vAnimauxManager = AnimauxManager.getInstance();
+
+			List<Animal> vAnimal = AnimauxManager.SelectByIdClient(aIdClient);
+
+			return vAnimal;
+			
+		}
 } 

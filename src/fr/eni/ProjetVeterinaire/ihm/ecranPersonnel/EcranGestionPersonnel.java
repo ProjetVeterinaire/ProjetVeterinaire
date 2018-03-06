@@ -77,33 +77,7 @@ public class EcranGestionPersonnel extends JFrame{
 		
 		
 		
-        
-//        ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
-//        List<Personnel> vListePersonnels = vControllerPersonnel.selectAll(); 
-//        for(int i =0; i<vListePersonnels.size();i++){
-//        	Personnel vPersonneli = vListePersonnels.get(i);
-//        	if(!vPersonneli.isvArchive()){
-//        		vLabelNomPersonneli=new JLabel(vPersonneli.getvNom());
-//            	vLabelRolei=new JLabel(vPersonneli.getvRole());
-//            	vLabelPasswordi=new JLabel(vPersonneli.getvMotDePasse());
-//            	vRadioSelecti=new JRadioButton();
-//            	
-//
-//            	gbc.gridy=i;
-//            	gbc.gridx=0;
-//            	userList.add(vLabelNomPersonneli,gbc);
-//            	gbc.gridx=1;
-//        		gbc.insets = new Insets(0,150,0,0);
-//        		userList.add(vLabelRolei,gbc);
-//            	gbc.gridx=2;
-//        		gbc.insets = new Insets(0,20,0,0);
-//        		userList.add(vLabelPasswordi,gbc);
-//            	gbc.gridx=3;
-//        		gbc.insets = new Insets(0,10,0,0);
-//        	
-//
-//        	}
-//        }
+
 
 		vPanel.add(getPanelBTN());
 		vJScrollPane = new JScrollPane(getvTablePersonnel());

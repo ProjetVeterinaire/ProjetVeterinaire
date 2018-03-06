@@ -72,7 +72,7 @@ public class EcranAnimaux extends JFrame {
 	    //Place la fenetre au cntre de l'écran
 		this.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    
 		//Set la frame visible   
 		this.getContentPane().setLayout(null); 

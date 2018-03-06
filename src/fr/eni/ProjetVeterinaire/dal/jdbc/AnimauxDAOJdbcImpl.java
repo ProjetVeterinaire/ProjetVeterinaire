@@ -4,7 +4,6 @@ package src.fr.eni.ProjetVeterinaire.dal.jdbc;
  * Author : Florian CHEVALIER (02/03/2018)
  * **/
 
-import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,6 +20,8 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 	private static final String sqlArchiver="update Animaux set Archive=1 where CodeAnimal=?";
 	private static final String sqlUpdate ="update Animaux set NomAnimal=?,Sexe=?,Couleur=?,Race=?,Espece=?,CodeClient=?,Tatouage=?,Antecedents=?,Archive=? where CodeAnimal=?";
 	private static final String sqlRaces = "select * from Races";
+	private static final String sqlSelectByIdClient = "select * from Animaux where CodeClient=?";
+
 	public ArrayList<Animal> SelectAll() throws DALException {
 		Connection cnx = null;
 		Statement rqt = null;
@@ -40,7 +41,7 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 						rs.getString("Race"),
 						rs.getString("Espece"),
 						rs.getInt("CodeClient"),
-						rs.getString("Tatoutage"),
+						rs.getString("Tatouage"),
 						rs.getString("Antecedents"),
 						rs.getBoolean("Archive")
 						);
@@ -113,8 +114,6 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 	public void Ajouter(Animal aAnimal) throws DALException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
-		ResultSet rs;
-		Personnel personnel = null;
 		String vRequete;
 		String vSexe = null;
 		try {
@@ -188,6 +187,56 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 		}catch(SQLException e){
 			throw new DALException("Update Failed - Animal" + aAnimal.getvCodeAnimal());
 		}
+	}
+	
+	@Override
+	public ArrayList<Animal> SelectByIdClient(int aIdClient) throws DALException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null; 
+		Animal animal = null; 
+		ArrayList<Animal> vListeAnimaux = new ArrayList<Animal>();
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(sqlSelectByIdClient);
+			rqt.setInt(1, aIdClient);
+			rs = rqt.executeQuery();
+
+			while(rs.next()){
+				animal = new Animal(rs.getInt("CodeAnimal"),
+						rs.getString("NomAnimal"),
+						rs.getString("Sexe"),
+						rs.getString("Couleur"),
+						rs.getString("Race"),
+						rs.getString("Espece"),
+						rs.getInt("CodeClient"),
+						rs.getString("Tatouage"),
+						rs.getString("Antecedents"),
+						rs.getBoolean("Archive")
+						);
+				vListeAnimaux.add(animal);
+				}
+			}
+
+		catch (SQLException e) {
+			throw new DALException("selectByIdClient failed :" , e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return vListeAnimaux;
 	}
 	
 	

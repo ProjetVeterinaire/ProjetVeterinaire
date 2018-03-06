@@ -93,7 +93,7 @@ public class EcranLogin extends JFrame{
 					try {
 						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),String.valueOf(getTFPassword().getPassword()));
 						if(vPersonnel!=null){
-							EcranAnimaux CliniqueVeto = new EcranAnimaux();
+							EcranPriseRDV CliniqueVeto = new EcranPriseRDV();
 						    setVisible(false);
 						}else{
 							vErrorMessage.setForeground(Color.red);

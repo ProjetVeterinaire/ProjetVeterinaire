@@ -30,6 +30,7 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	private static final String sqlAjouter ="insert into Personnels (Nom, MotPasse, Role,Archive) values (?,?,?,0)";
 	private static final String sqlArchiver ="update Personnels set Archive='1' where nom = ?";
 	private static final String sqlSelectAllSansRdv = "Select * from Personnels where Archive=0 and CodePers not in(Select CodeVeto from Agendas a join Personnels p on a.CodeVeto=p.CodePers); ";
+	private static final String sqlSelectVeterinaires = "Select * from Personnels where Role='Vet'";
 	
 	public ArrayList<Personnel> selectAll() throws DALException {
 			Connection cnx = null;
@@ -184,6 +185,47 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		return vListePersonnels;
 	}
 	
-	
+	public ArrayList<Personnel> selectVeterinaires() throws DALException {
+		Connection cnx = null;
+		Statement rqt = null;
+		ResultSet rs = null; 
+		Personnel personnel = null; 
+		ArrayList<Personnel> vListePersonnels = new ArrayList<Personnel>();
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt=cnx.createStatement();
+			rs = rqt.executeQuery(sqlSelectVeterinaires);
+		
+			while(rs.next()){
+				personnel = new Personnel(rs.getInt("CodePers"),
+						rs.getString("Nom"),
+						rs.getString("MotPasse"),
+						rs.getString("Role"),
+						rs.getBoolean("Archive")
+						);
+				vListePersonnels.add(personnel);
+				}
+			}
+
+		catch (SQLException e) {
+			throw new DALException("selectAll failed :" , e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return vListePersonnels;
+	}
 	
 }

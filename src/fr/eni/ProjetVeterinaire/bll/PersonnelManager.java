@@ -89,4 +89,16 @@ a	prénom et profil de l’employé et lui affecter un mot de passe.*/
 		daoPersonnel.reinitialiser(aNom, aNouveauMotDePasse);
 	}
 
+
+	//Retourne tous les veterinaires
+	public ArrayList<Personnel> selectVeterinaires() throws BLLException{
+		ArrayList<Personnel> personnel = null;
+		try{
+			personnel = daoPersonnel.selectVeterinaires();
+		}catch(DALException e){
+			e.printStackTrace();
+			throw new BLLException("Probleme lors du select all des veterinaires		");
+		}
+		return personnel;
+	}
 }

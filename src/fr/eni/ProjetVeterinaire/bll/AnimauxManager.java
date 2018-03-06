@@ -68,4 +68,15 @@ public class AnimauxManager {
 			throw new BLLException("Echec de l'ajout de l'animal ");
 		}
 	}
+	public static List<Animal> SelectByIdClient(int aIdClient) throws DALException{
+		List<Animal> animal = null;
+		try{
+			animal = daoAnimaux.SelectByIdClient(aIdClient);
+		}catch(DALException e){
+			e.printStackTrace();
+			throw new DALException("Probleme lors du select par Id Client d'animaux");
+		}
+		
+		return animal;
+	}
 }

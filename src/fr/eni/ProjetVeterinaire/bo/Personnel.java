@@ -52,8 +52,7 @@ public class Personnel {
 	
 	@Override
 	public String toString() {
-		return "Personnel [Nom=" + getvNom() + ", Mot De Passe=" + getvMotDePasse() + ", Role="
-				+ getvRole() + ", Archive=" + isvArchive() + ", Code Personnel=" + getvCodePers() + "]";
+		return getvNom() ;
 	}
 	
 }

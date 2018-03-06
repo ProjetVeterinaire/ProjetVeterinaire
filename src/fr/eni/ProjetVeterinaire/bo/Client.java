@@ -132,8 +132,7 @@ public class Client {
 	}
 
 	public String toString(){
-		return "Code client: "+getvCodeClient()+"\nNom Client: "+getvNomClient()+"\nPrenom Client: "+getvPrenomClient()+"\nAdresse 1: "+getvAdresse1()+"\nAdresse2: "+getvAdresse2()+"\nCode Postal: "+
-				getvCode_postal()+"\nVille: "+getvVille()+"\nNumTel: "+getvNumTel()+"\nAssurance: "+getvAssurance()+"\nEmail: "+getvEmail()+"\nRemarque: "+getvRemarque()+"\nArchive: "+isvArchive();
+		return getvNomClient();
 	}
 
 

@@ -107,6 +107,11 @@ public class Animal {
 	public void setvArchive(boolean vArchive) {
 		this.vArchive = vArchive;
 	}
+
+	@Override
+	public String toString() {
+		return vNomAnimal;
+	}
 	
 	
 	

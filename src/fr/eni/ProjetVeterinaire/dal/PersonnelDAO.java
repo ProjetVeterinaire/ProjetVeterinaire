@@ -19,4 +19,7 @@ public interface PersonnelDAO {
 	public  ArrayList<Personnel> selectAllSansRdv() throws DALException;	
 
 	public int reinitialiser(String aNom, String aNouveauMotDePasse) throws DALException; 
+
+	public ArrayList<Personnel> selectVeterinaires() throws DALException;
+
 }

@@ -9,6 +9,10 @@ package src.fr.eni.ProjetVeterinaire.ihm;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +21,17 @@ import javax.swing.border.TitledBorder;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+
+import src.fr.eni.ProjetVeterinaire.bll.AnimauxManager;
+import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.bll.ClientsManager;
+import src.fr.eni.ProjetVeterinaire.bll.PersonnelManager;
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
+import src.fr.eni.ProjetVeterinaire.bo.Client;
+import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.DateLabelFormatter;
 import java.awt.Color;
 import java.awt.Component;
@@ -25,7 +40,7 @@ import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import java.awt.Choice;
+import javax.swing.JComboBox;
 import java.awt.Label;
 
 public class EcranPriseRDV extends JFrame{
@@ -55,12 +70,12 @@ public class EcranPriseRDV extends JFrame{
 	private JButton vBtnValider;
 	private JButton vBtnSupprimer;
 
-	//Choices
-	private Choice vChoiceVeterinaire;
-	private Choice vChoiceClient;
-	private Choice vChoiceAnimal;
-	private Choice vChoiceHeure;
-	private Choice vChoiceMinutes;
+	//JComboBoxs
+	private JComboBox<Personnel> vJComboBoxVeterinaire;
+	private JComboBox<Client> vJComboBoxClient;
+	private JComboBox<Animal> vJComboBoxAnimal;
+	private JComboBox<Integer> vJComboBoxHeure;
+	private JComboBox<Integer> vJComboBoxMinutes;
 	
 	//UtilDateModel
 	private UtilDateModel vModel;
@@ -75,7 +90,7 @@ public class EcranPriseRDV extends JFrame{
 	private JScrollPane vScrollPane;
 	
 	
-	public EcranPriseRDV(){
+	public EcranPriseRDV() throws BLLException, DALException{
 		
 		vEcranPriseRDV =this;
 		
@@ -113,7 +128,7 @@ public class EcranPriseRDV extends JFrame{
 	}
 
 
-	private JPanel getvPanelClient() {
+	private JPanel getvPanelClient() throws BLLException, DALException {
 		if(vPanelClient==null){
 			vPanelClient = new JPanel();
 			vPanelClient.setBorder(new TitledBorder(null, "Pour", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -122,8 +137,8 @@ public class EcranPriseRDV extends JFrame{
 			vPanelClient.add(getvLblAnimal());
 			vPanelClient.add(getvBtnPlusClient());
 			vPanelClient.add(getvBtnPlusAnimal());
-			vPanelClient.add(getvChoiceClient());
-			vPanelClient.add(getvChoiceAnimal());
+			vPanelClient.add(getvJComboBoxClient());
+			vPanelClient.add(getvJComboBoxAnimal());
 			vPanelClient.setLayout(null);
 
 		}
@@ -144,26 +159,66 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vLblClient;
 	}
-	private Choice getvChoiceClient() {
-		if(vChoiceClient==null){
-			vChoiceClient = new Choice();
-			vChoiceClient.setBounds(31, 47, 125, 20);
-			vChoiceClient.add("Bob Marley");
+	private JComboBox<Client> getvJComboBoxClient() throws BLLException, DALException {
+		if(vJComboBoxClient==null){
+			
+			vJComboBoxClient = new JComboBox();
+			vJComboBoxClient.setBounds(31, 47, 125, 20);
+			ClientsManager vClientManager = new ClientsManager();
+			List<Client> vListeClients = vClientManager.SelectAll();
+			for(Client vClient : vListeClients){
+				vJComboBoxClient.addItem(vClient);
+			}
+			vJComboBoxClient.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+					try {
+						AnimauxManager vAnimauxManager = new AnimauxManager();
+						Client vClient =(Client)vJComboBoxClient.getSelectedItem();
+						List<Animal> vListeAnimaux = vAnimauxManager.SelectByIdClient(vClient.getvCodeClient());
+						vJComboBoxAnimal.removeAllItems();
+						for(Animal vAnimal : vListeAnimaux){
+							vJComboBoxAnimal.addItem(vAnimal);
+						}
+					} catch (DALException | BLLException e1) {
+						
+						e1.printStackTrace();
+					}
+					finally{
+						JDBCTools.closeConnection();
+					}
+				}
+			});
 		}
-		return vChoiceClient;
+		return vJComboBoxClient;
 	}
-	private Choice getvChoiceAnimal() {
-		if(vChoiceAnimal==null){
-			vChoiceAnimal= new Choice();
-			vChoiceAnimal.setBounds(31, 92, 125, 20);
-			vChoiceAnimal.add("Cheshire");
+	private JComboBox getvJComboBoxAnimal() throws BLLException, DALException {
+		if(vJComboBoxAnimal==null){
+			vJComboBoxAnimal= new JComboBox();
+			vJComboBoxAnimal.setBounds(31, 92, 125, 20);
+			AnimauxManager vAnimauxManager = new AnimauxManager();
+			Client vClient =(Client)vJComboBoxClient.getSelectedItem();
+			List<Animal> vListeAnimaux = vAnimauxManager.SelectByIdClient(vClient.getvCodeClient());
+			JDBCTools.closeConnection();
+			for(Animal vAnimal : vListeAnimaux){
+				vJComboBoxAnimal.addItem(vAnimal);
+			}
 		}
-		return vChoiceAnimal;
+		return vJComboBoxAnimal;
 	}
 	private JButton getvBtnPlusClient() {
 		if(vBtnPlusClient==null){
 			vBtnPlusClient = new JButton(new ImageIcon("./ressources/images/BTN_Plus_mini.png"));
 			vBtnPlusClient.setBounds(162, 41, 35, 35);
+			vBtnPlusClient.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					EcranClients vEcranClients = new EcranClients();
+				}
+			});
 		}
 		return vBtnPlusClient;
 	}
@@ -172,17 +227,28 @@ public class EcranPriseRDV extends JFrame{
 		if(vBtnPlusAnimal==null){
 			vBtnPlusAnimal = new JButton(new ImageIcon("./ressources/images/BTN_Plus_mini.png"));
 			vBtnPlusAnimal.setBounds(162, 87, 35, 35);
+			vBtnPlusAnimal.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						EcranAnimaux vEcranAnimaux = new EcranAnimaux();
+					} catch (BLLException | DALException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
 		}
 		return vBtnPlusAnimal;
 	}
 
-	private JPanel getvPanelVeto() {
+	private JPanel getvPanelVeto() throws BLLException {
 		if(vPanelVeto==null){
 			vPanelVeto = new JPanel();
 			vPanelVeto.setBorder(new TitledBorder(null, "Par", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 			vPanelVeto.setBounds(255, 36, 221, 133);
 			vPanelVeto.add(getvLblVeterinaire());
-			vPanelVeto.add(getvChoiceVeterinaire());
+			vPanelVeto.add(getvJComboBoxVeterinaire());
 			vPanelVeto.setLayout(null);
 		}
 		return vPanelVeto;
@@ -194,21 +260,27 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vLblVeterinaire;
 	}
-	private Choice getvChoiceVeterinaire() {
-		if(vChoiceVeterinaire==null){
-			vChoiceVeterinaire = new Choice();
-			vChoiceVeterinaire.setBounds(45, 69, 133, 20);
-			vChoiceVeterinaire.add("JJ Goldman");
+	private JComboBox getvJComboBoxVeterinaire() throws BLLException {
+		if(vJComboBoxVeterinaire==null){
+			vJComboBoxVeterinaire = new JComboBox();
+			vJComboBoxVeterinaire.setBounds(45, 69, 133, 20);
+			PersonnelManager vPersonnelManager = new PersonnelManager();
+			Client vClient =(Client)vJComboBoxClient.getSelectedItem();
+			List<Personnel> vListeVeterinaires = vPersonnelManager.selectVeterinaires();
+			JDBCTools.closeConnection();
+			for(Personnel vVeterinaire : vListeVeterinaires){
+				vJComboBoxVeterinaire.addItem(vVeterinaire);
+			}
 		}
-		return vChoiceVeterinaire;
+		return vJComboBoxVeterinaire;
 	}
 	private JPanel getvPanelRDV() {
 		if(vPanelRDV==null){
 			vPanelRDV= new JPanel();
 			vPanelRDV.setBorder(new TitledBorder(null, "Quand", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 			vPanelRDV.setBounds(503, 36, 221, 133);
-			vPanelRDV.add(getvChoiceHeure());
-			vPanelRDV.add(getvChoiceMinutes());
+			vPanelRDV.add(getvJComboBoxHeure());
+			vPanelRDV.add(getvJComboBoxMinutes());
 			vPanelRDV.add(getvLblH());
 			vPanelRDV.add(getvLblHeure());			
 			vPanelRDV.add(getvLblDate());
@@ -217,21 +289,26 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vPanelRDV;
 	}	
-	private Choice getvChoiceHeure() {
-		if(vChoiceHeure==null){
-			vChoiceHeure = new Choice();
-			vChoiceHeure.setBounds(39, 87, 49, 20);
-			vChoiceHeure.add("9");vChoiceHeure.add("10");vChoiceHeure.add("11");vChoiceHeure.add("14");vChoiceHeure.add("15");vChoiceHeure.add("16");vChoiceHeure.add("17");
+	private JComboBox getvJComboBoxHeure() {
+		if(vJComboBoxHeure==null){
+			vJComboBoxHeure = new JComboBox();
+			vJComboBoxHeure.setBounds(39, 87, 49, 20);
+			for(int i = 9;i<18;i++){
+				vJComboBoxHeure.addItem(i);
+			}
+			
 		}
-		return vChoiceHeure;
+		return vJComboBoxHeure;
 	}	
-	private Choice getvChoiceMinutes() {
-		if(vChoiceMinutes==null){
-			vChoiceMinutes = new Choice();
-			vChoiceMinutes.setBounds(109, 87, 49, 20);
-			vChoiceMinutes.add("00");vChoiceMinutes.add("15");vChoiceMinutes.add("30");vChoiceMinutes.add("45");
+	private JComboBox getvJComboBoxMinutes() {
+		if(vJComboBoxMinutes==null){
+			vJComboBoxMinutes = new JComboBox();
+			vJComboBoxMinutes.setBounds(109, 87, 49, 20);
+			for(int i = 0;i<46;i+=15){
+				vJComboBoxMinutes.addItem(i);
+			}
 		}
-		return vChoiceMinutes;
+		return vJComboBoxMinutes;
 	}
 	private JLabel getvLblH() {
 		if(vLblH==null){
@@ -281,10 +358,10 @@ public class EcranPriseRDV extends JFrame{
 	}
 	private JTable getvTable() {
 		if(vTabRDV==null){
+			String column[]={"Heure","Nom du client","Animal","Race"}; 
 			String data[][]={ 	{"9h00","Bob Marley","Cheshire","Chat"},    
 	     			{"9h15","Bob Dylan","Gizmo","Chat"},    
 	     			{"9h30","Bob Sinclar","Rouquin","Chat"}};    
-			String column[]={"Heure","Nom du client","Animal","Race"}; 
 			vTabRDV = new JTable(data,column);
 			vTabRDV.setShowHorizontalLines(false);
 			vTabRDV.setBounds(10, 209, 714, 224);
