@@ -155,7 +155,10 @@ public class EcranAnimaux extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					JDBCTools.closeConnection();
+					finally{
+						JDBCTools.closeConnection();
+						vEcranAnimaux.setVisible(false);
+					}
 				}
 			});
     	}
