@@ -1,10 +1,16 @@
 package src.fr.eni.ProjetVeterinaire.bll;
 
+import java.util.List;
+
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
+import src.fr.eni.ProjetVeterinaire.bo.Client;
+
 /**
  * Author : Florian CHEVALIER (02/03/2018)
  * **/
 
 import src.fr.eni.ProjetVeterinaire.dal.AnimauxDAO;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.DAOFactory;
 
 public class AnimauxManager {
@@ -24,5 +30,30 @@ public class AnimauxManager {
 	
 	public AnimauxManager() throws BLLException{
 		daoAnimaux = DAOFactory.getAnimauxDAO();
+	}
+	public void Archiver(int CodeAnimal) throws DALException{
+		daoAnimaux.Archiver(CodeAnimal);
+	}
+	public void Update(Animal aAnimal) throws DALException{
+		daoAnimaux.Update(aAnimal);
+	}
+	
+	public static List<Animal> SelectAll() throws DALException{
+		List<Animal> animal = null;
+		try{
+			animal = daoAnimaux.SelectAll();
+		}catch(DALException e){
+			e.printStackTrace();
+			throw new DALException("Probleme lors du select all d'animaux");
+		}
+		
+		return animal;
+	}
+	public void Ajouter(Animal aAnimal)throws BLLException{
+		try{
+			 daoAnimaux.Ajouter(aAnimal);
+		}catch(DALException e){
+			throw new BLLException("Echec de l'ajout de l'animal ");
+		}
 	}
 }

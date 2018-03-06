@@ -56,7 +56,7 @@ public class DAOFactory {
 	public static AnimauxDAO getAnimauxDAO()  {
 		AnimauxDAO animauxDAO=null;
 		try {
-			animauxDAO=(AnimauxDAO ) Class.forName("src.fr.eni.ProjetVeterinaire.dal.jdbc.ConnexionDAOJdbcImpl").newInstance();
+			animauxDAO=(AnimauxDAO ) Class.forName("src.fr.eni.ProjetVeterinaire.dal.jdbc.AnimauxDAOJdbcImpl").newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

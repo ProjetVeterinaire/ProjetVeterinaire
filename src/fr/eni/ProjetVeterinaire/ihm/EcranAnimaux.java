@@ -9,6 +9,8 @@ package src.fr.eni.ProjetVeterinaire.ihm;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,125 +19,285 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+
+import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerAnimal;
+import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranAddPersonnel;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Choice;
 import java.awt.Label;
 
-public class EcranAnimaux {
-	private JTextField TFClient;
-	private JTextField TFNomAnimal;
-	private JTextField TFCouleur;
-	private JTextField TFTatouage;
-
+public class EcranAnimaux extends JFrame {
+	//JTextFields
+	private JTextField vTFClient;
+	private JTextField vTFNomAnimal;
+	private JTextField vTFCouleur;
+	private JTextField vTFTatouage;
+	
+	
+	//Ecran
+	private EcranAnimaux vEcranAnimaux;
+	
+	//JPanels
+	private JPanel vPanelBTN;
+	private JPanel vPanelClient;
+	
+	//JButton
+	private JButton vBtnAnnuler ;
+	private JButton vBtnValider;
+	//JLabels
+	private JLabel vLblCode;
+	private JLabel vLblCodeAnimal;
+	private JLabel vLblNomAnimal;
+	private JLabel vLblCouleur;
+	private JLabel vLblEspece;
+	private JLabel vLblTatouage;
+	private JLabel vLblRace;
+	//Choices
+	private Choice vChoiceEspece;
+	private Choice vChoiceSexe;
+	private Choice vChoiceRace;
+	
 	public EcranAnimaux(){
 		
-		JFrame Animaux = new JFrame();
-		
+		vEcranAnimaux=this;
 		//Définit un titre pour la fenetre
-		Animaux.setTitle("Animaux");
+		this.setTitle("Animaux");
 	    //Définit sa taille
-		Animaux.setSize(450, 325);
+		this.setSize(450, 325);
 	    //Place la fenetre au cntre de l'écran
-		Animaux.setLocationRelativeTo(null);
+		this.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-		Animaux.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
-		
-		
-		
-		
 		//Set la frame visible   
-		Animaux.getContentPane().setLayout(null); 
+		this.getContentPane().setLayout(null); 
 		
-		JPanel panelBTN = new JPanel();
-		panelBTN.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelBTN.setBounds(10, 11, 414, 51);
-		Animaux.getContentPane().add(panelBTN);
-		panelBTN.setLayout(null);
+		this.getContentPane().add(getvPanelBTN());
 		
-		JButton btnAnnuler = new JButton(new ImageIcon("./ressources/images/BTN_Annuler.png"));
-		btnAnnuler.setBounds(364, 0, 50, 51);
-		panelBTN.add(btnAnnuler);
+		this.getContentPane().add(getvPanelClient());
 		
-		JButton btnValider = new JButton(new ImageIcon("./ressources/images/BTN_Valider.png"));
-		btnValider.setBounds(304, 0, 50, 51);
-		panelBTN.add(btnValider);
+		this.getContentPane().add(getvLabelCode());
+
+		this.getContentPane().add(getvLblCodeAnimal());
 		
-		JPanel panelClient = new JPanel();
-		panelClient.setBorder(new TitledBorder(null, "Client : ", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		panelClient.setBounds(10, 73, 414, 51);
-		Animaux.getContentPane().add(panelClient);
-		panelClient.setLayout(null);
+		this.getContentPane().add(getvLblNomAnimal());
 		
-		TFClient = new JTextField();
-		TFClient.setText("Nom client ici");
-		TFClient.setBounds(30, 21, 360, 20);
-		TFClient.setEditable(false);
-		panelClient.add(TFClient);
-		TFClient.setColumns(10);
+		this.getContentPane().add(getvLblCouleur());
 		
-		JLabel lblCode = new JLabel("Code :");
-		lblCode.setBounds(10, 135, 60, 14);
-		Animaux.getContentPane().add(lblCode);
+		this.getContentPane().add(getvLblEspece());
 		
-		JLabel lblCodeAnimal = new JLabel("8888");
-		lblCodeAnimal.setBounds(84, 132, 75, 14);
-		Animaux.getContentPane().add(lblCodeAnimal);
+		this.getContentPane().add(getvLblTatouage());
 		
-		JLabel lblNomAnimal = new JLabel("Nom :");
-		lblNomAnimal.setBounds(10, 153, 70, 14);
-		Animaux.getContentPane().add(lblNomAnimal);
+		this.getContentPane().add(getvTextFieldNomAnimal());		
+
+		this.getContentPane().add(getvTextFieldCouleur());
+				
+		this.getContentPane().add(getvChoiceSexe());
+				
+		this.getContentPane().add(getvTextFieldTatouage());
+				
+		this.getContentPane().add(getvChoiceEspece());
 		
-		JLabel lblCouleur = new JLabel("Couleur :");
-		lblCouleur.setBounds(10, 178, 70, 14);
-		Animaux.getContentPane().add(lblCouleur);
+		this.getContentPane().add(getvChoiceRace());
 		
-		JLabel lblEspece = new JLabel("Espèce :");
-		lblEspece.setBounds(10, 203, 70, 14);
-		Animaux.getContentPane().add(lblEspece);
+		this.getContentPane().add(getvLblRace());
 		
-		JLabel lblTatouage = new JLabel("Tatouage");
-		lblTatouage.setBounds(10, 231, 70, 14);
-		Animaux.getContentPane().add(lblTatouage);
-		
-		TFNomAnimal = new JTextField();
-		TFNomAnimal.setBounds(84, 150, 201, 20);
-		Animaux.getContentPane().add(TFNomAnimal);
-		TFNomAnimal.setColumns(10);
-		
-		TFCouleur = new JTextField();
-		TFCouleur.setBounds(84, 175, 201, 20);
-		Animaux.getContentPane().add(TFCouleur);
-		TFCouleur.setColumns(10);
-		
-		Choice choiceSexe = new Choice();
-		choiceSexe.setBounds(315, 147, 109, 20);
-		choiceSexe.add("Femelle");choiceSexe.add("Mâle");
-		Animaux.getContentPane().add(choiceSexe);
-		
-		TFTatouage = new JTextField();
-		TFTatouage.setBounds(84, 228, 201, 20);
-		Animaux.getContentPane().add(TFTatouage);
-		TFTatouage.setColumns(10);
-		
-		Choice choiceEspece = new Choice();
-		choiceEspece.setBounds(84, 198, 109, 20);
-		choiceEspece.add("Chien");choiceEspece.add("Chat");choiceEspece.add("Rat");choiceEspece.add("Lapin");choiceEspece.add("Diplodocus");
-		Animaux.getContentPane().add(choiceEspece);
-		
-		Choice choiceRace = new Choice();
-		choiceRace.setBounds(315, 198, 109, 20);
-		choiceRace.add("Siamois");choiceRace.add("Saint-Bernard");choiceRace.add("Main Coon");
-		Animaux.getContentPane().add(choiceRace);
-		
-		Label lblRace = new Label("Race :");
-		lblRace.setBounds(222, 198, 62, 22);
-		Animaux.getContentPane().add(lblRace);
-		Animaux.setVisible(true);
+		this.setVisible(true);
 		
 		//Donne à la fenetre l'icone de l'application
 		Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
-		Animaux.setIconImage(icone);
+		this.setIconImage(icone);
 	}
+	
+	
+	//GETTERS JBUTTONS
+	
+	public JButton getvBtnAnnuler(){
+    	if ( vBtnAnnuler== null){
+    		vBtnAnnuler = new JButton(new ImageIcon("./ressources/images/BTN_Annuler.png"));
+    		vBtnAnnuler.setBounds(364, 0, 50, 51);
+    		vBtnAnnuler.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					vEcranAnimaux.setVisible(false);
+				}
+			});
+    	}
+    	return vBtnAnnuler;
+    }
+	public JButton getvBtnAjouter(){
+    	if ( vBtnValider== null){
+    		vBtnValider = new JButton(new ImageIcon("./ressources/images/BTN_Valider.png"));
+    		vBtnValider.setBounds(304, 0, 50, 51);
+    		vBtnValider.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ControllerAnimal vControllerAnimal;
+					Animal vAnimal = new Animal(0,getvTextFieldNomAnimal().getText(),getvChoiceSexe().getSelectedItem(),getvTextFieldCouleur().getText(),getvChoiceRace().getSelectedItem(),getvChoiceEspece().getSelectedItem(), 1, getvTextFieldTatouage().getText(),"",false );
+					try {
+						vControllerAnimal = ControllerAnimal.getInstance();
+						vControllerAnimal.ajouter(vAnimal);
+					} catch (BLLException | DALException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					JDBCTools.closeConnection();
+				}
+			});
+    	}
+    	return vBtnValider;
+    }
+	
+	//GETTERS JPANELS
+	public JPanel getvPanelBTN(){
+    	if (vPanelBTN== null){
+    		vPanelBTN = new JPanel();
+    		vPanelBTN.setBorder(new LineBorder(new Color(0, 0, 0)));
+    		vPanelBTN.setBounds(10, 11, 414, 51);
+    		vPanelBTN.setLayout(null);
+    		vPanelBTN.add(getvBtnAnnuler());
+    		vPanelBTN.add(getvBtnAjouter());
+    	}
+    	return vPanelBTN;
+    }
+	public JPanel getvPanelClient(){
+    	if ( vPanelClient== null){
+    		vPanelClient = new JPanel();
+    		vPanelClient.setBorder(new TitledBorder(null, "Client : ", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+    		vPanelClient.setBounds(10, 73, 414, 51);
+    		vPanelClient.setLayout(null);
+    		vPanelClient.add(getvTextFieldClient());
+
+    	}
+    	return vPanelClient;
+    }
+	
+	//GETTERS JTEXTFIELDS
+
+	public JTextField getvTextFieldClient(){
+    	if ( vTFClient== null){
+    		vTFClient = new JTextField();
+    		vTFClient.setText("1");
+    		vTFClient.setBounds(30, 21, 360, 20);
+    		vTFClient.setEditable(false);
+    		vTFClient.setColumns(10);
+
+    	}
+    	return vTFClient;
+    }
+	public JTextField getvTextFieldNomAnimal(){
+    	if ( vTFNomAnimal== null){
+    		vTFNomAnimal = new JTextField();
+    		vTFNomAnimal.setBounds(84, 150, 201, 20);
+    		vTFNomAnimal.setColumns(10);
+    	}
+    	return vTFNomAnimal;
+    }
+	public JTextField getvTextFieldCouleur(){
+    	if ( vTFCouleur== null){
+    		vTFCouleur = new JTextField();
+    		vTFCouleur.setBounds(84, 175, 201, 20);
+    		vTFCouleur.setColumns(10);
+    	}
+    	return vTFCouleur;
+    }
+	
+	public JTextField getvTextFieldTatouage(){
+    	if ( vTFTatouage== null){
+    		vTFTatouage = new JTextField();
+    		vTFTatouage.setBounds(84, 228, 201, 20);
+    		vTFTatouage.setColumns(10);
+    	}
+    	return vTFTatouage;
+    }
+	
+	
+	//GETTERS JLABELS
+
+	public JLabel getvLabelCode(){
+		if(vLblCode==null){
+			vLblCode = new JLabel("Code :");
+			vLblCode.setBounds(10, 135, 60, 14);
+		}
+		return vLblCode;
+	}
+	public JLabel getvLblCodeAnimal(){
+		if(vLblCodeAnimal==null){
+			vLblCodeAnimal = new JLabel("");
+			vLblCodeAnimal.setBounds(84, 132, 75, 14);
+		}
+		return vLblCodeAnimal;
+	}
+	public JLabel getvLblNomAnimal(){
+		if(vLblNomAnimal==null){
+			vLblNomAnimal = new JLabel("Nom :");
+			vLblNomAnimal.setBounds(10, 153, 70, 14);
+		}
+		return vLblNomAnimal;
+	}
+	public JLabel getvLblCouleur(){
+		if(vLblCouleur==null){
+			vLblCouleur = new JLabel("Couleur :");
+			vLblCouleur.setBounds(10, 178, 70, 14);
+			
+		}
+		return vLblCouleur;
+	}
+	public JLabel getvLblEspece(){
+		if(vLblEspece==null){
+			vLblEspece = new JLabel("Espèce :");
+			vLblEspece.setBounds(10, 203, 70, 14);
+		}
+		return vLblEspece;
+	}
+	public JLabel getvLblTatouage(){
+		if(vLblTatouage==null){
+			vLblTatouage = new JLabel("Tatouage");
+			vLblTatouage.setBounds(10, 231, 70, 14);
+		}
+		return vLblTatouage;
+	}
+	public JLabel getvLblRace(){
+		if(vLblRace==null){
+			vLblRace = new JLabel("Race :");
+			vLblRace.setBounds(222, 198, 62, 22);
+		}
+		return vLblRace;
+	}
+	//GETTERS CHOICES
+
+	public Choice getvChoiceEspece(){
+		if(vChoiceEspece==null){
+			
+			vChoiceEspece = new Choice();
+			vChoiceEspece.setBounds(84, 198, 109, 20);
+			vChoiceEspece.add("Chien");vChoiceEspece.add("Chat");vChoiceEspece.add("Rat");vChoiceEspece.add("Lapin");vChoiceEspece.add("Diplodocus");
+			
+		}
+		return vChoiceEspece;
+	}
+	
+	public Choice getvChoiceSexe(){
+		if(vChoiceSexe==null){
+			vChoiceSexe = new Choice();
+			vChoiceSexe.setBounds(315, 147, 109, 20);
+			vChoiceSexe.add("Femelle");vChoiceSexe.add("Mâle");
+		}
+		return vChoiceSexe;
+	}
+	public Choice getvChoiceRace(){
+		if(vChoiceRace==null){
+			vChoiceRace = new Choice();
+			vChoiceRace.setBounds(315, 198, 109, 20);
+			vChoiceRace.add("Siamois");vChoiceRace.add("Saint-Bernard");vChoiceRace.add("Main-Coon");
+		}
+		return vChoiceRace;
+	}
+	
 }
