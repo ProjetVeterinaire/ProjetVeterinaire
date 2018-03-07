@@ -305,6 +305,7 @@ public class EcranAddClient extends JFrame{
 		}
 		return vTFRemarque;
 	}
+	
 }
 
 

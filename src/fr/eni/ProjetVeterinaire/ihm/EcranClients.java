@@ -49,6 +49,7 @@ public class EcranClients {
 	private JTextField vTFCode;
 	private JTextField vTFCodePostal;
 	private JTextField vTFVille;
+	private JTextField vTFNumTel;
 	private JTextField vTFAssurance;
 	private JTextField vTFEmail;
 	private JTextField vTFRemarque;
@@ -255,6 +256,8 @@ public class EcranClients {
 		if (vTFCode== null){
 			vTFCode= new JTextField();
 			vTFCode.setColumns(10);
+			vTFCode.setBounds(166, 150, 86, 20);
+			
 		}
 		return vTFCode;
 	}
@@ -263,7 +266,80 @@ public class EcranClients {
 		if (vTFNom== null){
 			vTFNom = new JTextField();
 			vTFNom.setColumns(10);
+			vTFNom.setBounds(166, 175, 86, 20);
 		}
 		return vTFNom;
 	}
+
+	
+	public JTextField getTFPrenom(){
+		if (vTFPrenom== null){
+			vTFPrenom = new JTextField();
+			vTFPrenom.setColumns(10);
+			vTFPrenom.setBounds(166, 200, 86, 20);
+		}
+		return vTFPrenom;
+	}
+	
+	public JTextField getTFAdresse1(){
+		if (vTFAdresse1== null){
+			vTFAdresse1 = new JTextField();
+			vTFAdresse1.setColumns(10);
+			vTFAdresse1.setBounds(166, 225, 86, 20);
+		}
+		return vTFAdresse1;
+	}
+	
+	public JTextField getTFAdresse2(){
+		if (vTFAdresse2== null){
+			vTFAdresse2 = new JTextField();
+			vTFAdresse2.setColumns(10);
+			vTFAdresse2.setBounds(166, 256, 86, 20);
+		}
+		return vTFAdresse2;
+	}
+	
+	public JTextField getTFCodePostal(){
+		if (vTFCodePostal== null){
+			vTFCodePostal = new JTextField();
+			vTFCodePostal.setColumns(10);
+			vTFCodePostal.setBounds(166, 287, 86, 20);
+		}
+		return vTFCodePostal;
+	}
+	
+	public JTextField getTFVille(){
+		if (vTFVille== null){
+			vTFVille = new JTextField();
+			vTFVille.setColumns(10);
+			vTFVille.setBounds(166, 318, 86, 20);
+		}
+		return vTFVille;
+	}
+	
+	public JTextField getTFNumTel(){
+		if (vTFNumTel== null){
+			vTFNumTel = new JTextField();
+			vTFNumTel.setColumns(10);
+			vTFNumTel.setBounds(166, 318, 86, 20);
+		}
+		return vTFNumTel;
+	}
+	
+	public JTextField getTFAssurance(){
+		if (vTFAssurance== null){
+			vTFAssurance= new JTextField();
+			vTFAssurance.setColumns(10);
+		}
+		return vTFAssurance;
+	}
+	
+	public JTextField getTFEmail(){
+		if (vTFEmail== null){
+			vTFEmail = new JTextField();
+			vTFEmail.setColumns(10);
+		}
+		return vTFEmail;
+	}
+	
 }
