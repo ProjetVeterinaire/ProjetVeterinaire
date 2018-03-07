@@ -60,7 +60,7 @@ public class EcranAddClient extends JFrame{
 			//Définit un titre pour la fenetre
 			this.setTitle("Ajouter un client");
 		    //Définit sa taille
-			this.setSize(300, 380);
+			this.setSize(300, 450);
 		    //Place la fenetre au cntre de l'écran
 			this.setLocationRelativeTo(null);
 		    //Termine proprement le processus lorsqu'on clique sur la croix rouge
@@ -134,15 +134,15 @@ public class EcranAddClient extends JFrame{
 			this.getContentPane().add(lblNumTel, "2, 18, right, default");
 			this.getContentPane().add(getTFNumTel(), "4, 18, left, default");
 			
-			JLabel lblAssurance = new JLabel("Numéro de téléphone");
+			JLabel lblAssurance = new JLabel("Assurance");
 			this.getContentPane().add(lblAssurance, "2, 20, right, default");
 			this.getContentPane().add(getTFAssurance(), "4, 20, left, default");
 			
-			JLabel lblEmail = new JLabel("Numéro de téléphone");
+			JLabel lblEmail = new JLabel("Email");
 			this.getContentPane().add(lblEmail, "2, 22, right, default");
 			this.getContentPane().add(getTFEmail(), "4, 22, left, default");
 			
-			JLabel lblRemarque = new JLabel("Numéro de téléphone");
+			JLabel lblRemarque = new JLabel("Remarque");
 			this.getContentPane().add(lblRemarque, "2, 24, right, default");
 			this.getContentPane().add(getTFRemarque(), "4, 24, left, default");
 			

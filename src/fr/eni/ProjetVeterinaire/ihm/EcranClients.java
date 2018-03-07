@@ -30,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.JTextArea;
 
 public class EcranClients {
 	
@@ -53,6 +54,10 @@ public class EcranClients {
 	private JTextField vTFRemarque;
 	private JTextField vTFArchive;
 	private JTable TabAnimauxClient;
+	private JTextField TFTelephone;
+	private JTextField TFAssurance;
+	private JTextField TFEmail;
+	private JTextArea TXTARemarque;
 
 	public EcranClients(){
 		
@@ -61,15 +66,11 @@ public class EcranClients {
 		//Définit un titre pour la fenetre
 		Clients.setTitle("Clients");
 	    //Définit sa taille
-		Clients.setSize(950, 470);
+		Clients.setSize(950, 550);
 	    //Place la fenetre au cntre de l'écran
 		Clients.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
 		Clients.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-	    
-		
-		
-		
 		
 		//Set la frame visible   
 		Clients.getContentPane().setLayout(null); 
@@ -116,7 +117,7 @@ public class EcranClients {
 		JLabel lblAdresse = new JLabel("Adresse");
 		lblAdresse.setBounds(54, 228, 70, 14);
 		Clients.getContentPane().add(lblAdresse);
-		
+
 		vTFAdresse1 = new JTextField();
 		vTFAdresse1.setBounds(166, 225, 86, 20);
 		Clients.getContentPane().add(vTFAdresse1);
@@ -160,6 +161,19 @@ public class EcranClients {
 		lblCodePostal.setBounds(54, 290, 70, 14);
 		Clients.getContentPane().add(lblCodePostal);
 		
+		JLabel lblNumTel = new JLabel("Numéro de téléphone");
+		lblNumTel.setBounds(54, 352, 110, 14);
+		Clients.getContentPane().add(lblNumTel);
+		JLabel lblAssurance = new JLabel("Assurance ");
+		lblAssurance.setBounds(54, 377, 70, 14);
+		Clients.getContentPane().add(lblAssurance);
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(54, 415, 70, 14);
+		Clients.getContentPane().add(lblEmail);
+		JLabel lblRemarque = new JLabel("Remarque ");
+		lblRemarque.setBounds(54, 450, 70, 14);
+		Clients.getContentPane().add(lblRemarque);
+		
 		String data[][]={ 	{"101","Cheshire","Femelle","Tigré gris","Europeene","Chat",""},    
                  			{"102","Gizmo","Male","Tigré Noir","Europeene","Chat",""},    
                  			{"101","Rouquin","Male","Tigré Roux","Europeene","Chat",""}};    
@@ -185,6 +199,25 @@ public class EcranClients {
 		JButton btnAjouterAnimal = new JButton(new ImageIcon("./ressources/images/BTN_Ajouter_petit.png"));
 		btnAjouterAnimal.setBounds(631, 352, 50, 52);
 		Clients.getContentPane().add(btnAjouterAnimal);
+		
+		TFTelephone = new JTextField();
+		TFTelephone.setColumns(10);
+		TFTelephone.setBounds(166, 349, 86, 20);
+		Clients.getContentPane().add(TFTelephone);
+		
+		TFAssurance = new JTextField();
+		TFAssurance.setColumns(10);
+		TFAssurance.setBounds(166, 377, 86, 20);
+		Clients.getContentPane().add(TFAssurance);
+		
+		TFEmail = new JTextField();
+		TFEmail.setColumns(10);
+		TFEmail.setBounds(166, 408, 86, 20);
+		Clients.getContentPane().add(TFEmail);
+		
+		
+		TXTARemarque.setBounds(166, 439, 193, 55);
+		Clients.getContentPane().add(TXTARemarque);
 		Clients.setVisible(true);
 		
 		//Donne à la fenetre l'icone de l'application
@@ -233,7 +266,4 @@ public class EcranClients {
 		}
 		return vTFNom;
 	}
-	
-	
-	
 }
