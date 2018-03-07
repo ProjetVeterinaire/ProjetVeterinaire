@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
 
 import java.awt.Color;
@@ -39,13 +41,17 @@ public class EcranClients {
 	private JButton btnValider;
 	private JButton btnAnnuler;
 	private JButton btnEditerAnimal;
-	private JTextField TFAdresse1;
-	private JTextField TFAdresse2;
-	private JTextField TFPrenom;
-	private JTextField TFNom;
-	private JTextField TFCode;
-	private JTextField TFCodePostal;
-	private JTextField TFVille;
+	private JTextField vTFAdresse1;
+	private JTextField vTFAdresse2;
+	private JTextField vTFPrenom;
+	private JTextField vTFNom;
+	private JTextField vTFCode;
+	private JTextField vTFCodePostal;
+	private JTextField vTFVille;
+	private JTextField vTFAssurance;
+	private JTextField vTFEmail;
+	private JTextField vTFRemarque;
+	private JTextField vTFArchive;
 	private JTable TabAnimauxClient;
 
 	public EcranClients(){
@@ -111,42 +117,40 @@ public class EcranClients {
 		lblAdresse.setBounds(54, 228, 70, 14);
 		Clients.getContentPane().add(lblAdresse);
 		
-		TFAdresse1 = new JTextField();
-		TFAdresse1.setBounds(166, 225, 86, 20);
-		Clients.getContentPane().add(TFAdresse1);
-		TFAdresse1.setColumns(10);
+		vTFAdresse1 = new JTextField();
+		vTFAdresse1.setBounds(166, 225, 86, 20);
+		Clients.getContentPane().add(vTFAdresse1);
+		vTFAdresse1.setColumns(10);
 		
-		TFAdresse2 = new JTextField();
-		TFAdresse2.setText("");
-		TFAdresse2.setBounds(166, 256, 86, 20);
-		Clients.getContentPane().add(TFAdresse2);
-		TFAdresse2.setColumns(10);
+		vTFAdresse2 = new JTextField();
+		vTFAdresse2.setText("");
+		vTFAdresse2.setBounds(166, 256, 86, 20);
+		Clients.getContentPane().add(vTFAdresse2);
+		vTFAdresse2.setColumns(10);
 		
-		TFPrenom = new JTextField();
-		TFPrenom.setBounds(166, 200, 86, 20);
-		Clients.getContentPane().add(TFPrenom);
-		TFPrenom.setColumns(10);
+		vTFPrenom = new JTextField();
+		vTFPrenom.setBounds(166, 200, 86, 20);
+		Clients.getContentPane().add(vTFPrenom);
+		vTFPrenom.setColumns(10);
 		
-		TFNom = new JTextField();
-		TFNom.setText("");
-		TFNom.setBounds(166, 175, 86, 20);
-		Clients.getContentPane().add(TFNom);
-		TFNom.setColumns(10);
 		
-		TFCode = new JTextField();
-		TFCode.setBounds(166, 150, 86, 20);
-		Clients.getContentPane().add(TFCode);
-		TFCode.setColumns(10);
 		
-		TFCodePostal = new JTextField();
-		TFCodePostal.setBounds(166, 287, 86, 20);
-		Clients.getContentPane().add(TFCodePostal);
-		TFCodePostal.setColumns(10);
+		vTFNom.setBounds(166, 175, 86, 20);
+		Clients.getContentPane().add(vTFNom);
+				
+		vTFCode.setBounds(166, 150, 86, 20);
+		Clients.getContentPane().add(vTFCode);
 		
-		TFVille = new JTextField();
-		TFVille.setBounds(166, 318, 86, 20);
-		Clients.getContentPane().add(TFVille);
-		TFVille.setColumns(10);
+		
+		vTFCodePostal = new JTextField();
+		vTFCodePostal.setBounds(166, 287, 86, 20);
+		Clients.getContentPane().add(vTFCodePostal);
+		vTFCodePostal.setColumns(10);
+		
+		vTFVille = new JTextField();
+		vTFVille.setBounds(166, 318, 86, 20);
+		Clients.getContentPane().add(vTFVille);
+		vTFVille.setColumns(10);
 		
 		JLabel lblVille = new JLabel("Ville");
 		lblVille.setBounds(54, 321, 70, 14);
@@ -170,9 +174,9 @@ public class EcranClients {
 		sp.setBounds(350, 148, 490, 190);
 		Clients.getContentPane().add(sp);
 		
-		JButton btnEditer = new JButton(new ImageIcon("./ressources/images/BTN_Editer_petit.png"));
-		btnEditer.setBounds(751, 352, 50, 52);
-		Clients.getContentPane().add(btnEditer);
+		JButton btnEditerAnimal = new JButton(new ImageIcon("./ressources/images/BTN_Editer_petit.png"));
+		btnEditerAnimal.setBounds(751, 352, 50, 52);
+		Clients.getContentPane().add(btnEditerAnimal);
 		
 		JButton btnSupprimerAnimal = new JButton(new ImageIcon("./ressources/images/BTN_Supprimer_petit.png"));
 		btnSupprimerAnimal.setBounds(691, 352, 50, 52);
@@ -188,23 +192,48 @@ public class EcranClients {
 		Clients.setIconImage(icone);
 	}
 	
-//	private JButton getBtnRechercher(){
-//		if (btnRechercher == null){
-//			btnRechercher = new JButton (new ImageIcon("./ressources/images/BTN_Recherche.png"));
-//			btnRechercher.addActionListener(new ActionListener(){
-//				
-//				public void actionPerformed(ActionEvent e){
-//					try{
-//						ControllerClient vControllerClient = ControllerClient.getInstance();
-//						vControllerClient.selectByNom(getNomClient());
-//					}
-//						
-//					
-//				}
-//			});
-//		}
-//		
-//		
-//		return btnAjouterAnimal;
-//	}
+	private JButton getBtnRechercher(){
+		if (btnRechercher == null){
+			btnRechercher = new JButton (new ImageIcon("./ressources/images/BTN_Recherche.png"));
+			btnRechercher.addActionListener(new ActionListener(){
+				
+				public void actionPerformed(ActionEvent e){
+					try{
+						ControllerClient vControllerClient = ControllerClient.getInstance();
+						vControllerClient.selectByNom(getTFNom().getText());
+					} catch (BLLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					catch(DALException e1){
+						e1.printStackTrace();
+					}
+						
+					
+				}
+			});
+		}
+		
+		
+		return btnRechercher;
+	}
+	
+	public JTextField getTFCode(){
+		if (vTFCode== null){
+			vTFCode= new JTextField();
+			vTFCode.setColumns(10);
+		}
+		return vTFCode;
+	}
+	
+	public JTextField getTFNom(){
+		if (vTFNom== null){
+			vTFNom = new JTextField();
+			vTFNom.setColumns(10);
+		}
+		return vTFNom;
+	}
+	
+	
+	
 }
