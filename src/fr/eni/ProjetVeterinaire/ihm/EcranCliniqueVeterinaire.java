@@ -1,5 +1,5 @@
 /*
- * Auteur : Gauthier LEFEVRE 
+s * Auteur : Gauthier LEFEVRE 
  * ENI
  * Projet client - serveur JAVA  / Groupe 3
  * 
@@ -26,6 +26,7 @@ import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranGestionPersonnel;
+import src.fr.eni.ProjetVeterinaire.ihm.reservations.EcranPriseRDV;
 
 public class EcranCliniqueVeterinaire  extends JFrame{
 	private JMenu menuFichier,menuGestionRDV; // Définis toutes les sections du menubar

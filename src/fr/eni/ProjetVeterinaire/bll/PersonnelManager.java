@@ -9,6 +9,7 @@ package src.fr.eni.ProjetVeterinaire.bll;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.DAOFactory;
@@ -100,5 +101,16 @@ a	prénom et profil de l’employé et lui affecter un mot de passe.*/
 			throw new BLLException("Probleme lors du select all des veterinaires		");
 		}
 		return personnel;
+	}
+	public static Personnel SelectById(int aIdPersonnel) throws DALException{
+		Personnel vPersonnel = null;
+		try{
+			vPersonnel = daoPersonnel.selectById(aIdPersonnel);
+		}catch(DALException e){
+			e.printStackTrace();
+			throw new DALException("Probleme lors du select par Id ");
+		}
+		
+		return vPersonnel;
 	}
 }

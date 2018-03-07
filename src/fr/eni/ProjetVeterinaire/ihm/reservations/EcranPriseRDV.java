@@ -5,13 +5,16 @@
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm;
+package src.fr.eni.ProjetVeterinaire.ihm.reservations;
 
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.JFrame;
@@ -29,9 +32,13 @@ import src.fr.eni.ProjetVeterinaire.bll.PersonnelManager;
 import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Client;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.bo.Rdv;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
+import src.fr.eni.ProjetVeterinaire.ihm.EcranAnimaux;
+import src.fr.eni.ProjetVeterinaire.ihm.EcranClients;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerRdv;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.DateLabelFormatter;
 import java.awt.Color;
 import java.awt.Component;
@@ -372,6 +379,30 @@ public class EcranPriseRDV extends JFrame{
 		if(vBtnValider==null){
 			vBtnValider = new JButton(new ImageIcon("./ressources/images/BTN_Valider.png"));
 			vBtnValider.setBounds(617, 444, 50, 51);
+			vBtnValider.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Personnel vVetoSelected  = (Personnel)getvJComboBoxVeterinaire().getSelectedItem();
+						Animal vAnimalSelected = (Animal)getvJComboBoxAnimal().getSelectedItem();
+						String vHeure = getvJComboBoxHeure().getSelectedItem().toString();
+						String vMinutes = getvJComboBoxMinutes().getSelectedItem().toString();
+						String vPickedDate = getvDatePicker().getJFormattedTextField().getText();
+						String[] vTableauString =  vPickedDate.split(" / ");
+						String vDateChaine = vTableauString[1]+"/"+vTableauString[0]+"/"+vTableauString[2]+" "+vHeure+":"+vMinutes;
+						Date vDate = new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(vDateChaine);
+						Rdv vRdvAjouter = new Rdv(vVetoSelected.getvCodePers(),vDate,vAnimalSelected.getvCodeAnimal());
+						ControllerRdv vControllerRdv = ControllerRdv.getInstance();
+						vControllerRdv.ajouter(vRdvAjouter);
+					} catch (BLLException | DALException | ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} 
+					JDBCTools.closeConnection();
+
+				}
+			});
 		}
 		return vBtnValider;
 	}

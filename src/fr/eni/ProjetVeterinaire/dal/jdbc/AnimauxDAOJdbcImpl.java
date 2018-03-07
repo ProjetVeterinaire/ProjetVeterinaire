@@ -21,6 +21,7 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 	private static final String sqlUpdate ="update Animaux set NomAnimal=?,Sexe=?,Couleur=?,Race=?,Espece=?,CodeClient=?,Tatouage=?,Antecedents=?,Archive=? where CodeAnimal=?";
 	private static final String sqlRaces = "select * from Races";
 	private static final String sqlSelectByIdClient = "select * from Animaux where CodeClient=?";
+	private static final String sqlSelectByIdAnimal = "select * from Animaux where CodeAnimal=?";
 
 	public ArrayList<Animal> SelectAll() throws DALException {
 		Connection cnx = null;
@@ -238,7 +239,52 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 		}
 		return vListeAnimaux;
 	}
-	
+	public Animal SelectById(int aIdAnimal) throws DALException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null; 
+		Animal vAnimal = null;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(sqlSelectByIdAnimal);
+			rqt.setInt(1, aIdAnimal);
+			rs = rqt.executeQuery();
+
+			if(rs.next()){
+				vAnimal = new Animal(rs.getInt("CodeAnimal"),
+						rs.getString("NomAnimal"),
+						rs.getString("Sexe"),
+						rs.getString("Couleur"),
+						rs.getString("Race"),
+						rs.getString("Espece"),
+						rs.getInt("CodeClient"),
+						rs.getString("Tatouage"),
+						rs.getString("Antecedents"),
+						rs.getBoolean("Archive")
+						);
+				}
+			}
+
+		catch (SQLException e) {
+			throw new DALException("selectById failed :" , e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return vAnimal;
+	}
 	
 	
 	}

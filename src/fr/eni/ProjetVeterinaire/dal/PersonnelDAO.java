@@ -22,4 +22,6 @@ public interface PersonnelDAO {
 
 	public ArrayList<Personnel> selectVeterinaires() throws DALException;
 
+	public Personnel selectById(int aCodePers) throws DALException;
+
 }

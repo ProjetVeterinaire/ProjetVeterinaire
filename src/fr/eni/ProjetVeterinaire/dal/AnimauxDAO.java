@@ -19,4 +19,6 @@ public interface AnimauxDAO {
 	public ArrayList<Race> SelectRaces()throws DALException;
 	
 	public List<Animal> SelectByIdClient(int aIdClient) throws DALException;
+	
+	public Animal SelectById(int aIdAnimal) throws DALException;
 }

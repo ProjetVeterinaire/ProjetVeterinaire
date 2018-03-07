@@ -79,4 +79,15 @@ public class AnimauxManager {
 		
 		return animal;
 	}
+	public static Animal SelectById(int aIdAnimal) throws DALException{
+		Animal animal = null;
+		try{
+			animal = daoAnimaux.SelectById(aIdAnimal);
+		}catch(DALException e){
+			e.printStackTrace();
+			throw new DALException("Probleme lors du select par Id ");
+		}
+		
+		return animal;
+	}
 }

@@ -2,8 +2,10 @@ package src.fr.eni.ProjetVeterinaire.ihm.controllers;
 
 import java.util.List;
 
+import src.fr.eni.ProjetVeterinaire.bll.AnimauxManager;
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bll.PersonnelManager;
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranGestionPersonnel;
@@ -50,5 +52,14 @@ public class ControllerPersonnel {
 		vPersonnelManager = PersonnelManager.getInstance();
 		vPersonnelManager.reinitialiser(aNom,aMotPasse);
 		
+	}
+	//methode de selection du personnel par Id
+	public Personnel selectById(int aIdPersonnel) throws BLLException, DALException{
+			vPersonnelManager = PersonnelManager.getInstance();
+
+			Personnel vPersonnel = vPersonnelManager.SelectById(aIdPersonnel);
+
+			return vPersonnel;
+			
 	}
 } 

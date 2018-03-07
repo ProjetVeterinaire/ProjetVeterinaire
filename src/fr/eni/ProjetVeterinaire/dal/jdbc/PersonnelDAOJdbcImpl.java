@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.ConnexionDAO;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
@@ -31,7 +32,8 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	private static final String sqlArchiver ="update Personnels set Archive='1' where nom = ?";
 	private static final String sqlSelectAllSansRdv = "Select * from Personnels where Archive=0 and CodePers not in(Select CodeVeto from Agendas a join Personnels p on a.CodeVeto=p.CodePers); ";
 	private static final String sqlSelectVeterinaires = "Select * from Personnels where Role='Vet'";
-	
+	private static final String sqlSelectById = "Select * from Personnels where CodePers = ?; ";
+
 	public ArrayList<Personnel> selectAll() throws DALException {
 			Connection cnx = null;
 			Statement rqt = null;
@@ -227,5 +229,46 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 		}
 		return vListePersonnels;
 	}
-	
+	public Personnel selectById(int aIdPersonnel) throws DALException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null; 
+		Personnel vPersonnel = null;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(sqlSelectById);
+			rqt.setInt(1, aIdPersonnel);
+			rs = rqt.executeQuery();
+
+			if(rs.next()){
+				vPersonnel = new Personnel(rs.getInt("CodePers"),
+						rs.getString("Nom"),
+						rs.getString("MotPasse"),
+						rs.getString("Role"),
+						rs.getBoolean("Archive")
+						);					
+				}
+			}
+
+		catch (SQLException e) {
+			throw new DALException("selectById failed :" , e);
+		} finally {
+			try {
+				if (rs != null){
+					rs.close();
+				}
+				if (rqt != null){
+					rqt.close();
+				}
+				if(cnx!=null){
+					cnx.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return vPersonnel;
+	}
+
 }

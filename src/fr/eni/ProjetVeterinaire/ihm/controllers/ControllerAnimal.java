@@ -60,12 +60,21 @@ public class ControllerAnimal {
 		
 	}
 	//methode de selection des animaux par IdClient
-		public List<Animal> selectIdClient(int aIdClient) throws BLLException, DALException{
+	public List<Animal> selectIdClient(int aIdClient) throws BLLException, DALException{
 			vAnimauxManager = AnimauxManager.getInstance();
 
 			List<Animal> vAnimal = AnimauxManager.SelectByIdClient(aIdClient);
 
 			return vAnimal;
 			
-		}
+	}
+	//methode de selection de l'animal par Id
+	public Animal selectId(int aIdAnimal) throws BLLException, DALException{
+			vAnimauxManager = AnimauxManager.getInstance();
+
+			Animal vAnimal = vAnimauxManager.SelectById(aIdAnimal);
+
+			return vAnimal;
+			
+	}
 } 
