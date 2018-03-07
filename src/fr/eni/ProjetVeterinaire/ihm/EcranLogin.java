@@ -93,13 +93,13 @@ public class EcranLogin extends JFrame{
 					try {
 						Personnel vPersonnel = ControllerLogin.getInstance().selectConnexion(getTFNom().getText(),String.valueOf(getTFPassword().getPassword()));
 						if(vPersonnel!=null){
-							EcranPriseRDV CliniqueVeto = new EcranPriseRDV();
+							EcranCliniqueVeterinaire CliniqueVeto = new EcranCliniqueVeterinaire(vPersonnel);
 						    setVisible(false);
 						}else{
 							vErrorMessage.setForeground(Color.red);
 							vErrorMessage.setText("Couple Login/Mdp invalide");
 						}
-					} catch (BLLException | DALException e1) {
+					} catch (BLLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} 
