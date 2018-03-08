@@ -6,6 +6,7 @@ import javax.swing.JTable;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerPersonnel;
 
 public class TablePersonnel extends JTable {
@@ -16,6 +17,7 @@ public class TablePersonnel extends JTable {
 	// TODO Auto-generated constructor stub
 		vControllerPersonnel = ControllerPersonnel.getInstance();
 		vListePersonnels= vControllerPersonnel.selectAll();
+		JDBCTools.closeConnection();
 		vDataModelPersonnel = new DataModelPersonnel(vListePersonnels);
 		this.setModel(vDataModelPersonnel);
 	}

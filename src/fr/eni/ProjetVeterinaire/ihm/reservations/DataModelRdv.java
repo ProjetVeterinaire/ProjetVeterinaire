@@ -10,6 +10,7 @@ import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.bo.Rdv;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerAnimal;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerPersonnel;
 
@@ -38,10 +39,14 @@ public class DataModelRdv extends AbstractTableModel {
 		Animal vAnimal = null;
 		Personnel vPersonnel = null;
 		try {
+			JDBCTools.closeConnection();
 			ControllerAnimal vControllerAnimal =ControllerAnimal.getInstance();
 			vAnimal = vControllerAnimal.selectId(vListeRdv.get(row).getvCodeAnimal());
+			JDBCTools.closeConnection();
 			ControllerPersonnel vControllerPersonnel = ControllerPersonnel.getInstance();
 			vPersonnel = vControllerPersonnel.selectById(vListeRdv.get(row).getvCodeVeterinaire());
+			JDBCTools.closeConnection();
+
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -40,10 +40,14 @@ import src.fr.eni.ProjetVeterinaire.ihm.EcranClients;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerRdv;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.DateLabelFormatter;
+import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.TablePersonnel;
+
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -53,7 +57,7 @@ import java.awt.Label;
 public class EcranPriseRDV extends JFrame{
 	
 	//JTable
-	private JTable vTabRDV;
+	private TableRdv vTabRDV;
 	
 	//EcranPriseRDV
 	private EcranPriseRDV vEcranPriseRDV; 
@@ -356,21 +360,23 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vDatePicker;
 	}
-	private JScrollPane getvScrollPane() {
+	private JScrollPane getvScrollPane() throws BLLException, DALException {
 		if(vScrollPane==null){
 			vScrollPane=new JScrollPane(getvTable());
 			vScrollPane.setBounds(10, 209, 714, 224);
 		}
 		return vScrollPane;
 	}
-	private JTable getvTable() {
+	private JTable getvTable() throws BLLException, DALException {
 		if(vTabRDV==null){
-			String column[]={"Heure","Nom du client","Animal","Race"}; 
-			String data[][]={ 	{"9h00","Bob Marley","Cheshire","Chat"},    
-	     			{"9h15","Bob Dylan","Gizmo","Chat"},    
-	     			{"9h30","Bob Sinclar","Rouquin","Chat"}};    
-			vTabRDV = new JTable(data,column);
-			vTabRDV.setShowHorizontalLines(false);
+//			String column[]={"Heure","Nom du client","Animal","Race"}; 
+//			String data[][]={ 	{"9h00","Bob Marley","Cheshire","Chat"},    
+//	     			{"9h15","Bob Dylan","Gizmo","Chat"},    
+//	     			{"9h30","Bob Sinclar","Rouquin","Chat"}};    
+			vTabRDV=new TableRdv();
+			vTabRDV.setFillsViewportHeight(true);
+			vTabRDV.setPreferredScrollableViewportSize(new Dimension(400,200));
+			vTabRDV.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			vTabRDV.setBounds(10, 209, 714, 224);
 		}
 		return vTabRDV;
@@ -395,11 +401,16 @@ public class EcranPriseRDV extends JFrame{
 						Rdv vRdvAjouter = new Rdv(vVetoSelected.getvCodePers(),vDate,vAnimalSelected.getvCodeAnimal());
 						ControllerRdv vControllerRdv = ControllerRdv.getInstance();
 						vControllerRdv.ajouter(vRdvAjouter);
+						
 					} catch (BLLException | DALException | ParseException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} 
-					JDBCTools.closeConnection();
+					finally{
+						JDBCTools.closeConnection();
+						JDBCTools.closeConnection();
+						
+					}
 
 				}
 			});
