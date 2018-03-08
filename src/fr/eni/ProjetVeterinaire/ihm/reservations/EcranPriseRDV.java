@@ -369,10 +369,6 @@ public class EcranPriseRDV extends JFrame{
 	}
 	private JTable getvTable() throws BLLException, DALException {
 		if(vTabRDV==null){
-//			String column[]={"Heure","Nom du client","Animal","Race"}; 
-//			String data[][]={ 	{"9h00","Bob Marley","Cheshire","Chat"},    
-//	     			{"9h15","Bob Dylan","Gizmo","Chat"},    
-//	     			{"9h30","Bob Sinclar","Rouquin","Chat"}};    
 			vTabRDV=new TableRdv();
 			vTabRDV.setFillsViewportHeight(true);
 			vTabRDV.setPreferredScrollableViewportSize(new Dimension(400,200));
@@ -421,6 +417,14 @@ public class EcranPriseRDV extends JFrame{
 		if(vBtnSupprimer==null){
 			vBtnSupprimer= new JButton(new ImageIcon("./ressources/images/BTN_Supprimer_petit.png"));
 			vBtnSupprimer.setBounds(557, 444, 50, 51);
+//			vBtnSupprimer.addActionListener(new ActionListener(){
+//				public void actionPerformed(ActionEvent e){
+//					try{
+//						ControllerRdv vControllerRdv = ControllerRdv.getInstance();
+//						vControllerRdv.Supprimer(getvTable().getValueAt(getvTable().getSelectedRow(), 0));
+//					}
+//				}
+//			});
 		}
 		return vBtnSupprimer;
 	}

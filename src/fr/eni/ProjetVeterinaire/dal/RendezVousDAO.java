@@ -12,5 +12,7 @@ public interface RendezVousDAO {
 	public void Ajouter(Rdv aRdv)throws DALException;
 	
 	public List<Rdv> SelectAll() throws DALException;
+	
+	public void Supprimer(Rdv aRdv) throws DALException;
 
 }

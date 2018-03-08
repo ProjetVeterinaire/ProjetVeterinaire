@@ -53,8 +53,15 @@ public class RdvManager {
 		try{
 			daoRdv.Ajouter(aRdv);
 		}catch(DALException e){
-			throw new BLLException("Echec de l'ajout du rdv ");
+			throw new BLLException("Echec de l'ajout du Rdv ");
 		}
 	}
-
+	
+	public void Supprimer(Rdv aRdv)throws BLLException{
+		try{
+			daoRdv.Supprimer(aRdv);	
+		}catch(DALException e){
+			throw new BLLException("Echec de la suppression du Rdv ");		
+		}
+	}
 }

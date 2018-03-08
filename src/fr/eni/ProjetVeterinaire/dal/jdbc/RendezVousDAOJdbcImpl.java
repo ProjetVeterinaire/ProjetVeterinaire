@@ -26,7 +26,7 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 	//requete sql de selection de la connexion
 	private static final String sqlSelectAll = "Select * from Agendas";
 	private static final String sqlInsert ="insert into Agendas(CodeVeto,DateRdv,CodeAnimal) values(?, CAST(? AS smalldatetime)  ,?);";
-
+	private static final String sqlDelete ="delete * from Agendas where CodeAnimal where CodeVeto=? and DateRdv=? and CodeAnimal=?";
 	
 	public ArrayList<Rdv> SelectAll() throws DALException {
 			Connection cnx = null;
@@ -74,8 +74,6 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 	public void Ajouter(Rdv aRdv)throws DALException{
 		Connection cnx = null;
 		PreparedStatement rqt = null;
-		ResultSet rs;
-		
 		
 		try {
 			cnx = JDBCTools.getConnection();
@@ -84,17 +82,31 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 			rqt.setString(2, (aRdv.getvDate()+":00"));
 			rqt.setInt(3, aRdv.getvCodeAnimal());
 
-			
-			//2007-05-08 12:35:29
-			int nbRows = rqt.executeUpdate();
+			rqt.executeUpdate();
 
-		
 		}catch(SQLException e){
 			throw new DALException("ajout failed - veterinaire =" + aRdv.getvCodeVeterinaire() , e);
-			
 		} 	
 	}
 	
+	public void Supprimer(Rdv aRdv) throws DALException{
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(sqlDelete);
+			rqt.setInt(1, aRdv.getvCodeVeterinaire());
+			rqt.setString(2, (aRdv.getvDate()+":00"));
+			rqt.setInt(3, aRdv.getvCodeAnimal());
+			
+			rqt.executeUpdate();
+		}catch(SQLException e){
+			throw new DALException("delet failed - Rdv =" + aRdv.getvCodeVeterinaire() + aRdv.getvDate() + aRdv.getvCodeAnimal(), e);
+			
+		}
+		
+	}
 	
 }
 

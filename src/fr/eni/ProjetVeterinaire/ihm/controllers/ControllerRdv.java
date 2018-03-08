@@ -45,5 +45,9 @@ public class ControllerRdv {
 		
 	}
 
+	public void Supprimer(Rdv aRdv) throws BLLException, DALException{
+		vRdvManager = RdvManager.getInstance();
+		vRdvManager.Supprimer(aRdv);
+	}
 
 } 
