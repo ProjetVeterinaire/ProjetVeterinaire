@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import src.fr.eni.ProjetVeterinaire.bo.Client;
@@ -37,15 +40,18 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 				rs = rqt.executeQuery(sqlSelectAll);
 			
 				while(rs.next()){
+					String vDateString = rs.getTimestamp("DateRdv").toString();
+					vDateString=vDateString.substring(0, vDateString.length()-5) ;
+					Date vDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(vDateString);
 					rdv = new Rdv(rs.getInt("CodeVeto"),
-							rs.getDate("DateRdv"),
+							vDate,
 							rs.getInt("CodeAnimal")
 							);
 					vListeRdv.add(rdv);
 					}
 				}
 	
-			catch (SQLException e) {
+			catch (SQLException | ParseException e) {
 				throw new DALException("selectAll failed :" , e);
 			} finally {
 				try {
