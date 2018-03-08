@@ -23,7 +23,7 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 	private static final String sqlInsert ="insert into Clients(NomClient,PrenomClient,Adresse1,Adresse2,CodePostal,Ville,NumTel,Assurance,Email,Remarque,Archive) values(?,?,?,?,?,?,?,?,?,?,0);";
 	private static final String sqlArchiver="update Clients set Archive=1 where CodeClient=?";
 	private static final String sqlUpdate="update Clients set NomClient=?,PrenomClient=?,Adresse1=?,Adresse2=?,CodePostal=?,Ville=?,NumTel=?,Assurance=?,Email=?,Remarque=? where CodeClient=?";
-	private static final String sqlSelectByNom="Select * from Clients where nom=?";
+	private static final String sqlSelectByNom="Select * from Clients where NomClient=?";
 	private static final String sqlSelectClientById="Select * from Clients where CodeClient=?";
 	
 	public ArrayList<Client> SelectAll() throws DALException {

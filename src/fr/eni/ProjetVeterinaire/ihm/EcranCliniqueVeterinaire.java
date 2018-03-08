@@ -24,6 +24,7 @@ import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bo.Personnel;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
+import src.fr.eni.ProjetVeterinaire.ihm.clients.EcranClients;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.EcranGestionPersonnel;
 import src.fr.eni.ProjetVeterinaire.ihm.reservations.EcranPriseRDV;
@@ -90,7 +91,12 @@ public class EcranCliniqueVeterinaire  extends JFrame{
         JMIGestionCli=new JMenuItem("Gestion des clients");
         JMIGestionCli.addActionListener(new ActionListener() {
   	      public void actionPerformed(ActionEvent ev) {
-  	    	EcranClients CliniqueVetoClients = new EcranClients();
+  	    	try {
+				EcranClients CliniqueVetoClients = new EcranClients();
+			} catch (BLLException | DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			setVisible(false);
   	      }
   	    });

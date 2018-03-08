@@ -1,11 +1,11 @@
 /*
- * Auteur : Gauthier LEFEVRE 
+ * Auteur : Gauthier LEFEVRE /Florian Chevalier
  * ENI
  * Projet client - serveur JAVA  / Groupe 3
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm;
+package src.fr.eni.ProjetVeterinaire.ihm.clients;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -65,7 +65,7 @@ public class EcranAddClient extends JFrame{
 		    //Place la fenetre au cntre de l'écran
 			this.setLocationRelativeTo(null);
 		    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 			this.setVisible(true);
 			getContentPane().setLayout(null);

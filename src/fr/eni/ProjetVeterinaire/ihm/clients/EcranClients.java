@@ -1,11 +1,11 @@
 /*
- * Auteur : Gauthier LEFEVRE 
+ * Auteur : Gauthier LEFEVRE  / Florian Chevalier
  * ENI
  * Projet client - serveur JAVA  / Groupe 3
  * 
  */
 
-package src.fr.eni.ProjetVeterinaire.ihm;
+package src.fr.eni.ProjetVeterinaire.ihm.clients;
 
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -19,8 +19,11 @@ import src.fr.eni.ProjetVeterinaire.bo.Client;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
+import src.fr.eni.ProjetVeterinaire.ihm.reservations.TableRdv;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,6 +35,7 @@ import javax.swing.JTable;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.ListSelectionModel;
 import javax.swing.JTextArea;
 
 public class EcranClients extends JFrame{
@@ -58,9 +62,9 @@ public class EcranClients extends JFrame{
 	private JTextField vTFArchive;
 	private JTable TabAnimauxClient;
 	private EcranClients ecranClients; 
-	
+	private JScrollPane vScrollPane;
 
-	public EcranClients(){
+	public EcranClients() throws BLLException, DALException{
 		ecranClients=this;
 		
 
@@ -148,19 +152,12 @@ public class EcranClients extends JFrame{
 		this.getContentPane().add(getTFRemarque());
 		this.setVisible(true);
 		
-		String data[][]={ 	{"101","Cheshire","Femelle","Tigré gris","Europeene","Chat",""},    
-                 			{"102","Gizmo","Male","Tigré Noir","Europeene","Chat",""},    
-                 			{"101","Rouquin","Male","Tigré Roux","Europeene","Chat",""}};    
-		String column[]={"Numéro","Nom","Sexe","Couleur","Race","Espece","Tatouage"}; 
-		TabAnimauxClient = new JTable(data,column);
-		TabAnimauxClient.setCellSelectionEnabled(true);
-		TabAnimauxClient.setShowVerticalLines(false);
-		TabAnimauxClient.setColumnSelectionAllowed(true);
-		TabAnimauxClient.setBounds(350, 148, 490, 190);
+
+
+
 		
-		JScrollPane sp=new JScrollPane(TabAnimauxClient);
-		sp.setBounds(350, 148, 490, 190);
-		this.getContentPane().add(sp);
+		
+		this.getContentPane().add(getvScrollPane());
 		
 		JButton btnEditerAnimal = new JButton(new ImageIcon("./ressources/images/BTN_Editer_petit.png"));
 		btnEditerAnimal.setBounds(751, 352, 50, 52);
@@ -188,7 +185,12 @@ public class EcranClients extends JFrame{
 			btnRechercher.addActionListener(new ActionListener(){
 				
 				public void actionPerformed(ActionEvent e){
-					 new EcranResultRecherche();
+					 try {
+						new EcranResultRecherche(ecranClients);
+					} catch (BLLException | DALException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 		}
@@ -262,8 +264,7 @@ public class EcranClients extends JFrame{
 				} catch (BLLException | DALException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-				   
+				}				   
 			   }
 		   });
 			
@@ -314,8 +315,26 @@ public class EcranClients extends JFrame{
 	}
 
 	
-	
-	
+	private JScrollPane getvScrollPane() throws BLLException, DALException {
+		if(vScrollPane==null){
+			vScrollPane=new JScrollPane(getvTabAnimauxClient());
+			vScrollPane.setBounds(350, 148, 490, 190);
+		}
+		return vScrollPane;
+	}
+	private JTable getvTabAnimauxClient() throws BLLException, DALException {
+		if(TabAnimauxClient==null){
+			TabAnimauxClient=new TableClients();
+			TabAnimauxClient.setCellSelectionEnabled(true);
+			TabAnimauxClient.setShowVerticalLines(false);
+			TabAnimauxClient.setColumnSelectionAllowed(true);
+			TabAnimauxClient.setBounds(350, 148, 490, 190);
+			TabAnimauxClient.setFillsViewportHeight(true);
+			TabAnimauxClient.setPreferredScrollableViewportSize(new Dimension(400,200));
+			TabAnimauxClient.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return TabAnimauxClient;
+	}
 	public JTextField getTFCode(){
 		if (vTFCode== null){
 			vTFCode= new JTextField();

@@ -58,7 +58,7 @@ public class ClientsManager {
 	public List<Client> SelectByNom(String NomClient) throws DALException{
 		List<Client> clientByNom =null;
 		try{
-			daoClient.SelectByNom(NomClient);
+			clientByNom =daoClient.SelectByNom(NomClient);
 		}catch(DALException e){
 			e.printStackTrace();
 			throw new DALException("Probleme lors de la recherche par nom du client");

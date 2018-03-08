@@ -6,7 +6,7 @@ import src.fr.eni.ProjetVeterinaire.bll.BLLException;
 import src.fr.eni.ProjetVeterinaire.bll.ClientsManager;
 import src.fr.eni.ProjetVeterinaire.bo.Client;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
-import src.fr.eni.ProjetVeterinaire.ihm.EcranClients;
+import src.fr.eni.ProjetVeterinaire.ihm.clients.EcranClients;
 
 public class ControllerClient {
 

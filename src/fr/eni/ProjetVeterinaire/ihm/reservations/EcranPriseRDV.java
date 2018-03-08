@@ -36,7 +36,7 @@ import src.fr.eni.ProjetVeterinaire.bo.Rdv;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
 import src.fr.eni.ProjetVeterinaire.ihm.EcranAnimaux;
-import src.fr.eni.ProjetVeterinaire.ihm.EcranClients;
+import src.fr.eni.ProjetVeterinaire.ihm.clients.EcranClients;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerRdv;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.DateLabelFormatter;
@@ -227,7 +227,12 @@ public class EcranPriseRDV extends JFrame{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					EcranClients vEcranClients = new EcranClients();
+					try {
+						EcranClients vEcranClients = new EcranClients();
+					} catch (BLLException | DALException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 		}
