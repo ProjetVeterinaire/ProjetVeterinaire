@@ -61,6 +61,15 @@ public class ControllerClient {
 		
 	}
 	
+	public Client SelectClientById(int CodeClient) throws BLLException, DALException{
+		vClientsManager = ClientsManager.getInstance();
+		
+		Client vClientByNom = vClientsManager.SelectClientById(CodeClient);
+		
+		return vClientByNom;
+		
+	}
+	
 	
 	
 }

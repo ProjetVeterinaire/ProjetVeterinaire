@@ -9,11 +9,18 @@ package src.fr.eni.ProjetVeterinaire.ihm;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+
+import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.dal.DALException;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
+
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
@@ -23,34 +30,36 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
-public class EcranResultRecherche {
+public class EcranResultRecherche extends JFrame{
 	private JTextField TFRecherche;
 	private JTable TabRecherche;
+	private EcranResultRecherche ecranResultRecherche;
 
 	public EcranResultRecherche(){
 		
-		JFrame ResultRecherche = new JFrame();
+		ecranResultRecherche=this;
+		
 		
 		//Définit un titre pour la fenetre
-		ResultRecherche.setTitle("Resultat de la recherche");
+		this.setTitle("Resultat de la recherche");
 	    //Définit sa taille
-		ResultRecherche.setSize(500, 300);
+		this.setSize(500, 300);
 	    //Place la fenetre au cntre de l'écran
-		ResultRecherche.setLocationRelativeTo(null);
+		this.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-		ResultRecherche.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    
 		
 		
 		
 		
 		//Set la frame visible   
-		ResultRecherche.getContentPane().setLayout(null); 
+		this.getContentPane().setLayout(null); 
 		
 		JPanel panelRecherche = new JPanel();
 		panelRecherche.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelRecherche.setBounds(10, 11, 464, 51);
-		ResultRecherche.getContentPane().add(panelRecherche);
+		this.getContentPane().add(panelRecherche);
 		panelRecherche.setLayout(null);
 		
 		JButton btnRecherche = new JButton(new ImageIcon("./ressources/images/BTN_Recherche_petit.png"));
@@ -81,12 +90,38 @@ public class EcranResultRecherche {
 		
 		JScrollPane sp=new JScrollPane(TabRecherche);
 		sp.setBounds(10, 75, 464, 175);
-		ResultRecherche.getContentPane().add(sp);		
+		this.getContentPane().add(sp);		
 		
-		ResultRecherche.setVisible(true);
+		this.setVisible(true);
 		
 		//Donne à la fenetre l'icone de l'application
 		Image icone = Toolkit.getDefaultToolkit().getImage("./ressources/Images/ico_veto.png"); 
-		ResultRecherche.setIconImage(icone);
+		this.setIconImage(icone);
 	}
+	
+//	private JButton getBtnRechercher(){
+//		if (btnRechercher == null){
+//			btnRechercher = new JButton (new ImageIcon("./ressources/images/BTN_Recherche.png"));
+//			btnRechercher.addActionListener(new ActionListener(){
+//				
+//				public void actionPerformed(ActionEvent e){
+//					try{
+//						ControllerClient vControllerClient = ControllerClient.getInstance();
+//						vControllerClient.selectByNom(getTFNom().getText());
+//					} catch (BLLException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//					catch(DALException e1){
+//						e1.printStackTrace();
+//					}
+//						
+//					
+//				}
+//			});
+//		}
+//		
+//		
+//		return btnRechercher;
+//	}
 }

@@ -67,4 +67,19 @@ public class ClientsManager {
 		return clientByNom;
 		
 	}
+	
+	public Client SelectClientById(int CodeClient) throws DALException{
+		Client clientById =null;
+		try{
+			clientById =daoClient.SelectClientById(CodeClient);
+		}catch(DALException e){
+			e.printStackTrace();
+			throw new DALException("");
+		}
+		
+		return clientById;
+		
+	}
+	
+	
 }
