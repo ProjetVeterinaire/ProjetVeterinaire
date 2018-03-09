@@ -190,7 +190,7 @@ public class EcranPriseRDV extends JFrame{
 					try {
 						AnimauxManager vAnimauxManager = new AnimauxManager();
 						Client vClient =(Client)vJComboBoxClient.getSelectedItem();
-						List<Animal> vListeAnimaux = vAnimauxManager.SelectByIdClient(1);
+						List<Animal> vListeAnimaux = vAnimauxManager.SelectByIdClient(vClient.getvCodeClient());
 						vJComboBoxAnimal.removeAllItems();
 						for(Animal vAnimal : vListeAnimaux){
 							vJComboBoxAnimal.addItem(vAnimal);
