@@ -194,7 +194,7 @@ public class EcranAnimaux extends JFrame {
 	public JTextField getvTextFieldClient(){
     	if ( vTFClient== null){
     		vTFClient = new JTextField();
-    		vTFClient.setText("9");
+    		vTFClient.setText("1");
     		vTFClient.setBounds(30, 21, 360, 20);
     		vTFClient.setEditable(false);
     		vTFClient.setColumns(10);
