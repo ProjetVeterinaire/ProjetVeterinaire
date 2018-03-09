@@ -114,7 +114,7 @@ public class EcranPriseRDV extends JFrame{
 	    //Place la fenetre au cntre de l'écran
 		this.setLocationRelativeTo(null);
 	    //Termine proprement le processus lorsqu'on clique sur la croix rouge
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    
 		this.getContentPane().setLayout(null); 
 
@@ -190,7 +190,7 @@ public class EcranPriseRDV extends JFrame{
 					try {
 						AnimauxManager vAnimauxManager = new AnimauxManager();
 						Client vClient =(Client)vJComboBoxClient.getSelectedItem();
-						List<Animal> vListeAnimaux = vAnimauxManager.SelectByIdClient(vClient.getvCodeClient());
+						List<Animal> vListeAnimaux = vAnimauxManager.SelectByIdClient(1);
 						vJComboBoxAnimal.removeAllItems();
 						for(Animal vAnimal : vListeAnimaux){
 							vJComboBoxAnimal.addItem(vAnimal);
