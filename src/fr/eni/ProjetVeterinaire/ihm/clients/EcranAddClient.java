@@ -51,11 +51,11 @@ public class EcranAddClient extends JFrame{
 	private JTextField vTFEmail;
 	private JTextArea vTARemarque;
 	private JTextField vTFArchive;
-
+	private EcranClients vEcranClients;
 	
-	public EcranAddClient(){
-		ecranAddClient=this;
-				
+	public EcranAddClient(EcranClients aEcranClients){
+			ecranAddClient=this;
+			vEcranClients =aEcranClients;
 			JFrame AddClient = new JFrame();
 			
 			//Définit un titre pour la fenetre
@@ -139,7 +139,21 @@ public class EcranAddClient extends JFrame{
 				   Client aClient = new Client(0, getTFNom().getText(), getTFPrenom().getText(), getTFAdresse1().getText(), getTFAdresse2().getText(), getTFCodePostal().getText(), getTFVille().getText(), getTFNumTel().getText(), getTFAssurance().getText(), getTFEmail().getText(),getTARemarque().getText(), Boolean.valueOf(getTFArchive().getText()));
 				   try {
 					ControllerClient vControllerClient = ControllerClient.getInstance();
-					vControllerClient.Ajouter(aClient);
+					int vCode = vControllerClient.Ajouter(aClient);
+					if(vEcranClients!=null){
+						vEcranClients.getTFCode().setText(String.valueOf(vCode));
+						vEcranClients.getTFNom().setText(aClient.getvNomClient());
+						vEcranClients.getTFPrenom().setText(aClient.getvPrenomClient());
+						vEcranClients.getTFAdresse1().setText(aClient.getvAdresse1());
+						vEcranClients.getTFAdresse2().setText(aClient.getvAdresse2());
+						vEcranClients.getTFCodePostal().setText(aClient.getvCode_postal());
+						vEcranClients.getTFVille().setText(aClient.getvVille());
+						vEcranClients.getTFNumTel().setText(aClient.getvNumTel());
+						vEcranClients.getTFAssurance().setText(aClient.getvAssurance());
+						vEcranClients.getTFEmail().setText(aClient.getvEmail());
+						vEcranClients.getTFRemarque().setText(aClient.getvRemarque());
+					}
+					
 					setVisible(false);
 				} catch (BLLException | DALException e1) {
 					// TODO Auto-generated catch block

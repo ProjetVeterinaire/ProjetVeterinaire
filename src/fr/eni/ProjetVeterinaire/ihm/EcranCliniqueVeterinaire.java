@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import javafx.geometry.VPos;
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
@@ -79,7 +80,6 @@ public class EcranCliniqueVeterinaire  extends JFrame{
         	public void actionPerformed(ActionEvent ev) {
     	    	try {
 					EcranPriseRDV CliniqueVetoPriseRDV = new EcranPriseRDV();
-					setVisible(false);
 				} catch (BLLException | DALException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -97,7 +97,6 @@ public class EcranCliniqueVeterinaire  extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			setVisible(false);
   	      }
   	    });
         menuGestionRDV.add(JMIrdv);
@@ -115,7 +114,12 @@ public class EcranCliniqueVeterinaire  extends JFrame{
         menuGestionPerso.addActionListener(new ActionListener() {
      	   public void actionPerformed(ActionEvent ev) {
      	    	try {
-					EcranGestionPersonnel CliniqueVetoGestionPerso = new EcranGestionPersonnel(vPersonnel);
+     	    		if(vPersonnel.getvRole().compareTo("Adm")==0){
+    					EcranGestionPersonnel CliniqueVetoGestionPerso = new EcranGestionPersonnel(vPersonnel);
+     	    		}
+     	    		else{
+     	    			JOptionPane.showMessageDialog(null, "Vous n'avez pas les droits d'accès, vous n'tes pas administrateur");
+     	    		}
 				} catch (BLLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

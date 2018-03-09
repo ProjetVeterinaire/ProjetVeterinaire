@@ -19,12 +19,12 @@ import src.fr.eni.ProjetVeterinaire.dal.DALException;
 public class ClientDAOJdbcImpl implements ClientDAO{
 	
 	//requete sql de selection de la connexion
-	private static final String sqlSelectAll = "Select * from Clients";
+	private static final String sqlSelectAll = "Select * from Clients where Archive =0";
 	private static final String sqlInsert ="insert into Clients(NomClient,PrenomClient,Adresse1,Adresse2,CodePostal,Ville,NumTel,Assurance,Email,Remarque,Archive) values(?,?,?,?,?,?,?,?,?,?,0);";
-	private static final String sqlArchiver="update Clients set Archive=1 where CodeClient=?";
+	private static final String sqlArchiver="update Clients set Archive=1 where CodeClient=? ";
 	private static final String sqlUpdate="update Clients set NomClient=?,PrenomClient=?,Adresse1=?,Adresse2=?,CodePostal=?,Ville=?,NumTel=?,Assurance=?,Email=?,Remarque=? where CodeClient=?";
-	private static final String sqlSelectByNom="Select * from Clients where NomClient=?";
-	private static final String sqlSelectClientById="Select * from Clients where CodeClient=?";
+	private static final String sqlSelectByNom="Select * from Clients where NomClient=? and Archive=0";
+	private static final String sqlSelectClientById="Select * from Clients where CodeClient=? and Archive=0";
 	
 	public ArrayList<Client> SelectAll() throws DALException {
 			Connection cnx = null;
@@ -77,7 +77,7 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 		}
 	
 	
-	public void Ajouter(Client aClient) throws DALException {
+	public int Ajouter(Client aClient) throws DALException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
 		ResultSet rs;
@@ -85,7 +85,7 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 		
 		try {
 			cnx = JDBCTools.getConnection();
-			rqt = cnx.prepareStatement(sqlInsert);
+			rqt = cnx.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
 			rqt.setString(1, aClient.getvNomClient());
 			rqt.setString(2, aClient.getvPrenomClient());
 			rqt.setString(3, aClient.getvAdresse1());
@@ -99,12 +99,19 @@ public class ClientDAOJdbcImpl implements ClientDAO{
 			
 
 			int nbRows = rqt.executeUpdate();
+			if(nbRows==1){
+				rs = rqt.getGeneratedKeys();
+				if(rs.next()){
+					aClient.setvCodeClient(rs.getInt(1));
+				}
+			}
 			
+
 		}catch(SQLException e){
 			throw new DALException("ajout failed - nom =" + aClient.getvCodeClient() , e);
 			
 		} 	
-		
+		return aClient.getvCodeClient();
 		
 	}
 	

@@ -139,9 +139,7 @@ public class AnimauxDAOJdbcImpl implements AnimauxDAO{
 			rqt.setInt(6, aAnimal.getvCodeClient());
 			rqt.setString(7, aAnimal.getvTatouage());
 			rqt.setString(8, "e");
-			vRequete="insert into Animaux(NomAnimal,Sexe,Couleur,Race,Espece,CodeClient,Tatouage,Antecedents,Archive) values(";
-			vRequete+=aAnimal.getvNomAnimal()+","+vSexe+","+aAnimal.getvCouleur()+","+aAnimal.getvRace()+","+aAnimal.getvEspece()+","+aAnimal.getvCodeClient()+","+aAnimal.getvTatouage()+",'e',false;";																																														
-			System.out.println(vRequete);
+
 			rqt.executeUpdate();
 			
 		

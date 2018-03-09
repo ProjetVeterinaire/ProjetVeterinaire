@@ -40,6 +40,7 @@ import src.fr.eni.ProjetVeterinaire.ihm.clients.EcranClients;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerLogin;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerRdv;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.DateLabelFormatter;
+import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.DataModelPersonnel;
 import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.TablePersonnel;
 
 import java.awt.Color;
@@ -51,6 +52,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import java.awt.Label;
 
@@ -340,6 +342,7 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vLblHeure;
 	}
+	
 	private JLabel getvLblDate() {
 		if(vLblDate==null){
 			vLblDate = new JLabel("Date");
@@ -347,6 +350,7 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vLblDate;
 	}
+	
 	private JDatePanelImpl getvDatePanel() {
 		if(vDatePanel==null){
 			vModel = new UtilDateModel();
@@ -358,6 +362,7 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vDatePanel;
 	}
+	
 	private JDatePickerImpl getvDatePicker() {
 		if(vDatePicker==null){
 			vDatePicker = new JDatePickerImpl(getvDatePanel(), new DateLabelFormatter());
@@ -365,6 +370,7 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vDatePicker;
 	}
+	
 	private JScrollPane getvScrollPane() throws BLLException, DALException {
 		if(vScrollPane==null){
 			vScrollPane=new JScrollPane(getvTable());
@@ -372,6 +378,7 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vScrollPane;
 	}
+	
 	private JTable getvTable() throws BLLException, DALException {
 		if(vTabRDV==null){
 			vTabRDV=new TableRdv();
@@ -382,6 +389,7 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vTabRDV;
 	}
+	
 	private JButton getvBtnValider() {
 		if(vBtnValider==null){
 			vBtnValider = new JButton(new ImageIcon("./ressources/images/BTN_Valider.png"));
@@ -418,18 +426,32 @@ public class EcranPriseRDV extends JFrame{
 		}
 		return vBtnValider;
 	}
-	private JButton getvBtnSupprimer() {
+	private JButton getvBtnSupprimer() throws BLLException, DALException {
 		if(vBtnSupprimer==null){
 			vBtnSupprimer= new JButton(new ImageIcon("./ressources/images/BTN_Supprimer_petit.png"));
 			vBtnSupprimer.setBounds(557, 444, 50, 51);
-//			vBtnSupprimer.addActionListener(new ActionListener(){
-//				public void actionPerformed(ActionEvent e){
-//					try{
-//						ControllerRdv vControllerRdv = ControllerRdv.getInstance();
-//						vControllerRdv.Supprimer(getvTable().getValueAt(getvTable().getSelectedRow(), 0));
-//					}
-//				}
-//			});
+			vBtnSupprimer.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+				
+
+	     	    			JOptionPane.showMessageDialog(null, "Fonctionnalité non disponible");
+//							try {
+//
+//							ControllerRdv vControllerRdv = ControllerRdv.getInstance();
+//							Rdv vRdv = (Rdv) (getvTable().getValueAt(getvTable().getSelectedRow(), 0));
+//							vControllerRdv.Supprimer(vRdv);
+//							JDBCTools.closeConnection();
+//							vEcranPriseRDV.getvTable().setModel(new DataModelRdv(vControllerRdv.selectAll()));
+
+//						} catch (BLLException | DALException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						}
+
+						
+					
+				}
+			});
 		}
 		return vBtnSupprimer;
 	}

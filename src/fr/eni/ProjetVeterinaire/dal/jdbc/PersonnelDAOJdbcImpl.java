@@ -102,7 +102,6 @@ public class PersonnelDAOJdbcImpl implements PersonnelDAO{
 	public int ajouter(Personnel personnel) throws DALException{
 		Connection cnx = null;
 		PreparedStatement rqt = null;
-	
 		try {
 			cnx = JDBCTools.getConnection();
 			rqt=cnx.prepareStatement(sqlAjouter);

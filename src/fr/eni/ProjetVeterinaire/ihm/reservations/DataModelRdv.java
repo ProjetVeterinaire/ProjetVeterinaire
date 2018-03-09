@@ -56,7 +56,7 @@ public class DataModelRdv extends AbstractTableModel {
 		}
 		switch(col){
 			case 0 : 
-				vRet =vListeRdv.get(row).getHeure()+"h"+vListeRdv.get(row).getMinutes();
+				vRet =vListeRdv.get(row);
 				break;
 			case 1: 
 				vRet= vPersonnel.getvNom();

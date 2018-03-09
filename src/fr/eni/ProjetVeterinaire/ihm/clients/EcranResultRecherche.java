@@ -22,9 +22,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Client;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerAnimal;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerPersonnel;
 import src.fr.eni.ProjetVeterinaire.ihm.ecranPersonnel.DataModelPersonnel;
@@ -140,6 +142,9 @@ public class EcranResultRecherche extends JFrame{
 						vEcranClients.getTFAssurance().setText(vClient.getvAssurance());
 						vEcranClients.getTFEmail().setText(vClient.getvEmail());
 						vEcranClients.getTFRemarque().setText(vClient.getvRemarque());
+						ControllerAnimal vControllerAnimal = ControllerAnimal.getInstance();
+						List<Animal> vListeAnimaux = vControllerAnimal.selectIdClient(vClient.getvCodeClient());
+						vEcranClients.getvTabAnimauxClient().setModel(new DataModelClient(vListeAnimaux));
 
 					} catch (BLLException | DALException e1) {
 						// TODO Auto-generated catch block

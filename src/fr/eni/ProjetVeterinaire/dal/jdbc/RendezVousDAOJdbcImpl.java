@@ -26,7 +26,7 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 	//requete sql de selection de la connexion
 	private static final String sqlSelectAll = "Select * from Agendas";
 	private static final String sqlInsert ="insert into Agendas(CodeVeto,DateRdv,CodeAnimal) values(?, CAST(? AS smalldatetime)  ,?);";
-	private static final String sqlDelete ="delete * from Agendas where CodeAnimal where CodeVeto=? and DateRdv=? and CodeAnimal=?";
+	private static final String sqlDelete ="delete * from Agendas where CodeVeto=? and DateRdv=? and CodeAnimal=?";
 	
 	public ArrayList<Rdv> SelectAll() throws DALException {
 			Connection cnx = null;
@@ -40,9 +40,16 @@ public class RendezVousDAOJdbcImpl implements RendezVousDAO{
 				rs = rqt.executeQuery(sqlSelectAll);
 			
 				while(rs.next()){
+					
+					
+					
+					
 					String vDateString = rs.getTimestamp("DateRdv").toString();
 					vDateString=vDateString.substring(0, vDateString.length()-5) ;
 					Date vDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(vDateString);
+				
+					
+					
 					rdv = new Rdv(rs.getInt("CodeVeto"),
 							vDate,
 							rs.getInt("CodeAnimal")

@@ -27,12 +27,14 @@ public class ClientsManager {
 		daoClient = DAOFactory.getClientDAO();
 	}
 	
-	public void Ajouter(Client aClient)throws BLLException{
+	public int Ajouter(Client aClient)throws BLLException{
+		int code;
 		try{
-			 daoClient.Ajouter(aClient);
+			 code = daoClient.Ajouter(aClient);
 		}catch(DALException e){
 			throw new BLLException("Echec de l'ajout du client ");
 		}
+		return code;
 	}
 	
 	public List<Client> SelectAll() throws DALException{

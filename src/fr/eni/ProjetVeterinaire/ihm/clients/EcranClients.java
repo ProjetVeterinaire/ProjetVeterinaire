@@ -15,9 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import src.fr.eni.ProjetVeterinaire.bll.BLLException;
+import src.fr.eni.ProjetVeterinaire.bo.Animal;
 import src.fr.eni.ProjetVeterinaire.bo.Client;
 import src.fr.eni.ProjetVeterinaire.dal.DALException;
 import src.fr.eni.ProjetVeterinaire.dal.jdbc.JDBCTools;
+import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerAnimal;
 import src.fr.eni.ProjetVeterinaire.ihm.controllers.ControllerClient;
 import src.fr.eni.ProjetVeterinaire.ihm.reservations.TableRdv;
 
@@ -28,6 +30,7 @@ import javax.swing.UIManager;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -218,7 +221,7 @@ public class EcranClients extends JFrame{
 
 				
 				public void actionPerformed(ActionEvent e) {
-					EcranAddClient addClient = new EcranAddClient();
+					EcranAddClient addClient = new EcranAddClient(ecranClients);
 					
 						
 				}
@@ -237,10 +240,17 @@ public class EcranClients extends JFrame{
 			btnSupprimerClient.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					ControllerClient vControllerClient;
+					ControllerAnimal vControllerAnimal;
+
 					try {
 						vControllerClient = ControllerClient.getInstance();
 						vControllerClient.Archiver(Integer.valueOf(getTFCode().getText()));
-						
+						vControllerAnimal = ControllerAnimal.getInstance();
+						List<Animal> vListAnimaux = vControllerAnimal.selectIdClient(Integer.valueOf(getTFCode().getText()));
+						for(Animal vAnimal : vListAnimaux){
+							vControllerAnimal.archiver(vAnimal.getvCodeAnimal());
+						}
+						getvTabAnimauxClient().removeAll();
 					} catch (BLLException | NumberFormatException | DALException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -322,7 +332,7 @@ public class EcranClients extends JFrame{
 		}
 		return vScrollPane;
 	}
-	private JTable getvTabAnimauxClient() throws BLLException, DALException {
+	public JTable getvTabAnimauxClient() throws BLLException, DALException {
 		if(TabAnimauxClient==null){
 			TabAnimauxClient=new TableClients();
 			TabAnimauxClient.setCellSelectionEnabled(true);

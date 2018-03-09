@@ -36,11 +36,10 @@ public class ControllerClient {
 		return vClient;
 		
 	}
-	
-	public void Ajouter(Client aClient) throws BLLException, DALException{
+	public int Ajouter(Client aClient) throws BLLException, DALException{
 		vClientsManager = ClientsManager.getInstance();
-		vClientsManager.Ajouter(aClient);
-		
+		int vCode = vClientsManager.Ajouter(aClient);
+		return vCode;
 	}
 	public void Archiver(int CodeClient) throws BLLException, DALException{
 		vClientsManager = ClientsManager.getInstance();

@@ -1,5 +1,6 @@
 package src.fr.eni.ProjetVeterinaire.ihm.clients;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -21,7 +22,8 @@ public class TableClients extends JTable {
 	public TableClients() throws BLLException, DALException {
 	// TODO Auto-generated constructor stub
 		vControllerAnimal = ControllerAnimal.getInstance();
-		vListeAnimaux= vControllerAnimal.selectAll();
+		List<Animal> vAnimalVide = new ArrayList<Animal>();
+		vListeAnimaux= vAnimalVide;
 		JDBCTools.closeConnection();
 		vDataModelClient = new DataModelClient(vListeAnimaux);
 		this.setModel(vDataModelClient);

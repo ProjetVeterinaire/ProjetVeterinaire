@@ -41,7 +41,10 @@ public class Rdv {
 	public String getvDate() {
 		return vDateStr;
 	}
+	public String toString(){
+		return 	getHeure()+"h"+getMinutes();
 
+	}
 	
 }
 
